@@ -1,7 +1,28 @@
 {
   "name": "cra-electron-kit",
+  "description": "Electron + Create React App + Electron Builder",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "Saeed Heidari",
+    "email": "saeed.heidari86@gmail.com",
+    "url": "http://boum.ir"
+  },
+  "build": {
+    "appId": "ir.boum.cra-electron",
+    "productName": "Cra-Electron",
+    "copyright": "Copyright © 2020 boum.ir",
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -12,12 +33,22 @@
     "react-scripts": "3.4.1"
   },
   "main": "public/electron.js",
+  "homepage": "./",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start:dev": "concurrently 'BROWSER=none yarn start' 'wait-on http://localhost:3000 && electron .'"
+    "start:dev": "eslint . && concurrently 'BROWSER=none yarn start' 'wait-on http://localhost:3000 && electron .'",
+    "postinstall": "electron-builder install-app-deps",
+    "preelectron-pack": "yarn build",
+    "electron-pack": "./node_modules/.bin/electron-builder build -mw",
+    "lint": "eslint ."
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,6 +69,12 @@
     "concurrently": "^5.1.0",
     "electron": "^8.2.0",
     "electron-builder": "^22.4.1",
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.19.0",
+    "husky": "^4.2.3",
+    "prettier": "2.0.2",
+    "pretty-quick": "^2.0.1",
+    "typescript": "^3.8.3",
     "wait-on": "^4.0.1"
   }
 }
