@@ -20,9 +20,10 @@
     "indent": ["warn", 2],
     "semi": ["warn", "never"],
     "quotes": ["warn", "single"],
-    "max-len": ["warn", { "code": 80 }],
+    "max-len": ["warn", { "code": 90 }],
     "no-multiple-empty-lines": ["warn", { "max": 1, "maxEOF": 0 }],
     "comma-dangle": ["warn", "never"],
-    "comma-spacing": ["warn", { "before": false, "after": true }]
+    "comma-spacing": ["warn", { "before": false, "after": true }],
+    "no-console": "warn"
   }
 }
