@@ -39,10 +39,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start:dev": "concurrently 'BROWSER=none yarn start' 'wait-on http://localhost:3000 && electron .'",
+    "start:dev": "eslint . && concurrently 'BROWSER=none yarn start' 'wait-on http://localhost:3000 && electron .'",
     "postinstall": "electron-builder install-app-deps",
     "preelectron-pack": "yarn build",
-    "electron-pack": "./node_modules/.bin/electron-builder build -mw"
+    "electron-pack": "./node_modules/.bin/electron-builder build -mw",
+    "lint": "eslint ."
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -63,6 +64,8 @@
     "concurrently": "^5.1.0",
     "electron": "^8.2.0",
     "electron-builder": "^22.4.1",
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.19.0",
     "typescript": "^3.8.3",
     "wait-on": "^4.0.1"
   }
