@@ -24,6 +24,7 @@
     }
   },
   "dependencies": {
+    "@commitlint/config-conventional": "^8.3.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -47,6 +48,7 @@
   },
   "husky": {
     "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "pretty-quick --staged"
     }
   },
@@ -66,6 +68,7 @@
     ]
   },
   "devDependencies": {
+    "commitlint": "^8.3.5",
     "concurrently": "^5.1.0",
     "electron": "^8.2.0",
     "electron-builder": "^22.4.1",
