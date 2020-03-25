@@ -45,6 +45,11 @@
     "electron-pack": "./node_modules/.bin/electron-builder build -mw",
     "lint": "eslint ."
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -66,6 +71,9 @@
     "electron-builder": "^22.4.1",
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.19.0",
+    "husky": "^4.2.3",
+    "prettier": "2.0.2",
+    "pretty-quick": "^2.0.1",
     "typescript": "^3.8.3",
     "wait-on": "^4.0.1"
   }
