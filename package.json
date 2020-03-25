@@ -63,6 +63,8 @@
     "concurrently": "^5.1.0",
     "electron": "^8.2.0",
     "electron-builder": "^22.4.1",
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.19.0",
     "typescript": "^3.8.3",
     "wait-on": "^4.0.1"
   }
