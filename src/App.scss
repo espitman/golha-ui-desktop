@@ -1,0 +1,35 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+hr {
+  opacity: 0.35;
+}
+ul {
+  float: left;
+  width: 100%;
+  display: block;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  li {
+    float: left;
+    width: 33%;
+    text-align: center;
+    a {
+      padding: 15px 0;
+      color: #000000;
+      display: block;
+      text-decoration: none;
+      &:hover {
+        background-color: rgba($color: #000000, $alpha: 0.1);
+      }
+    }
+  }
+}
+
+h1 {
+  margin: 15px;
+  text-align: center;
+}
