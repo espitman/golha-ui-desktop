@@ -12,6 +12,8 @@ import HomeScreen from '../screen/home'
 import ProgramsScreen from '../screen/programs'
 import ArtistsScreen from '../screen/artists'
 import ArchiveScreens from '../screen/archive'
+import AboutScreen from '../screen/about'
+import SettingsScreen from '../screen/settings'
 
 function App() {
   return (
@@ -31,6 +33,12 @@ function App() {
           </Route>
           <Route path="/archive">
             <ArchiveScreens />
+          </Route>
+          <Route path="/about">
+            <AboutScreen />
+          </Route>
+          <Route path="/settings">
+            <SettingsScreen />
           </Route>
         </Switch>
       </div>
