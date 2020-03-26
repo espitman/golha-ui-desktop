@@ -1,24 +1,13 @@
 #side {
   position: absolute;
   width: 20%;
-  height: 100%;
+  height: calc(100% - 120px - 32px);
   right: 0;
-  background-image: url('./assets/bg.jpg');
-  background-size: cover;
-  background-position: center center;
-  opacity: 0.2;
-  filter: blur(5px);
-}
-
-.box {
-  position: absolute;
-  width: 20%;
-  height: 100%;
-  right: 0;
-  background: rgba($color: #ffffff, $alpha: 0.4);
+  background: rgba($color: #ffffff, $alpha: 1);
   z-index: 2;
   direction: rtl;
   padding: 60px 0px;
+  border-left: solid 2px #eaeaea;
 
   h5 {
     font-family: IRANSansWeb;

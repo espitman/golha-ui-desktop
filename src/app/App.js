@@ -6,6 +6,7 @@ import '../common/css/fonts.scss'
 import '../common/css/fontAwesome.all.min.scss'
 
 import Side from '../component/side'
+import TitleBar from '../component/title-bar'
 
 import HomeScreen from '../screen/home'
 import ProgramsScreen from '../screen/programs'
@@ -15,6 +16,7 @@ import ArchiveScreens from '../screen/archive'
 function App() {
   return (
     <Router>
+      <TitleBar />
       <Side />
       <div id="main">
         <Switch>

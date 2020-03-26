@@ -7,8 +7,7 @@ export default class Side extends React.Component {
   render() {
     return (
       <>
-        <div id="side"></div>
-        <div className="box">
+        <div id="side">
           <h5>کتابخانه</h5>
           <ul>
             <li>
