@@ -29,7 +29,8 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: winWidth,
     height: winHeight,
-    frame: false
+    frame: false,
+    titleBarStyle: 'hidden'
   })
   mainWindow.loadURL(
     isDev
