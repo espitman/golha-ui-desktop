@@ -1,6 +1,7 @@
 const electron = require('electron')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
+const screen = electron.screen
 
 const path = require('path')
 const isDev = require('electron-is-dev')
@@ -21,7 +22,15 @@ function createSplashWindow() {
 }
 
 function createWindow() {
-  mainWindow = new BrowserWindow({ width: 900, height: 680 })
+  const { width } = screen.getPrimaryDisplay().workAreaSize
+  const winWidth = Math.floor(width * 0.9)
+  const winHeight = Math.floor((winWidth * 9) / 16)
+
+  mainWindow = new BrowserWindow({
+    width: winWidth,
+    height: winHeight,
+    frame: false
+  })
   mainWindow.loadURL(
     isDev
       ? 'http://localhost:3000'
