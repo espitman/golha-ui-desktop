@@ -15,6 +15,7 @@ export default class ProgramTitlesRow extends React.Component {
             return (
               <li key={`program_${name}`}>
                 <div className="program-box">
+                  <div className="program-box-overlay"></div>
                   <h4>{title}</h4>
                   <div className="program-info">تعداد برنامه: {count}</div>
                 </div>
