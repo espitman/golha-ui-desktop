@@ -1,7 +1,14 @@
 import React from 'react'
 
+import './style.scss'
+
 export default class HomeScreen extends React.Component {
   render() {
-    return <h1>Hello, SAEED</h1>
+    return (
+      <>
+        <i class="fal fa-search"></i>
+        <h1>سلام سعید</h1>
+      </>
+    )
   }
 }

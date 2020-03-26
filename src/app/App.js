@@ -2,6 +2,9 @@ import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import './App.scss'
+import '../common/css/fonts.scss'
+import '../common/css/fontAwesome.all.min.scss'
+
 import HomeScreen from '../screen/home'
 import Side from '../component/side'
 
