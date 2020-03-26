@@ -1,7 +1,7 @@
 {
-  "name": "cra-electron-kit",
+  "name": "Golha",
   "description": "Electron + Create React App + Electron Builder",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "author": {
     "name": "Saeed Heidari",
@@ -9,8 +9,8 @@
     "url": "http://boum.ir"
   },
   "build": {
-    "appId": "ir.boum.cra-electron",
-    "productName": "Cra-Electron",
+    "appId": "ir.boum.golha-electron",
+    "productName": "Radio Golha Desktop App",
     "copyright": "Copyright © 2020 boum.ir",
     "mac": {
       "category": "public.app-category.utilities"
