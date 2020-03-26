@@ -9,10 +9,51 @@
   opacity: 0.2;
   filter: blur(5px);
 }
+
 .box {
   position: absolute;
-  width: 100%;
+  width: 20%;
   height: 100%;
-  background: white;
-  opacity: 0.2;
+  right: 0;
+  background: rgba($color: #ffffff, $alpha: 0.4);
+  z-index: 2;
+  direction: rtl;
+  padding: 60px 0px;
+
+  h5 {
+    font-family: IRANSansWeb;
+    font-weight: normal;
+    font-size: 1rem;
+    margin: 15px 30px 15px 0;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      a {
+        text-decoration: none;
+        display: block;
+        padding: 10px 35px;
+        &:hover {
+          background-color: rgba($color: #fff, $alpha: 0.5);
+        }
+        i {
+          color: #000000;
+          font-size: 0.85rem;
+          margin-left: 10px;
+          position: relative;
+          top: 1px;
+          font-weight: lighter;
+        }
+        span {
+          color: #000000;
+          font-family: IRANSansWeb;
+          font-weight: lighter;
+          font-size: 0.85rem;
+        }
+      }
+    }
+  }
 }

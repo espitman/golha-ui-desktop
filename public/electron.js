@@ -30,7 +30,8 @@ function createWindow() {
     width: winWidth,
     height: winHeight,
     frame: false,
-    titleBarStyle: 'hidden'
+    titleBarStyle: 'hidden',
+    resizable: false
   })
   mainWindow.loadURL(
     isDev

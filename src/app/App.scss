@@ -3,10 +3,21 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  font-size: 16px;
 }
+
 #main {
   position: absolute;
-  width: 80%;
-  height: 100%;
+  width: calc(80% - 30px);
+  height: calc(100% - 30px);
   background: #ffffff;
+  padding: 15px;
+}
+
+* {
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
 }

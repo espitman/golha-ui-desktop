@@ -5,8 +5,12 @@ import './App.scss'
 import '../common/css/fonts.scss'
 import '../common/css/fontAwesome.all.min.scss'
 
-import HomeScreen from '../screen/home'
 import Side from '../component/side'
+
+import HomeScreen from '../screen/home'
+import ProgramsScreen from '../screen/programs'
+import ArtistsScreen from '../screen/artists'
+import ArchiveScreens from '../screen/archive'
 
 function App() {
   return (
@@ -17,11 +21,14 @@ function App() {
           <Route exact path="/">
             <HomeScreen />
           </Route>
-          <Route path="/about">
-            <h1>About</h1>
+          <Route path="/programs">
+            <ProgramsScreen />
           </Route>
-          <Route path="/dashboard">
-            <h1>Dashboard</h1>
+          <Route path="/artists">
+            <ArtistsScreen />
+          </Route>
+          <Route path="/archive">
+            <ArchiveScreens />
           </Route>
         </Switch>
       </div>

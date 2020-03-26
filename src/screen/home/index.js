@@ -5,10 +5,9 @@ import './style.scss'
 export default class HomeScreen extends React.Component {
   render() {
     return (
-      <>
-        <i className="fal fa-search"></i>
-        <h1>سلام سعید</h1>
-      </>
+      <div id="screen-home">
+        <h1>صفحه اصلی</h1>
+      </div>
     )
   }
 }
