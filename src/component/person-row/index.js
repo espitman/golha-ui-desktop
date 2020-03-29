@@ -6,10 +6,10 @@ import './style.scss'
 
 export default class PersonRow extends React.Component {
   render() {
-    const { persons } = this.props
+    const { style, persons } = this.props
     const width = persons.length * 170
     return (
-      <div className="person-row">
+      <div className="person-row" style={style}>
         <h3>خواننده‌ها</h3>
         <ul style={{ width }}>
           {persons.map((person) => {

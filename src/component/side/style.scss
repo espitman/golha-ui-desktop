@@ -12,11 +12,13 @@
   h5 {
     font-family: IRANSansWeb;
     font-weight: normal;
-    font-size: 1rem;
+    font-size: 0.85rem;
     margin: 15px 30px 15px 0;
+    opacity: 0.6;
   }
   #side-menu-app {
-    margin-top: 60px;
+    margin-top: 15px;
+    border-top: solid 2px #eaeaea;
   }
   ul {
     list-style: none;
@@ -26,9 +28,9 @@
       a {
         text-decoration: none;
         display: block;
-        padding: 10px 35px;
+        padding: 10px 30px;
         &:hover {
-          background-color: rgba($color: #fff, $alpha: 0.5);
+          background-color: rgba($color: #000, $alpha: 0.02);
         }
         i {
           color: #000000;

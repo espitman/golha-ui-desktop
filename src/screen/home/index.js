@@ -7,6 +7,8 @@ import { ProgramService } from '../../service/program'
 import Loading from '../../component/loading'
 import PersonRow from '../../component/person-row'
 import ProgramTitlesRow from '../../component/program-titles-row'
+import { DastgahService } from '../../service/dastgah'
+import DastgahRow from '../../component/dastgah-row'
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -14,26 +16,30 @@ export default class HomeScreen extends React.Component {
     this.state = {
       loading: true,
       singers: [],
-      programs: []
+      programs: [],
+      dastgahs: []
     }
     this.personService = new PersonService()
     this.programService = new ProgramService()
+    this.dastgahService = new DastgahService()
   }
 
   async componentDidMount() {
-    const [singers, programs] = await Promise.all([
+    const [singers, programs, dastgahs] = await Promise.all([
       this.personService.getAllByRole('singer'),
-      this.programService.getAll()
+      this.programService.getAll(),
+      this.dastgahService.getAll()
     ])
     this.setState({
       singers,
       programs,
+      dastgahs,
       loading: false
     })
   }
 
   render() {
-    const { singers, programs, loading } = this.state
+    const { singers, programs, dastgahs, loading } = this.state
     return (
       <div id="screen-home">
         {loading ? (
@@ -42,6 +48,7 @@ export default class HomeScreen extends React.Component {
           <>
             <ProgramTitlesRow programs={programs} />
             <PersonRow persons={singers} />
+            <DastgahRow dastgahs={dastgahs} />
           </>
         )}
       </div>
