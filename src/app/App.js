@@ -14,6 +14,7 @@ import ArtistsScreen from '../screen/artists'
 import ArchiveScreens from '../screen/archive'
 import AboutScreen from '../screen/about'
 import SettingsScreen from '../screen/settings'
+import PersonScreen from '../screen/person'
 
 function App() {
   return (
@@ -39,6 +40,9 @@ function App() {
           </Route>
           <Route path="/settings">
             <SettingsScreen />
+          </Route>
+          <Route path="/person/:id/:name">
+            <PersonScreen />
           </Route>
         </Switch>
       </div>
