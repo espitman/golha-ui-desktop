@@ -5,6 +5,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import './style.scss'
 import { PersonService } from '../../service/person'
 import storage from '../../modules/storage'
+import { withTest } from '../../hoc/withTest'
 
 class PersonScreen extends React.Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class PersonScreen extends React.Component {
     const { info, loading } = this.state
     return (
       <div id="screen-person">
+        <h1>{this.props.count}</h1>
         <div className={'box-name'}>
           <div className={'box-name-image'}>
             <div className={'box-name-image-frame'}>
@@ -56,4 +58,4 @@ class PersonScreen extends React.Component {
   }
 }
 
-export default withRouter(PersonScreen)
+export default withRouter(withTest(PersonScreen))

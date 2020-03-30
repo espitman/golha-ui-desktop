@@ -1,6 +1,7 @@
 import React from 'react'
 import './style.scss'
 
+import { withTest } from '../../hoc/withTest'
 import storage from '../../modules/storage'
 import { PersonService } from '../../service/person'
 import { ProgramService } from '../../service/program'
@@ -11,7 +12,7 @@ import ProgramTitlesRow from '../../component/program-titles-row'
 import { DastgahService } from '../../service/dastgah'
 import DastgahRow from '../../component/dastgah-row'
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -48,6 +49,7 @@ export default class HomeScreen extends React.Component {
           <Loading />
         ) : (
           <>
+            <h1>{this.props.count}</h1>
             <ProgramTitlesRow programs={programs} />
             <PersonRow persons={singers} />
             <DastgahRow dastgahs={dastgahs} />
@@ -57,3 +59,5 @@ export default class HomeScreen extends React.Component {
     )
   }
 }
+
+export default withTest(HomeScreen)
