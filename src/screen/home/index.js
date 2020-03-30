@@ -2,27 +2,26 @@ import React from 'react'
 import './style.scss'
 
 import storage from '../../modules/storage'
-import { PersonService } from '../../service/person'
-import { ProgramService } from '../../service/program'
 
 import Loading from '../../component/loading'
 import PersonRow from '../../component/person-row'
 import ProgramTitlesRow from '../../component/program-titles-row'
-import { DastgahService } from '../../service/dastgah'
 import DastgahRow from '../../component/dastgah-row'
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
+
+    this.programService = props.services.programService
+    this.personService = props.services.personService
+    this.dastgahService = props.services.dastgahService
+
     this.state = {
       loading: true,
       singers: [],
       programs: [],
       dastgahs: []
     }
-    this.personService = new PersonService()
-    this.programService = new ProgramService()
-    this.dastgahService = new DastgahService()
   }
 
   async componentDidMount() {

@@ -3,13 +3,14 @@ import { withRouter } from 'react-router-dom'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 import './style.scss'
-import { PersonService } from '../../service/person'
 import storage from '../../modules/storage'
 
 class PersonScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.personService = new PersonService()
+
+    this.personService = props.services.personService
+
     this.state = {
       loading: true
     }
