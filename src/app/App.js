@@ -41,7 +41,7 @@ function App() {
           <Route path="/settings">
             <SettingsScreen />
           </Route>
-          <Route path="/person/:id/:name">
+          <Route path="/person/:id/:name/:role">
             <PersonScreen />
           </Route>
         </Switch>

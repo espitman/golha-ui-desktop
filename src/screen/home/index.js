@@ -1,6 +1,7 @@
 import React from 'react'
 import './style.scss'
 
+import storage from '../../modules/storage'
 import { PersonService } from '../../service/person'
 import { ProgramService } from '../../service/program'
 
@@ -36,6 +37,7 @@ export default class HomeScreen extends React.Component {
       dastgahs,
       loading: false
     })
+    storage.set('programs', programs)
   }
 
   render() {

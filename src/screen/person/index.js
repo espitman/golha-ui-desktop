@@ -1,37 +1,59 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 import './style.scss'
+import { PersonService } from '../../service/person'
+import storage from '../../modules/storage'
 
 class PersonScreen extends React.Component {
   constructor(props) {
     super(props)
+    this.personService = new PersonService()
+    this.state = {
+      loading: true
+    }
   }
 
-  componentDidMount() {
-    // const { id } = this.props.match.params
+  async componentDidMount() {
+    const programs = storage.get('programs')
+    const { id } = this.props.match.params
+    const { info, count, tracks } = await this.personService.getPersonTracks(id)
+    this.setState({ info, count, tracks, programs, loading: false })
+  }
+
+  getProgramTitle = (name) => {
+    const { programs } = this.state
+    return programs.find((x) => x.name === name).title
   }
 
   render() {
-    const { name } = this.props.match.params
+    const { name, role } = this.props.match.params
+    const { info, loading } = this.state
     return (
       <div id="screen-person">
-        <h1>{name}</h1>
+        <div className={'box-name'}>
+          <div className={'box-name-image'}>
+            <div className={'box-name-image-frame'}>
+              {!loading ? (
+                <LazyLoadImage
+                  alt={name}
+                  effect="blur"
+                  src={`http://37.152.181.202:9000${info.image}`}
+                />
+              ) : (
+                <i className="fal fa-microphone-stand no-img"></i>
+              )}
+            </div>
+          </div>
+          <div className={'box-name-text'}>
+            <h1>{name}</h1>
+            <h2>{role}</h2>
+          </div>
+        </div>
       </div>
     )
   }
 }
 
 export default withRouter(PersonScreen)
-
-// export default function PersonScreen() {
-//   // We can use the `useParams` hook here to access
-//   // the dynamic pieces of the URL.
-//   let { id } = useParams()
-
-//   return (
-//     <div>
-//       <h3>ID: {id}</h3>
-//     </div>
-//   )
-// }
