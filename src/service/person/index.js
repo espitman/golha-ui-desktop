@@ -9,4 +9,13 @@ export class PersonService {
     } = await axios.get(`http://localhost:3100/api/v1/person/role/${role}`)
     return persons
   }
+
+  async getPersonTracks(personId) {
+    const {
+      data: {
+        payload: { info, count, tracks }
+      }
+    } = await axios.get(`http://localhost:3100/api/v1/person/${personId}`)
+    return { info, count, tracks }
+  }
 }

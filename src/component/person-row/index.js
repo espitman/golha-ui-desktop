@@ -9,7 +9,7 @@ import './style.scss'
 class PersonRow extends React.Component {
   handleClick = (person) => {
     const { _id, name } = person
-    this.props.history.push(`/person/${_id}/${name}`)
+    this.props.history.push(`/person/${_id}/${name}/خواننده`)
   }
 
   render() {
