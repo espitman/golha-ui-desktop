@@ -8,7 +8,7 @@ export default class DastgahRow extends React.Component {
     const width = dastgahs.length * 330
     return (
       <div className="dastgah-row" style={style}>
-        <h3>دستگاه / آواز</h3>
+        <h3>دستگاه / آواز ({dastgahs.length})</h3>
         <ul style={{ width }}>
           {dastgahs.map((dastgah) => {
             const { title, count } = dastgah

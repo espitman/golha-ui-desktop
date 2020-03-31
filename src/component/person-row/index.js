@@ -8,8 +8,8 @@ import './style.scss'
 
 class PersonRow extends React.Component {
   handleClick = (person) => {
-    const { _id, name } = person
-    this.props.history.push(`/person/${_id}/${name}/خواننده`)
+    const { id, name } = person
+    this.props.history.push(`/person/${id}/${name}/خواننده`)
   }
 
   render() {
@@ -17,15 +17,12 @@ class PersonRow extends React.Component {
     const width = persons.length * 170
     return (
       <div className="person-row" style={style}>
-        <h3>خواننده‌ها</h3>
+        <h3>خواننده‌ها ({persons.length})</h3>
         <ul style={{ width }}>
           {persons.map((person) => {
-            const { _id, name, image } = person
+            const { id, name, image } = person
             return (
-              <li
-                key={`person_${_id}`}
-                onClick={() => this.handleClick(person)}
-              >
+              <li key={`person_${id}`} onClick={() => this.handleClick(person)}>
                 <div className={'img'}>
                   {image ? (
                     <LazyLoadImage

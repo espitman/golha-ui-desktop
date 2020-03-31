@@ -24,11 +24,18 @@ export class ProgramService {
         }
       } = await axios.get('http://localhost:3100/api/v1/program')
       const promises = []
+      const result = []
       programs.map(async (program) => {
         const { count, name, title } = program
+        result.push({ count, name, title })
         promises.push(this.db.program.insert({ count, name, title }))
       })
-      return await Promise.all(promises)
+      try {
+        return await Promise.all(promises)
+      } catch (error) {
+        // do nothing
+      }
+      return result
     }
     return (await getFromLocalDb()) || (await getFromServer())
   }

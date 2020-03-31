@@ -13,7 +13,7 @@ export class PersonService {
     this.db = await this.connectToDb()
 
     const getFromLocalDb = async () => {
-      const persons = await this.db.person.find().exec()
+      const persons = await this.db.person.find().sort('id').exec()
       return persons.length ? persons.map((person) => person.toJSON()) : null
     }
     const getFromServer = async () => {
@@ -23,13 +23,20 @@ export class PersonService {
         }
       } = await axios.get(`http://localhost:3100/api/v1/person/role/${role}`)
       const promises = []
-      persons.map((person) => {
+      const result = []
+      persons.forEach((person) => {
         const { _id: id, name, image } = person
+        result.push({ id, name, image })
         promises.push(this.db.person.insert({ id, name, image }))
       })
-      return await Promise.all(promises)
+      try {
+        await Promise.all(promises)
+      } catch (error) {
+        // do nothing
+      }
+      return result
     }
-    return (await await getFromLocalDb()) || (await getFromServer())
+    return (await getFromLocalDb()) || (await getFromServer())
   }
 
   async getPersonTracks(personId) {

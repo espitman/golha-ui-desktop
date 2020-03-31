@@ -11,7 +11,8 @@ const programSchema = {
       type: 'number'
     },
     name: {
-      type: 'string'
+      type: 'string',
+      primary: true
     },
     title: {
       type: 'string'
@@ -25,7 +26,8 @@ const personSchema = {
   type: 'object',
   properties: {
     id: {
-      type: 'string'
+      type: 'string',
+      primary: true
     },
     name: {
       type: 'string'
@@ -46,7 +48,8 @@ const dastgahSchema = {
       index: true
     },
     title: {
-      type: 'string'
+      type: 'string',
+      primary: true
     }
   },
   required: ['count', 'title']

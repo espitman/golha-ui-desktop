@@ -8,7 +8,7 @@ export default class ProgramTitlesRow extends React.Component {
     const width = programs.length * 330
     return (
       <div className="program-titles-row" style={style}>
-        <h3>برنامه‌ها</h3>
+        <h3>برنامه‌ها ({programs.length})</h3>
         <ul style={{ width }}>
           {programs.map((program) => {
             const { name, title, count } = program

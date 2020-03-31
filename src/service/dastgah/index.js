@@ -22,11 +22,18 @@ export class DastgahService {
         }
       } = await axios.get('http://localhost:3100/api/v1/dastgah')
       const promises = []
+      const result = []
       dastgah.map(async (program) => {
         const { count, title } = program
+        result.push({ count, title })
         promises.push(this.db.dastgah.insert({ count, title }))
       })
-      return await Promise.all(promises)
+      try {
+        await Promise.all(promises)
+      } catch (error) {
+        // do nothing
+      }
+      return result
     }
     return (await getFromLocalDb()) || (await getFromServer())
   }
