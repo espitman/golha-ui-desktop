@@ -1,6 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
+import $ from 'jquery'
 
 import './style.scss'
 import Loading from '../../component/loading'
@@ -22,6 +23,7 @@ class PersonScreen extends React.Component {
   componentDidMount() {
     const { id: personId } = this.props.match.params
     this.getPersonData(personId)
+    window.addEventListener('scroll', this.handleScroll, true)
   }
 
   getPersonData = async (personId) => {
@@ -35,6 +37,19 @@ class PersonScreen extends React.Component {
   changePerson = async (person) => {
     const { id } = person
     this.getPersonData(id)
+  }
+
+  handleScroll = (e) => {
+    const target = e.target.className
+    if (target === 'box-main-right') {
+      const size = 200 - e.target.scrollTop
+      if (size > 40) {
+        $('.box-name').height(size)
+        $('#avatar').width(size).height(size)
+        $('.box-name h1').css({ fontSize: Math.max((size * 32) / 200, 12) })
+        $('.box-name h2').css({ fontSize: Math.max((size * 24) / 200, 11) })
+      }
+    }
   }
 
   render() {
@@ -59,7 +74,7 @@ class PersonScreen extends React.Component {
             <div className={'box-main-right'}>
               <div className={'box-name'}>
                 <div className={'box-name-image'}>
-                  <div className={'box-name-image-frame'}>
+                  <div id="avatar" className={'box-name-image-frame'}>
                     {!loading && image ? (
                       <LazyLoadImage
                         alt={name}
