@@ -12,9 +12,12 @@ export class ProgramService {
   async getAll() {
     this.db = await this.connectToDb()
     const getFromLocalDb = async () => {
-      const allPrograms = await this.db.program.find().exec()
-      return allPrograms.length
-        ? allPrograms.map((program) => program.toJSON())
+      if (!this.database.isEnable()) {
+        return null
+      }
+      const programs = await this.db.program.find().exec()
+      return programs.length
+        ? programs.map((program) => program.toJSON())
         : null
     }
     const getFromServer = async () => {

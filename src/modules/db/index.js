@@ -56,7 +56,9 @@ const dastgahSchema = {
 }
 
 export class Database {
-  enable = true
+  isEnable() {
+    return true
+  }
 
   async connect() {
     const db = await RxDB.create({

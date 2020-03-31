@@ -13,6 +13,9 @@ export class PersonService {
     this.db = await this.connectToDb()
 
     const getFromLocalDb = async () => {
+      if (!this.database.isEnable()) {
+        return null
+      }
       const persons = await this.db.person.find().sort('id').exec()
       return persons.length ? persons.map((person) => person.toJSON()) : null
     }

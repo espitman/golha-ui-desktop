@@ -12,6 +12,9 @@ export class DastgahService {
   async getAll() {
     this.db = await this.connectToDb()
     const getFromLocalDb = async () => {
+      if (!this.database.isEnable()) {
+        return null
+      }
       const dastgah = await this.db.dastgah.find().sort('-count').exec()
       return dastgah.length ? dastgah.map((dsg) => dsg.toJSON()) : null
     }
