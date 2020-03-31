@@ -55,6 +55,30 @@ const dastgahSchema = {
   required: ['count', 'title']
 }
 
+const personTracksSchema = {
+  version: 0,
+  type: 'object',
+  properties: {
+    id: {
+      type: 'string',
+      primary: true
+    },
+    name: {
+      type: 'string'
+    },
+    image: {
+      type: 'string'
+    },
+    count: {
+      type: 'object'
+    },
+    tracks: {
+      type: 'array'
+    }
+  },
+  required: ['id', 'name']
+}
+
 export class Database {
   isEnable() {
     return true
@@ -84,6 +108,12 @@ export class Database {
     await db.collection({
       name: 'dastgah',
       schema: dastgahSchema,
+      autoMigrate: true
+    })
+
+    await db.collection({
+      name: 'ptracks',
+      schema: personTracksSchema,
       autoMigrate: true
     })
 

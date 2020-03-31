@@ -18,9 +18,16 @@ class PersonScreen extends React.Component {
 
   async componentDidMount() {
     const programs = storage.get('programs')
-    const { id } = this.props.match.params
-    const { info, count, tracks } = await this.personService.getPersonTracks(id)
-    this.setState({ info, count, tracks, programs, loading: false })
+    const { id: personId } = this.props.match.params
+    const {
+      id,
+      name,
+      image,
+      count,
+      tracks
+    } = await this.personService.getPersonTracks(personId)
+    console.log(await this.personService.getPersonTracks(personId))
+    this.setState({ id, name, image, count, tracks, programs, loading: false })
   }
 
   getProgramTitle = (name) => {
@@ -30,7 +37,7 @@ class PersonScreen extends React.Component {
 
   render() {
     const { name, role } = this.props.match.params
-    const { info, loading } = this.state
+    const { image, loading } = this.state
     return (
       <div id="screen-person">
         <div className={'box-name'}>
@@ -40,7 +47,7 @@ class PersonScreen extends React.Component {
                 <LazyLoadImage
                   alt={name}
                   effect="blur"
-                  src={`http://37.152.181.202:9000${info.image}`}
+                  src={`http://37.152.181.202:9000${image}`}
                 />
               ) : (
                 <i className="fal fa-microphone-stand no-img"></i>
