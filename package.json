@@ -30,6 +30,8 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "electron-is-dev": "^1.1.0",
+    "moment": "^2.24.0",
+    "moment-duration-format": "^2.3.2",
     "node-sass": "^4.13.1",
     "pouchdb-adapter-idb": "^7.2.1",
     "react": "^16.13.1",

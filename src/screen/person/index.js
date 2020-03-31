@@ -5,6 +5,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import './style.scss'
 import Loading from '../../component/loading'
 import PersonColumn from '../../component/person-column'
+import TrackRow from '../../component/track-row'
 
 class PersonScreen extends React.Component {
   constructor(props) {
@@ -59,7 +60,7 @@ class PersonScreen extends React.Component {
               <div className={'box-name'}>
                 <div className={'box-name-image'}>
                   <div className={'box-name-image-frame'}>
-                    {!loading ? (
+                    {!loading && image ? (
                       <LazyLoadImage
                         alt={name}
                         effect="blur"
@@ -76,11 +77,9 @@ class PersonScreen extends React.Component {
                 </div>
               </div>
               <div className={'box-tracks'}>
-                <ul>
-                  {tracks.map((track, i) => {
-                    return <li key={`track_${i}`}>{track.title}</li>
-                  })}
-                </ul>
+                {tracks.map((track, i) => {
+                  return <TrackRow key={`track_${i}`} track={track} />
+                })}
               </div>
             </div>
           </div>
