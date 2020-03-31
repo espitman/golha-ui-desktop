@@ -22,18 +22,16 @@ export class PersonService {
           payload: { persons }
         }
       } = await axios.get(`http://localhost:3100/api/v1/person/role/${role}`)
-      const promises = []
       const result = []
       persons.forEach((person) => {
-        const { _id: id, name, image } = person
-        result.push({ id, name, image })
-        promises.push(this.db.person.insert({ id, name, image }))
+        try {
+          const { _id: id, name, image } = person
+          result.push({ id, name, image })
+          this.db.person.insert(result)
+        } catch (error) {
+          // do nothing
+        }
       })
-      try {
-        await Promise.all(promises)
-      } catch (error) {
-        // do nothing
-      }
       return result
     }
     return (await getFromLocalDb()) || (await getFromServer())
