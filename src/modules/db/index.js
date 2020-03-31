@@ -1,0 +1,122 @@
+import RxDB from 'rxdb'
+import adapter from 'pouchdb-adapter-idb'
+RxDB.plugin(adapter)
+// RxDB.removeDatabase('golha', 'idb')
+
+const programSchema = {
+  version: 0,
+  type: 'object',
+  properties: {
+    count: {
+      type: 'number'
+    },
+    name: {
+      type: 'string',
+      primary: true
+    },
+    title: {
+      type: 'string'
+    }
+  },
+  required: ['count', 'name', 'title']
+}
+
+const personSchema = {
+  version: 0,
+  type: 'object',
+  properties: {
+    id: {
+      type: 'string',
+      primary: true
+    },
+    name: {
+      type: 'string'
+    },
+    image: {
+      type: 'string'
+    }
+  },
+  required: ['id', 'name']
+}
+
+const dastgahSchema = {
+  version: 0,
+  type: 'object',
+  properties: {
+    count: {
+      type: 'number',
+      index: true
+    },
+    title: {
+      type: 'string',
+      primary: true
+    }
+  },
+  required: ['count', 'title']
+}
+
+const personTracksSchema = {
+  version: 0,
+  type: 'object',
+  properties: {
+    id: {
+      type: 'string',
+      primary: true
+    },
+    name: {
+      type: 'string'
+    },
+    image: {
+      type: 'string'
+    },
+    count: {
+      type: 'object'
+    },
+    tracks: {
+      type: 'array'
+    }
+  },
+  required: ['id', 'name']
+}
+
+export class Database {
+  isEnable() {
+    return true
+  }
+
+  async connect() {
+    const db = await RxDB.create({
+      name: 'golha',
+      adapter: 'idb',
+      multiInstance: true,
+      queryChangeDetection: false,
+      ignoreDuplicate: true
+    })
+
+    await db.collection({
+      name: 'program',
+      schema: programSchema,
+      autoMigrate: true
+    })
+
+    await db.collection({
+      name: 'person',
+      schema: personSchema,
+      autoMigrate: true
+    })
+
+    await db.collection({
+      name: 'dastgah',
+      schema: dastgahSchema,
+      autoMigrate: true
+    })
+
+    await db.collection({
+      name: 'ptracks',
+      schema: personTracksSchema,
+      autoMigrate: true
+    })
+
+    return db
+  }
+}

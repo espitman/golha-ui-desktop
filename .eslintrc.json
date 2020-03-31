@@ -8,6 +8,7 @@
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
   },
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -24,6 +25,7 @@
     "no-multiple-empty-lines": ["warn", { "max": 1, "maxEOF": 0 }],
     "comma-dangle": ["warn", "never"],
     "comma-spacing": ["warn", { "before": false, "after": true }],
-    "no-console": "warn"
+    "no-console": "warn",
+    "react/prop-types": "off"
   }
 }

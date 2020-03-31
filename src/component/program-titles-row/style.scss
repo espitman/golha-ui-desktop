@@ -1,0 +1,66 @@
+.program-titles-row {
+  width: 100%;
+  overflow-x: auto;
+
+  h3 {
+    font-family: IranSansWeb;
+    font-weight: normal;
+    position: fixed;
+    width: 100%;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-top: 64px;
+
+    li {
+      float: right;
+      display: flex;
+      flex-direction: column;
+      margin-left: 10px;
+
+      .program-box {
+        width: 320px;
+        height: 120px;
+        background: rgba($color: #000000, $alpha: 0.1);
+        border-radius: 7.5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background-image: url('./assets/bg.jpg');
+        background-size: cover;
+        background-position: center right;
+        position: relative;
+        .program-box-overlay {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background-color: rgba($color: #000000, $alpha: 0.2);
+          border-radius: 7.5px;
+        }
+        h4 {
+          margin: 0;
+          padding: 0;
+          font-family: IranSansWeb;
+          font-weight: lighter;
+          font-size: 1.5rem;
+          position: relative;
+          z-index: 2;
+          color: #ffffff;
+        }
+        .program-info {
+          font-family: IranSansWeb;
+          font-weight: lighter;
+          font-size: 0.75rem;
+          margin-top: 15px;
+          position: relative;
+          z-index: 2;
+          color: #ffffff;
+        }
+      }
+    }
+  }
+}

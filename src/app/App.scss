@@ -1,0 +1,23 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-size: 16px;
+}
+
+#main {
+  position: absolute;
+  width: calc(82.5% - 15px);
+  height: calc(100% - 30px - 32px);
+  background: #fafafa;
+  padding: 0 15px 15px 0;
+}
+
+* {
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+}
