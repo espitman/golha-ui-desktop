@@ -1,9 +1,12 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
+import storage from '../modules/storage'
+
 import { Database } from '../modules/db'
 import { ProgramService } from '../service/program'
 import { PersonService } from '../service/person'
+import { DastgahService } from '../service/dastgah'
 
 import './App.scss'
 import '../common/css/fonts.scss'
@@ -19,7 +22,6 @@ import ArchiveScreens from '../screen/archive'
 import AboutScreen from '../screen/about'
 import SettingsScreen from '../screen/settings'
 import PersonScreen from '../screen/person'
-import { DastgahService } from '../service/dastgah'
 
 const database = new Database()
 const services = {
@@ -27,6 +29,8 @@ const services = {
   personService: new PersonService(database),
   dastgahService: new DastgahService(database)
 }
+
+storage.clear()
 
 function App() {
   return (

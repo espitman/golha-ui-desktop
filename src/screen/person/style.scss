@@ -1,49 +1,69 @@
 #screen-person {
   direction: rtl;
-
-  .box-name {
-    margin-top: 30px;
+  height: 100%;
+  .box-main {
+    width: 100%;
+    height: 100%;
     display: flex;
-    flex-direction: row;
-    .box-name-image {
-      margin-left: 15px;
-      border-radius: 7.5px;
-      .box-name-image-frame {
-        width: 200px;
-        height: 200px;
-        border-radius: 7.5px;
-        background: rgba($color: #000000, $alpha: 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          filter: grayscale(100%);
-          border-radius: 7.5px;
-        }
-        i.no-img {
-          color: #ffffff;
-          font-size: 6rem;
-        }
-      }
+    flex-direction: row-reverse;
+    .box-main-left {
+      width: 30%;
+      height: 100%;
+      overflow-y: auto;
+      border-right: solid 2px #eaeaea;
     }
-    .box-name-text {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      h1 {
-        font-family: IRANSansWeb;
-        font-weight: lighter;
-        margin: 0;
-        padding: 0;
-      }
-      h2 {
-        font-family: IRANSansWeb;
-        font-weight: lighter;
-        margin: 0;
-        padding: 0;
+    .box-main-right {
+      width: 70%;
+      height: 100%;
+      overflow-y: auto;
+      .box-name {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        margin-top: 30px;
+        display: flex;
+        flex-direction: row;
+        .box-name-image {
+          margin-left: 15px;
+          border-radius: 7.5px;
+          .box-name-image-frame {
+            width: 200px;
+            height: 200px;
+            border-radius: 7.5px;
+            background: rgba($color: #000000, $alpha: 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              filter: grayscale(100%);
+              border-radius: 7.5px;
+            }
+            i.no-img {
+              color: #ffffff;
+              font-size: 6rem;
+            }
+          }
+        }
+        .box-name-text {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          h1 {
+            font-family: IRANSansWeb;
+            font-weight: lighter;
+            margin: 0;
+            padding: 0;
+          }
+          h2 {
+            font-family: IRANSansWeb;
+            font-weight: lighter;
+            margin: 0;
+            padding: 0;
+          }
+        }
       }
     }
   }
