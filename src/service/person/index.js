@@ -1,21 +1,78 @@
 import axios from 'axios'
 
 export class PersonService {
+  constructor(database) {
+    this.database = database
+  }
+
+  async connectToDb() {
+    return this.db || (await this.database.connect())
+  }
+
   async getAllByRole(role) {
-    const {
-      data: {
-        payload: { persons }
+    this.db = await this.connectToDb()
+    const getFromLocalDb = async () => {
+      if (!this.database.isEnable()) {
+        return null
       }
-    } = await axios.get(`http://localhost:3100/api/v1/person/role/${role}`)
-    return persons
+      const persons = await this.db.person.find().sort('id').exec()
+      return persons.length ? persons.map((person) => person.toJSON()) : null
+    }
+    const getFromServer = async () => {
+      const {
+        data: {
+          payload: { persons }
+        }
+      } = await axios.get(`http://localhost:3100/api/v1/person/role/${role}`)
+      const promises = []
+      const result = []
+      persons.forEach((person) => {
+        const { _id: id, name, image } = person
+        result.push({ id, name, image })
+        promises.push(this.db.person.insert({ id, name, image }))
+      })
+      try {
+        await Promise.all(promises)
+      } catch (error) {
+        // do nothing
+      }
+      return result
+    }
+    return (await getFromLocalDb()) || (await getFromServer())
   }
 
   async getPersonTracks(personId) {
-    const {
-      data: {
-        payload: { info, count, tracks }
+    this.db = await this.connectToDb()
+    const getFromLocalDb = async () => {
+      if (!this.database.isEnable()) {
+        return null
       }
-    } = await axios.get(`http://localhost:3100/api/v1/person/${personId}`)
-    return { info, count, tracks }
+      const personsTracks = await this.db.ptracks
+        .find()
+        .where('id')
+        .eq(personId)
+        .exec()
+      return personsTracks.length ? personsTracks[0].toJSON() : null
+    }
+    const getFromServer = async () => {
+      const {
+        data: {
+          payload: {
+            info: { _id: id, name, image },
+            count,
+            tracks
+          }
+        }
+      } = await axios.get(`http://localhost:3100/api/v1/person/${personId}`)
+      const promises = []
+      promises.push(this.db.ptracks.insert({ id, name, image, count, tracks }))
+      try {
+        await Promise.all(promises)
+      } catch (error) {
+        // do nothing
+      }
+      return { id, name, image, count, tracks }
+    }
+    return (await getFromLocalDb()) || (await getFromServer())
   }
 }

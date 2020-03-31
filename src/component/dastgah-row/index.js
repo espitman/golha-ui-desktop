@@ -4,11 +4,11 @@ import './style.scss'
 
 export default class DastgahRow extends React.Component {
   render() {
-    const { style, dastgahs } = this.props
+    const { id, style, dastgahs } = this.props
     const width = dastgahs.length * 330
     return (
-      <div className="dastgah-row" style={style}>
-        <h3>دستگاه / آواز</h3>
+      <div id={id} className="dastgah-row" style={style}>
+        <h3>دستگاه / آواز ({dastgahs.length})</h3>
         <ul style={{ width }}>
           {dastgahs.map((dastgah) => {
             const { title, count } = dastgah

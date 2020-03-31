@@ -2,27 +2,28 @@ import React from 'react'
 import './style.scss'
 
 import storage from '../../modules/storage'
-import { PersonService } from '../../service/person'
-import { ProgramService } from '../../service/program'
 
 import Loading from '../../component/loading'
 import PersonRow from '../../component/person-row'
 import ProgramTitlesRow from '../../component/program-titles-row'
-import { DastgahService } from '../../service/dastgah'
 import DastgahRow from '../../component/dastgah-row'
+
+const rows = ['programs', 'singers', 'dastgahs']
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
+
+    this.programService = props.services.programService
+    this.personService = props.services.personService
+    this.dastgahService = props.services.dastgahService
+
     this.state = {
       loading: true,
       singers: [],
       programs: [],
       dastgahs: []
     }
-    this.personService = new PersonService()
-    this.programService = new ProgramService()
-    this.dastgahService = new DastgahService()
   }
 
   async componentDidMount() {
@@ -37,7 +38,30 @@ export default class HomeScreen extends React.Component {
       dastgahs,
       loading: false
     })
-    storage.set('programs', programs)
+
+    this.setScrollPositions()
+  }
+
+  componentWillUnmount() {
+    this.saveScrollsPositions()
+  }
+
+  saveScrollsPositions() {
+    rows.map((row) => {
+      storage.set(
+        `scroll-position-home-${row}`,
+        document.querySelector(`#row-${row}`).scrollLeft
+      )
+    })
+  }
+
+  setScrollPositions() {
+    rows.map((row) => {
+      const position = storage.get(`scroll-position-home-${row}`)
+      if (position != null) {
+        document.querySelector(`#row-${row}`).scrollTo(position, 0)
+      }
+    })
   }
 
   render() {
@@ -48,9 +72,9 @@ export default class HomeScreen extends React.Component {
           <Loading />
         ) : (
           <>
-            <ProgramTitlesRow programs={programs} />
-            <PersonRow persons={singers} />
-            <DastgahRow dastgahs={dastgahs} />
+            <ProgramTitlesRow id="row-programs" programs={programs} />
+            <PersonRow id="row-singers" persons={singers} />
+            <DastgahRow id="row-dastgahs" dastgahs={dastgahs} />
           </>
         )}
       </div>

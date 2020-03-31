@@ -4,11 +4,11 @@ import './style.scss'
 
 export default class ProgramTitlesRow extends React.Component {
   render() {
-    const { style, programs } = this.props
+    const { id, style, programs } = this.props
     const width = programs.length * 330
     return (
-      <div className="program-titles-row" style={style}>
-        <h3>برنامه‌ها</h3>
+      <div id={id} className="program-titles-row" style={style}>
+        <h3>برنامه‌ها ({programs.length})</h3>
         <ul style={{ width }}>
           {programs.map((program) => {
             const { name, title, count } = program
