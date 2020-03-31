@@ -4,6 +4,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 import './style.scss'
 import Loading from '../../component/loading'
+import PersonColumn from '../../component/person-column'
 
 class PersonScreen extends React.Component {
   constructor(props) {
@@ -17,21 +18,29 @@ class PersonScreen extends React.Component {
     }
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     const { id: personId } = this.props.match.params
+    this.getPersonData(personId)
+  }
+
+  getPersonData = async (personId) => {
     const [person, singers] = await Promise.all([
       this.personService.getPersonTracks(personId),
       this.personService.getAllByRole('singer')
     ])
-
     this.setState({ person, singers, loading: false })
   }
 
+  changePerson = async (person) => {
+    const { id } = person
+    this.getPersonData(id)
+  }
+
   render() {
-    const { name, role } = this.props.match.params
+    const { role } = this.props.match.params
     const {
       singers,
-      person: { id, image, tracks },
+      person: { name, image, tracks },
       loading
     } = this.state
     return (
@@ -41,15 +50,10 @@ class PersonScreen extends React.Component {
         ) : (
           <div className={'box-main'}>
             <div className={'box-main-left'}>
-              <ul>
-                {singers.map((singer) => {
-                  return (
-                    singer.id !== id && (
-                      <li key={`singer_${singer.id}`}>{singer.name}</li>
-                    )
-                  )
-                })}
-              </ul>
+              <PersonColumn
+                persons={singers}
+                changePerson={this.changePerson}
+              />
             </div>
             <div className={'box-main-right'}>
               <div className={'box-name'}>
@@ -73,8 +77,8 @@ class PersonScreen extends React.Component {
               </div>
               <div className={'box-tracks'}>
                 <ul>
-                  {tracks.map((track) => {
-                    return <li key={`track_${track.id}`}>{track.title}</li>
+                  {tracks.map((track, i) => {
+                    return <li key={`track_${i}`}>{track.title}</li>
                   })}
                 </ul>
               </div>

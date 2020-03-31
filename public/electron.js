@@ -1,5 +1,6 @@
 const electron = require('electron')
 const app = electron.app
+const globalShortcut = electron.globalShortcut
 const BrowserWindow = electron.BrowserWindow
 const screen = electron.screen
 
@@ -42,6 +43,7 @@ function createWindow() {
 }
 
 app.on('ready', () => {
+  // globalShortcut.register('CmdOrCtrl+R', () => {})
   createSplashWindow()
   setTimeout(() => {
     splashWindow.close()
