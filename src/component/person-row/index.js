@@ -13,10 +13,10 @@ class PersonRow extends React.Component {
   }
 
   render() {
-    const { style, persons } = this.props
+    const { id, style, persons } = this.props
     const width = persons.length * 170
     return (
-      <div className="person-row" style={style}>
+      <div id={id} className="person-row" style={style}>
         <h3>خواننده‌ها ({persons.length})</h3>
         <ul style={{ width }}>
           {persons.map((person) => {

@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 import './style.scss'
-import storage from '../../modules/storage'
 
 class PersonScreen extends React.Component {
   constructor(props) {
@@ -17,7 +16,6 @@ class PersonScreen extends React.Component {
   }
 
   async componentDidMount() {
-    const programs = storage.get('programs')
     const { id: personId } = this.props.match.params
     const {
       id,
@@ -26,13 +24,7 @@ class PersonScreen extends React.Component {
       count,
       tracks
     } = await this.personService.getPersonTracks(personId)
-    console.log(await this.personService.getPersonTracks(personId))
-    this.setState({ id, name, image, count, tracks, programs, loading: false })
-  }
-
-  getProgramTitle = (name) => {
-    const { programs } = this.state
-    return programs.find((x) => x.name === name).title
+    this.setState({ id, name, image, count, tracks, loading: false })
   }
 
   render() {

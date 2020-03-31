@@ -8,6 +8,8 @@ import PersonRow from '../../component/person-row'
 import ProgramTitlesRow from '../../component/program-titles-row'
 import DastgahRow from '../../component/dastgah-row'
 
+const rows = ['programs', 'singers', 'dastgahs']
+
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
@@ -36,7 +38,30 @@ export default class HomeScreen extends React.Component {
       dastgahs,
       loading: false
     })
-    storage.set('programs', programs)
+
+    this.setScrollPositions()
+  }
+
+  componentWillUnmount() {
+    this.saveScrollsPositions()
+  }
+
+  saveScrollsPositions() {
+    rows.map((row) => {
+      storage.set(
+        `scroll-position-home-${row}`,
+        document.querySelector(`#row-${row}`).scrollLeft
+      )
+    })
+  }
+
+  setScrollPositions() {
+    rows.map((row) => {
+      const position = storage.get(`scroll-position-home-${row}`)
+      if (position != null) {
+        document.querySelector(`#row-${row}`).scrollTo(position, 0)
+      }
+    })
   }
 
   render() {
@@ -47,9 +72,9 @@ export default class HomeScreen extends React.Component {
           <Loading />
         ) : (
           <>
-            <ProgramTitlesRow programs={programs} />
-            <PersonRow persons={singers} />
-            <DastgahRow dastgahs={dastgahs} />
+            <ProgramTitlesRow id="row-programs" programs={programs} />
+            <PersonRow id="row-singers" persons={singers} />
+            <DastgahRow id="row-dastgahs" dastgahs={dastgahs} />
           </>
         )}
       </div>
