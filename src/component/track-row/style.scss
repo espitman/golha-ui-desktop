@@ -7,12 +7,22 @@
   overflow: hidden;
   display: flex;
   flex-direction: row;
-  .track-row-title {
-    flex: 3;
+  align-items: center;
+  .track-row-index {
+    flex: 0.5;
     font-family: IRANSansWeb;
     font-weight: lighter;
     font-size: 0.85rem;
     opacity: 0.7;
+    text-align: right;
+  }
+  .track-row-title {
+    flex: 2.5;
+    font-family: IRANSansWeb;
+    font-weight: lighter;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    text-align: right;
   }
   .track-row-dastgah {
     flex: 1;
@@ -20,6 +30,7 @@
     font-weight: lighter;
     font-size: 0.85rem;
     opacity: 0.7;
+    text-align: right;
   }
   .track-row-duration {
     flex: 1;
@@ -27,5 +38,107 @@
     font-weight: lighter;
     font-size: 0.85rem;
     opacity: 0.7;
+    text-align: center;
   }
+  .track-row-play {
+    flex: 1;
+    text-align: center;
+    i {
+      font-size: 1rem;
+      opacity: 0.7;
+    }
+  }
+  .track-row-menu {
+    flex: 1;
+    text-align: center;
+    i {
+      font-size: 1.5rem;
+      opacity: 0.7;
+    }
+  }
+}
+
+.react-contextmenu {
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  color: #373a3c;
+  font-size: 16px;
+  margin: 2px 0 0;
+  min-width: 160px;
+  outline: none;
+  opacity: 0;
+  padding: 5px 0;
+  pointer-events: none;
+  text-align: left;
+  transition: opacity 250ms ease !important;
+}
+
+.react-contextmenu.react-contextmenu--visible {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 9999;
+}
+
+.react-contextmenu-item {
+  background: 0 0;
+  border: 0;
+  color: #373a3c;
+  cursor: pointer;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 3px 20px;
+  text-align: inherit;
+  white-space: nowrap;
+  text-align: right;
+  font-family: IRANSansWeb;
+  font-weight: 300;
+  font-size: 0.85rem;
+}
+
+.react-contextmenu-item.react-contextmenu-item--active,
+.react-contextmenu-item.react-contextmenu-item--selected {
+  color: #fff;
+  background-color: #20a0ff;
+  border-color: #20a0ff;
+  text-decoration: none;
+}
+
+.react-contextmenu-item.react-contextmenu-item--disabled,
+.react-contextmenu-item.react-contextmenu-item--disabled:hover {
+  background-color: transparent;
+  border-color: rgba(0, 0, 0, 0.15);
+  color: #878a8c;
+}
+
+.react-contextmenu-item--divider {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  cursor: inherit;
+  margin-bottom: 3px;
+  padding: 2px 0;
+}
+.react-contextmenu-item--divider:hover {
+  background-color: transparent;
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+.react-contextmenu-item.react-contextmenu-submenu {
+  padding: 0;
+}
+
+.react-contextmenu-item.react-contextmenu-submenu > .react-contextmenu-item {
+}
+
+.react-contextmenu-item.react-contextmenu-submenu
+  > .react-contextmenu-item:after {
+  content: '▶';
+  display: inline-block;
+  position: absolute;
+  right: 7px;
+}
+
+.example-multiple-targets::after {
+  content: attr(data-count);
+  display: block;
 }
