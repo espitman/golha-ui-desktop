@@ -11,6 +11,7 @@ import { DastgahService } from '../service/dastgah'
 import './App.scss'
 import '../common/css/fonts.scss'
 import '../common/css/fontAwesome.all.min.scss'
+import '../common/css/context-menu.scss'
 
 import Side from '../component/side'
 import TitleBar from '../component/title-bar'
