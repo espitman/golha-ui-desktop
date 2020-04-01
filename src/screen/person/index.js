@@ -37,6 +37,9 @@ class PersonScreen extends React.Component {
   changePerson = async (person) => {
     const { id } = person
     this.getPersonData(id)
+    setTimeout(() => {
+      document.querySelector('.box-main-right').scrollTo(0, 0)
+    }, 100)
   }
 
   handleScroll = (e) => {
