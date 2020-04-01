@@ -1,6 +1,8 @@
 export class PlayerService {
   constructor() {
     this.visible = false
+    this.isPlaying = false
+    this.track = {}
   }
   show() {
     this.visible = true
@@ -9,7 +11,15 @@ export class PlayerService {
     this.visible = false
   }
   play(track) {
-    console.log(track)
+    this.isPlaying = true
+    this.track = track
     this.show()
+  }
+  pause() {
+    this.isPlaying = false
+  }
+  togglePlay() {
+    this.isPlaying = !this.isPlaying
+    return this.isPlaying
   }
 }

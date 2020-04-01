@@ -1,13 +1,148 @@
 #player {
   position: fixed;
-  width: 100%;
+  width: calc(100% - 30px);
+  padding: 0 15px;
   height: 60px;
   left: 0;
   bottom: 0;
-  background: gold;
+  background: #0f0f0f;
   z-index: 5;
   display: none;
   &.show {
-    display: block;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .player-box-name {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    .player-box-name-image {
+      width: 48px;
+      height: 48px;
+      background: rgba($color: #000000, $alpha: 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 7.5px;
+      .player-box-name-image-frame {
+        width: 100%;
+        height: 100%;
+        background: rgba($color: #ffffff, $alpha: 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 7.5px;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          filter: grayscale(100%);
+          border-radius: 7.5px;
+        }
+        i.no-img {
+          color: #ffffff;
+          font-size: 1rem;
+        }
+      }
+    }
+    .player-box-name-text {
+      margin-left: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .player-box-name-text-title {
+        color: #fff;
+        font-family: IRANSansWeb;
+        font-weight: lighter;
+        font-size: 0.85rem;
+        text-align: left;
+        span {
+          &::before {
+            content: ' - ';
+          }
+        }
+      }
+      .player-box-name-text-singer {
+        color: #fff;
+        font-family: IRANSansWeb;
+        font-weight: lighter;
+        font-size: 0.75rem;
+        direction: rtl;
+        text-align: left;
+        span {
+          &::after {
+            content: '، ';
+          }
+          &:last-child {
+            &::after {
+              content: '';
+            }
+          }
+        }
+      }
+    }
+  }
+  .player-box-controller {
+    flex: 3;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .player-box-controller-btns {
+      display: flex;
+      flex: 2;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      i {
+        color: #ffffff;
+        margin: 0 15px;
+        font-size: 1.25rem;
+        &.play {
+          padding: 10px;
+          font-size: 1.5rem;
+          border-radius: 50%;
+        }
+      }
+    }
+    .player-box-controller-time {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      position: relative;
+      width: 100%;
+      top: -7px;
+      .player-box-controller-time-current,
+      .player-box-controller-time-duration {
+        color: #ffffff;
+        font-family: IRANSansWeb;
+        font-weight: lighter;
+        flex: 1;
+        font-size: 0.65rem;
+        text-align: center;
+        text-align: right;
+        &.player-box-controller-time-duration {
+          text-align: left;
+        }
+      }
+      .player-box-controller-time-bar {
+        flex: 5;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        .bar {
+          width: calc(100% - 20px);
+          margin: 0 10px;
+          height: 5px;
+          background-color: rgba($color: #ffffff, $alpha: 0.1);
+        }
+      }
+    }
+  }
+  .player-box-volume {
+    flex: 1;
   }
 }

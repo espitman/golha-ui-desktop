@@ -40,9 +40,9 @@ storage.clear()
 class App extends React.Component {
   constructor(props) {
     super(props)
-    console.log('saeed')
     this.state = {
       showPlayer: false,
+      isPlaying: false,
       track: {}
     }
   }
@@ -51,18 +51,36 @@ class App extends React.Component {
     play: (track) => {
       services.playerService.play(track)
       this.setState({
-        track,
-        showPlayer: services.playerService.visible
+        track: services.playerService.track,
+        showPlayer: services.playerService.visible,
+        isPlaying: services.playerService.isPlaying
       })
+    },
+    pause: () => {
+      services.playerService.pause()
+      this.setState({
+        isPlaying: services.playerService.isPlaying
+      })
+    },
+    togglePlay: () => {
+      services.playerService.togglePlay()
+      const isPlaying = services.playerService.isPlaying
+      this.setState({
+        isPlaying
+      })
+      return isPlaying
     },
     hide: () => {
       services.playerService.hide()
-      this.setState({ showPlayer: services.playerService.visible })
+      this.setState({
+        showPlayer: services.playerService.visible,
+        isPlaying: services.playerService.isPlaying
+      })
     }
   }
 
   render() {
-    const { showPlayer, track } = this.state
+    const { showPlayer, isPlaying, track } = this.state
     return (
       <Router>
         <TitleBar />
@@ -92,7 +110,12 @@ class App extends React.Component {
             </Route>
           </Switch>
         </div>
-        <Player show={showPlayer} track={track} />
+        <Player
+          show={showPlayer}
+          track={track}
+          isPlaying={isPlaying}
+          player={this.player}
+        />
       </Router>
     )
   }
