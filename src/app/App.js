@@ -8,6 +8,7 @@ import { Database } from '../modules/db'
 import { ProgramService } from '../service/program'
 import { PersonService } from '../service/person'
 import { DastgahService } from '../service/dastgah'
+import { PlayerService } from '../service/player'
 
 import './App.scss'
 import '../common/css/fonts.scss'
@@ -25,7 +26,6 @@ import AboutScreen from '../screen/about'
 import SettingsScreen from '../screen/settings'
 import PersonScreen from '../screen/person'
 import Player from '../component/player'
-import { PlayerService } from '../service/player'
 
 const database = new Database()
 const services = {
@@ -43,7 +43,7 @@ class App extends React.Component {
     this.state = {
       showPlayer: false,
       isPlaying: false,
-      track: {}
+      currentTrack: {}
     }
   }
 
@@ -51,7 +51,7 @@ class App extends React.Component {
     play: (track) => {
       services.playerService.play(track)
       this.setState({
-        track: services.playerService.track,
+        currentTrack: services.playerService.track,
         showPlayer: services.playerService.visible,
         isPlaying: services.playerService.isPlaying
       })
@@ -80,7 +80,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { showPlayer, isPlaying, track } = this.state
+    const { showPlayer, isPlaying, currentTrack } = this.state
     return (
       <Router>
         <TitleBar />
@@ -106,13 +106,18 @@ class App extends React.Component {
               <SettingsScreen services={services} />
             </Route>
             <Route path="/person/:id/:name/:role">
-              <PersonScreen services={services} player={this.player} />
+              <PersonScreen
+                services={services}
+                player={this.player}
+                currentTrack={currentTrack}
+                isPlaying={isPlaying}
+              />
             </Route>
           </Switch>
         </div>
         <Player
           show={showPlayer}
-          track={track}
+          track={currentTrack}
           isPlaying={isPlaying}
           player={this.player}
         />

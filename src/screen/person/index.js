@@ -102,6 +102,8 @@ class PersonScreen extends React.Component {
                       index={i}
                       track={track}
                       player={this.props.player}
+                      currentTrack={this.props.currentTrack}
+                      isPlaying={this.props.isPlaying}
                     />
                   )
                 })}

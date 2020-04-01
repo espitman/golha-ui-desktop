@@ -11,10 +11,6 @@ import './style.scss'
 
 momentDurationFormatSetup(moment)
 
-// const createSliderWithTooltip = Slider.createSliderWithTooltip
-// const Range = createSliderWithTooltip(Slider.Range)
-// const Handle = Slider.Handle
-
 class Player extends React.Component {
   constructor(props) {
     super(props)
@@ -35,8 +31,14 @@ class Player extends React.Component {
     const { track } = newProps
     const src = `http://37.152.181.202:9000/golha/music/${track.file}`
     if (!this.props.track || track._id !== this.props.track._id) {
-      this.media.attr('src', src)
-      this.audio.play()
+      this.audio.pause()
+      this.audio.currentTime = 0
+      setTimeout(() => {
+        this.media.attr('src', src)
+        this.audio.play()
+      })
+    } else if (newProps.isPlaying !== this.props.isPlaying) {
+      !newProps.isPlaying ? this.audio.pause() : this.audio.play()
     }
   }
 
