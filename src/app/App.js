@@ -40,6 +40,7 @@ storage.clear()
 class App extends React.Component {
   constructor(props) {
     super(props)
+    console.log('saeed')
     this.state = {
       showPlayer: false,
       track: {}
