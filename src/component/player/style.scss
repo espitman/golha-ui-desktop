@@ -2,12 +2,13 @@
   position: fixed;
   width: calc(100% - 30px);
   padding: 0 15px;
-  height: 60px;
+  height: 70px;
   left: 0;
   bottom: 0;
   background: #0f0f0f;
   z-index: 5;
   display: none;
+  border-radius: 10px 10px 0 0;
   &.show {
     display: flex;
     flex-direction: row;
@@ -136,8 +137,6 @@
         .bar {
           width: calc(100% - 20px);
           margin: 0 10px;
-          height: 5px;
-          background-color: rgba($color: #ffffff, $alpha: 0.1);
         }
       }
     }
@@ -145,4 +144,18 @@
   .player-box-volume {
     flex: 1;
   }
+}
+
+.rc-slider-handle {
+  width: 4px;
+  height: 10px;
+  margin-top: -3px;
+  border-radius: 0;
+  border: none;
+}
+.rc-slider-rail {
+  background-color: rgba($color: #ffffff, $alpha: 0.17);
+}
+.rc-slider-track {
+  background-color: rgba($color: #fff, $alpha: 0.3);
 }

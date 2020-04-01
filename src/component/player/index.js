@@ -4,10 +4,16 @@ import $ from 'jquery'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import moment from 'moment'
 import momentDurationFormatSetup from 'moment-duration-format'
+import Slider from 'rc-slider'
 
+import 'rc-slider/assets/index.css'
 import './style.scss'
 
 momentDurationFormatSetup(moment)
+
+// const createSliderWithTooltip = Slider.createSliderWithTooltip
+// const Range = createSliderWithTooltip(Slider.Range)
+// const Handle = Slider.Handle
 
 class Player extends React.Component {
   constructor(props) {
@@ -45,6 +51,10 @@ class Player extends React.Component {
     }, 1000)
   }
 
+  onSliderChange = (value) => {
+    this.audio.currentTime = value
+  }
+
   render() {
     const {
       show,
@@ -74,7 +84,8 @@ class Player extends React.Component {
               </div>
               <div className={'player-box-name-text'}>
                 <div className={'player-box-name-text-title'}>
-                  {title} {dastgah && <span>{dastgah}</span>}
+                  {title}{' '}
+                  {dastgah && <span className={'dastgah'}>{dastgah}</span>}
                 </div>
                 <div className={'player-box-name-text-singer'}>
                   {singer.map((s) => (
@@ -99,7 +110,15 @@ class Player extends React.Component {
                     .format('mm:ss', { trim: false })}
                 </div>
                 <div className={'player-box-controller-time-bar'}>
-                  <div className={'bar'}></div>
+                  <div className={'bar'}>
+                    <Slider
+                      min={0}
+                      max={duration}
+                      defaultValue={0}
+                      value={currentTime}
+                      onChange={this.onSliderChange}
+                    />
+                  </div>
                 </div>
                 <div className={'player-box-controller-time-duration'}>
                   {moment.duration(duration, 'second').format('mm:ss')}
