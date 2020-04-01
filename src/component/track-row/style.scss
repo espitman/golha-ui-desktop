@@ -1,0 +1,59 @@
+.track-row {
+  width: calc(100% - 30px);
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #ffffff;
+  border-radius: 7.5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  .track-row-index {
+    flex: 0.5;
+    font-family: IRANSansWeb;
+    font-weight: lighter;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    text-align: right;
+  }
+  .track-row-title {
+    flex: 2.5;
+    font-family: IRANSansWeb;
+    font-weight: lighter;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    text-align: right;
+  }
+  .track-row-dastgah {
+    flex: 1;
+    font-family: IRANSansWeb;
+    font-weight: lighter;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    text-align: right;
+  }
+  .track-row-duration {
+    flex: 1;
+    font-family: IRANSansWeb;
+    font-weight: lighter;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    text-align: center;
+  }
+  .track-row-play {
+    flex: 1;
+    text-align: center;
+    i {
+      font-size: 1rem;
+      opacity: 0.7;
+    }
+  }
+  .track-row-menu {
+    flex: 1;
+    text-align: center;
+    i {
+      font-size: 1.5rem;
+      opacity: 0.7;
+    }
+  }
+}
