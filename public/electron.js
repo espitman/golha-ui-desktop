@@ -44,7 +44,7 @@ function createWindow() {
 
 app.on('ready', () => {
   // globalShortcut.register('CmdOrCtrl+R', () => {})
-  globalShortcut.register('Tab', () => {})
+  // globalShortcut.register('Tab', () => {})
   createSplashWindow()
   setTimeout(() => {
     splashWindow.close()

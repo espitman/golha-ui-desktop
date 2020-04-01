@@ -13,6 +13,11 @@ class TrackRow extends React.Component {
   constructor(props) {
     super(props)
   }
+
+  play = () => {
+    this.props.player.play(this.props.track)
+  }
+
   render() {
     const {
       index,
@@ -28,7 +33,7 @@ class TrackRow extends React.Component {
             {moment.duration(duration, 'second').format('mm:ss')}
           </div>
           <div className="track-row-play">
-            <i className="fal fa-play"></i>
+            <i className="fal fa-play" onClick={this.play}></i>
           </div>
           <div className="track-row-menu">
             <ContextMenuTrigger

@@ -12,6 +12,9 @@ body {
   height: calc(100% - 30px);
   background: #fafafa;
   padding: 0 0 15px 0;
+  &.withPlayer {
+    height: calc(100% - 30px - 60px);
+  }
 }
 
 * {
