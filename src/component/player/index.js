@@ -69,13 +69,14 @@ class Player extends React.Component {
   }
 
   mute = () => {
+    this.setState({ lastVolume: this.audio.volume })
     this.audio.volume = 0
     this.setState({ volume: 0 })
   }
 
   unmute = () => {
-    this.audio.volume = 1
-    this.setState({ volume: 100 })
+    this.audio.volume = this.state.lastVolume
+    this.setState({ volume: this.state.lastVolume * 100 })
   }
 
   render() {
