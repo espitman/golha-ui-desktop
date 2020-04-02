@@ -9,7 +9,7 @@ export default class DastgahRow extends React.Component {
     return (
       <div id={id} className="dastgah-row">
         <h3>دستگاه / آواز ({dastgahs.length})</h3>
-        <div id={id} className="dastgah-row-inner" style={style}>
+        <div id={`${id}-inner`} className="dastgah-row-inner" style={style}>
           <ul style={{ width }}>
             {dastgahs.map((dastgah) => {
               const { title, count } = dastgah

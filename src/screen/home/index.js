@@ -8,7 +8,7 @@ import PersonRow from '../../component/person-row'
 import ProgramTitlesRow from '../../component/program-titles-row'
 import DastgahRow from '../../component/dastgah-row'
 
-const rows = ['programs', 'singers', 'dastgahs']
+const rows = ['programs-inner', 'singers-inner', 'dastgahs-inner']
 
 export default class HomeScreen extends React.Component {
   constructor(props) {

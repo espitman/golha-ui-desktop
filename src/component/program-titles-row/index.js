@@ -9,7 +9,11 @@ export default class ProgramTitlesRow extends React.Component {
     return (
       <div id={id} className="program-titles-row">
         <h3>برنامه‌ها ({programs.length})</h3>
-        <div className="program-titles-row-inner" style={style}>
+        <div
+          id={`${id}-inner`}
+          className="program-titles-row-inner"
+          style={style}
+        >
           <ul style={{ width }}>
             {programs.map((program) => {
               const { name, title, count } = program

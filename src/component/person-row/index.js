@@ -18,7 +18,7 @@ class PersonRow extends React.Component {
     return (
       <div id={id} className="person-row">
         <h3>خواننده‌ها ({persons.length})</h3>
-        <div className="person-row-inner" style={style}>
+        <div id={`${id}-inner`} className="person-row-inner" style={style}>
           <ul style={{ width }}>
             {persons.map((person) => {
               const { id, name, image } = person
