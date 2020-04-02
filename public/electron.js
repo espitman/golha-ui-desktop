@@ -1,6 +1,6 @@
 const electron = require('electron')
 const app = electron.app
-const globalShortcut = electron.globalShortcut
+// const globalShortcut = electron.globalShortcut
 const BrowserWindow = electron.BrowserWindow
 const screen = electron.screen
 

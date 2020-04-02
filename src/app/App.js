@@ -11,8 +11,6 @@ import { DastgahService } from '../service/dastgah'
 import { PlayerService } from '../service/player'
 
 import './App.scss'
-import '../common/css/fonts.scss'
-import '../common/css/fontAwesome.all.min.scss'
 import '../common/css/context-menu.scss'
 
 import Side from '../component/side'
@@ -45,6 +43,13 @@ class App extends React.Component {
       isPlaying: false,
       currentTrack: {}
     }
+  }
+
+  componentDidMount() {
+    // Don`t remove it, its for fix production first navigation
+    setTimeout(() => {
+      document.querySelector('a#homeLink').click()
+    }, 100)
   }
 
   player = {

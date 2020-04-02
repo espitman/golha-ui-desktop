@@ -12,7 +12,7 @@ export default class Side extends React.Component {
             <h5>کتابخانه</h5>
             <ul>
               <li>
-                <Link to="/">
+                <Link to="/" id="homeLink">
                   <i className="fal fa-home"></i>
                   <span>صفحه اصلی</span>
                 </Link>
