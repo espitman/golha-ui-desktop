@@ -45,11 +45,12 @@ function createWindow() {
 app.on('ready', () => {
   // globalShortcut.register('CmdOrCtrl+R', () => {})
   // globalShortcut.register('Tab', () => {})
-  createSplashWindow()
-  setTimeout(() => {
-    splashWindow.close()
-    createWindow()
-  }, 3000)
+  createWindow()
+  // createSplashWindow()
+  // setTimeout(() => {
+  //   splashWindow.close()
+  //   createWindow()
+  // }, 3000)
 })
 
 app.on('window-all-closed', () => {
