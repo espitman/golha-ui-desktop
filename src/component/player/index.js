@@ -16,7 +16,8 @@ class Player extends React.Component {
     super(props)
     this.player = props.player
     this.state = {
-      currentTime: 0
+      currentTime: 0,
+      volume: 0
     }
   }
 
@@ -24,6 +25,7 @@ class Player extends React.Component {
     this.media = $('#media')
     this.audio = $('#media')[0]
     this.setCurrentTime()
+    this.setCurrentVolume()
   }
 
   // eslint-disable-next-line react/no-deprecated
@@ -57,13 +59,32 @@ class Player extends React.Component {
     this.audio.currentTime = value
   }
 
+  setCurrentVolume = () => {
+    this.setState({ volume: this.audio.volume * 100 })
+  }
+
+  onVolumeChange = (value) => {
+    this.audio.volume = value / 100
+    this.setCurrentVolume()
+  }
+
+  mute = () => {
+    this.audio.volume = 0
+    this.setState({ volume: 0 })
+  }
+
+  unmute = () => {
+    this.audio.volume = 1
+    this.setState({ volume: 100 })
+  }
+
   render() {
     const {
       show,
       isPlaying,
       track: { title, dastgah = '', singer = [{}], duration }
     } = this.props
-    const { currentTime } = this.state
+    const { currentTime, volume } = this.state
     return (
       <div id="player" className={show ? 'show' : ''}>
         <audio id="media">
@@ -127,7 +148,26 @@ class Player extends React.Component {
                 </div>
               </div>
             </div>
-            <div className={'player-box-volume'}></div>
+            <div className={'player-box-options'}>
+              <div className={'player-box-options-btns'}>
+                <i className="fal fa-list-music"></i>
+                <i className="fal fa-random"></i>
+              </div>
+              <div className={'player-box-options-volume'}>
+                {volume === 0 ? (
+                  <i className="fal fa-volume-off" onClick={this.unmute}></i>
+                ) : (
+                  <i className="fal fa-volume" onClick={this.mute}></i>
+                )}
+                <Slider
+                  min={0}
+                  max={100}
+                  defaultValue={volume}
+                  value={volume}
+                  onChange={this.onVolumeChange}
+                />
+              </div>
+            </div>
           </>
         )}
       </div>

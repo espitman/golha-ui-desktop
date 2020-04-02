@@ -141,8 +141,33 @@
       }
     }
   }
-  .player-box-volume {
+  .player-box-options {
     flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    .player-box-options-btns {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100%;
+      i {
+        color: #ffffff;
+        margin: 0 10px;
+      }
+    }
+    .player-box-options-volume {
+      display: flex;
+      flex: 2;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      i {
+        color: #ffffff;
+        margin: 0 10px;
+      }
+    }
   }
 }
 
