@@ -71,11 +71,11 @@ export default class HomeScreen extends React.Component {
         {loading ? (
           <Loading />
         ) : (
-          <>
+          <div className="home-main-box">
             <ProgramTitlesRow id="row-programs" programs={programs} />
             <PersonRow id="row-singers" persons={singers} />
             <DastgahRow id="row-dastgahs" dastgahs={dastgahs} />
-          </>
+          </div>
         )}
       </div>
     )

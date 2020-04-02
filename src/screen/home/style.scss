@@ -1,8 +1,17 @@
 #screen-home {
   direction: rtl;
   padding-right: 15px;
-  h1 {
-    font-family: IRANSansWeb;
-    font-weight: lighter;
+  height: 100%;
+  overflow-y: auto;
+  .home-main-box {
+    width: 100%;
+    padding-bottom: 30px;
+    h1 {
+      font-family: IRANSansWeb;
+      font-weight: lighter;
+    }
+    #row-singers {
+      margin-top: 30px;
+    }
   }
 }
