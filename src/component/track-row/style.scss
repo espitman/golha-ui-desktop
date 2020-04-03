@@ -24,11 +24,55 @@
     opacity: 0.7;
     text-align: right;
   }
+  .track-row-img {
+    padding-left: 10px;
+    img {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      filter: grayscale(100%);
+      border-radius: 7.5px;
+    }
+    i {
+      width: 48px;
+      height: 48px;
+      background: gold;
+      color: #ffffff;
+      font-size: 1rem;
+      background: rgba($color: #000000, $alpha: 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 7.5px;
+    }
+  }
+  .track-row-singers {
+    flex: 2.5;
+    font-family: IRANSansWeb;
+    font-weight: lighter;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-left: 15px;
+    span {
+      font-size: 0.75rem;
+      &::after {
+        content: '، ';
+      }
+      &:last-child {
+        &::after {
+          content: '';
+        }
+      }
+    }
+  }
   .track-row-dastgah {
     flex: 1;
     font-family: IRANSansWeb;
     font-weight: lighter;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     opacity: 0.7;
     text-align: right;
   }
@@ -60,6 +104,11 @@
     background-color: rgba($color: #000000, $alpha: 0.7);
     * {
       color: #ffffff;
+    }
+  }
+  &.large {
+    .track-row-title {
+      flex: 1.75;
     }
   }
 }

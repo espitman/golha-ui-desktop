@@ -48,7 +48,7 @@ class App extends React.Component {
   componentDidMount() {
     // Don`t remove it, its for fix production first navigation
     setTimeout(() => {
-      document.querySelector('a#homeLink').click()
+      // document.querySelector('a#homeLink').click()
     }, 100)
   }
 
@@ -96,7 +96,12 @@ class App extends React.Component {
               <HomeScreen services={services} />
             </Route>
             <Route path="/programs">
-              <ProgramsScreen services={services} />
+              <ProgramsScreen
+                services={services}
+                player={this.player}
+                currentTrack={currentTrack}
+                isPlaying={isPlaying}
+              />
             </Route>
             <Route path="/artists">
               <ArtistsScreen services={services} />
