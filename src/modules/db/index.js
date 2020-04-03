@@ -80,6 +80,21 @@ const personTracksSchema = {
   required: ['id', 'name']
 }
 
+const programTracksSchema = {
+  version: 0,
+  type: 'object',
+  properties: {
+    name: {
+      type: 'string',
+      primary: true
+    },
+    tracks: {
+      type: 'array'
+    }
+  },
+  required: ['name']
+}
+
 export class Database {
   isEnable() {
     return config.get('db.local.enable')
@@ -115,6 +130,12 @@ export class Database {
     await db.collection({
       name: 'ptracks',
       schema: personTracksSchema,
+      autoMigrate: true
+    })
+
+    await db.collection({
+      name: 'prgtracks',
+      schema: programTracksSchema,
       autoMigrate: true
     })
 

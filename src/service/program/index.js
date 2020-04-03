@@ -47,19 +47,20 @@ export class ProgramService {
   async getTracks(name) {
     this.db = await this.connectToDb()
     const getFromLocalDb = async () => {
-      //   if (!this.database.isEnable()) {
-      return null
-      //   }
-      //   const allPrograms = await this.db.program.find().exec()
-      //   return allPrograms.length
-      //     ? allPrograms.map((program) => program.toJSON())
-      //     : null
+      if (!this.database.isEnable()) {
+        return null
+      }
+      const tracks = await this.db.prgtracks
+        .find()
+        .where('name')
+        .eq(name)
+        .exec()
+      return tracks.length ? tracks[0].tracks : null
     }
     const getFromServer = async () => {
       const {
         data: { payload: programs }
       } = await axios.get(`${config.get('api.v1.url')}/program/${name}`)
-      // const promises = []
       const result = []
       programs.map(async (prg) => {
         const {
@@ -84,10 +85,9 @@ export class ProgramService {
           duration,
           singer
         })
-        // promises.push(this.db.program.insert({ count, name, title }))
       })
       try {
-        // return await Promise.all(promises)
+        this.db.prgtracks.insert({ name, tracks: result })
       } catch (error) {
         // do nothing
       }
