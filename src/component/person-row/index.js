@@ -1,6 +1,7 @@
 import React from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { withRouter } from 'react-router-dom'
+import config from '../../modules/config'
 
 import 'react-lazy-load-image-component/src/effects/blur.css'
 
@@ -32,7 +33,7 @@ class PersonRow extends React.Component {
                       <LazyLoadImage
                         alt={name}
                         effect="blur"
-                        src={`http://37.152.181.202:9000${image}`}
+                        src={`${config.get('path.image.url')}${image}`}
                       />
                     ) : (
                       <i className="fal fa-microphone-stand no-img"></i>

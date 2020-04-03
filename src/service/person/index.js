@@ -1,4 +1,5 @@
 import axios from 'axios'
+import config from '../../modules/config'
 
 export class PersonService {
   constructor(database) {
@@ -23,7 +24,7 @@ export class PersonService {
         data: {
           payload: { persons }
         }
-      } = await axios.get(`http://localhost:3100/api/v1/person/role/${role}`)
+      } = await axios.get(`${config.get('api.v1.url')}/person/role/${role}`)
       const promises = []
       const result = []
       persons.forEach((person) => {
@@ -63,7 +64,7 @@ export class PersonService {
             tracks
           }
         }
-      } = await axios.get(`http://localhost:3100/api/v1/person/${personId}`)
+      } = await axios.get(`${config.get('api.v1.url')}/person/${personId}`)
       const promises = []
       promises.push(this.db.ptracks.insert({ id, name, image, count, tracks }))
       try {

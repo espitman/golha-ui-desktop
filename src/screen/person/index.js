@@ -2,6 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import $ from 'jquery'
+import config from '../../modules/config'
 
 import './style.scss'
 import Loading from '../../component/loading'
@@ -82,7 +83,7 @@ class PersonScreen extends React.Component {
                       <LazyLoadImage
                         alt={name}
                         effect="blur"
-                        src={`http://37.152.181.202:9000${image}`}
+                        src={`${config.get('path.image.url')}${image}`}
                       />
                     ) : (
                       <i className="fal fa-microphone-stand no-img"></i>
