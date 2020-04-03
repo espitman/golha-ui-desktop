@@ -45,14 +45,11 @@ class PersonScreen extends React.Component {
 
   handleScroll = (e) => {
     const target = e.target.className
-    if (target === 'box-main-right') {
-      const size = 200 - e.target.scrollTop
-      if (size > 40) {
-        $('.box-name').height(size)
-        $('#avatar').width(size).height(size)
-        $('.box-name h1').css({ fontSize: Math.max((size * 32) / 200, 12) })
-        $('.box-name h2').css({ fontSize: Math.max((size * 24) / 200, 11) })
-      }
+    const scrollTop = e.target.scrollTop
+    if (target === 'box-main-right' && scrollTop > 40) {
+      $('.box-name').addClass('small')
+    } else {
+      $('.box-name').removeClass('small')
     }
   }
 
