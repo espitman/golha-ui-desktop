@@ -96,7 +96,16 @@ class PersonScreen extends React.Component {
               </div>
               <div className={'box-tracks'}>
                 {tracks.map((track, i) => {
-                  return <TrackRow key={`track_${i}`} index={i} track={track} />
+                  return (
+                    <TrackRow
+                      key={`track_${i}`}
+                      index={i}
+                      track={track}
+                      player={this.props.player}
+                      currentTrack={this.props.currentTrack}
+                      isPlaying={this.props.isPlaying}
+                    />
+                  )
                 })}
               </div>
             </div>

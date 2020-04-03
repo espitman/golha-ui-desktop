@@ -8,7 +8,7 @@ import PersonRow from '../../component/person-row'
 import ProgramTitlesRow from '../../component/program-titles-row'
 import DastgahRow from '../../component/dastgah-row'
 
-const rows = ['programs', 'singers', 'dastgahs']
+const rows = ['programs-inner', 'singers-inner', 'dastgahs-inner']
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -71,11 +71,11 @@ export default class HomeScreen extends React.Component {
         {loading ? (
           <Loading />
         ) : (
-          <>
+          <div className="home-main-box">
             <ProgramTitlesRow id="row-programs" programs={programs} />
             <PersonRow id="row-singers" persons={singers} />
             <DastgahRow id="row-dastgahs" dastgahs={dastgahs} />
-          </>
+          </div>
         )}
       </div>
     )

@@ -10,7 +10,7 @@
   },
   "build": {
     "appId": "ir.boum.golha-electron",
-    "productName": "Radio Golha Desktop App",
+    "productName": "Radio Golha",
     "copyright": "Copyright © 2020 boum.ir",
     "mac": {
       "category": "public.app-category.utilities"
@@ -35,6 +35,7 @@
     "moment-duration-format": "^2.3.2",
     "node-sass": "^4.13.1",
     "pouchdb-adapter-idb": "^7.2.1",
+    "rc-slider": "^9.2.4",
     "react": "^16.13.1",
     "react-contextmenu": "^2.13.0",
     "react-dom": "^16.13.1",
@@ -56,7 +57,7 @@
     "start:dev": "eslint . && concurrently 'BROWSER=none yarn start' 'wait-on http://localhost:3000 && electron .'",
     "postinstall": "electron-builder install-app-deps",
     "preelectron-pack": "yarn build",
-    "electron-pack": "./node_modules/.bin/electron-builder build -mw",
+    "electron-pack": "./node_modules/.bin/electron-builder build -m",
     "lint": "eslint ."
   },
   "husky": {

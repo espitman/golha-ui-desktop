@@ -13,14 +13,25 @@ class TrackRow extends React.Component {
   constructor(props) {
     super(props)
   }
+
+  play = () => {
+    this.props.player.play(this.props.track)
+  }
+
+  pause = () => {
+    this.props.player.pause()
+  }
+
   render() {
     const {
       index,
-      track: { _id: id, title, dastgah = '', duration }
+      track: { _id: id, title, dastgah = '', duration },
+      currentTrack,
+      isPlaying
     } = this.props
     return (
       <>
-        <div className="track-row">
+        <div className={`track-row ${currentTrack._id === id && 'active'}`}>
           <div className="track-row-index">{index + 1}</div>
           <div className="track-row-title">{title}</div>
           <div className="track-row-dastgah">{dastgah}</div>
@@ -28,7 +39,11 @@ class TrackRow extends React.Component {
             {moment.duration(duration, 'second').format('mm:ss')}
           </div>
           <div className="track-row-play">
-            <i className="fal fa-play"></i>
+            {currentTrack._id === id && isPlaying ? (
+              <i className="fal fa-pause" onClick={this.pause}></i>
+            ) : (
+              <i className="fal fa-play" onClick={this.play}></i>
+            )}
           </div>
           <div className="track-row-menu">
             <ContextMenuTrigger

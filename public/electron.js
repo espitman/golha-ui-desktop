@@ -1,6 +1,6 @@
 const electron = require('electron')
 const app = electron.app
-const globalShortcut = electron.globalShortcut
+// const globalShortcut = electron.globalShortcut
 const BrowserWindow = electron.BrowserWindow
 const screen = electron.screen
 
@@ -44,12 +44,13 @@ function createWindow() {
 
 app.on('ready', () => {
   // globalShortcut.register('CmdOrCtrl+R', () => {})
-  globalShortcut.register('Tab', () => {})
-  createSplashWindow()
-  setTimeout(() => {
-    splashWindow.close()
-    createWindow()
-  }, 3000)
+  // globalShortcut.register('Tab', () => {})
+  createWindow()
+  // createSplashWindow()
+  // setTimeout(() => {
+  //   splashWindow.close()
+  //   createWindow()
+  // }, 3000)
 })
 
 app.on('window-all-closed', () => {
