@@ -95,7 +95,7 @@ class App extends React.Component {
             <Route exact path="/">
               <HomeScreen services={services} />
             </Route>
-            <Route path="/programs">
+            <Route path="/programs/:name?">
               <ProgramsScreen
                 services={services}
                 player={this.player}

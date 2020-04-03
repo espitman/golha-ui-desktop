@@ -1,11 +1,13 @@
 import React from 'react'
+import { withRouter } from 'react-router'
+import { findIndex } from 'lodash'
 
 import Loading from '../../component/loading'
 import TrackRow from '../../component/track-row'
 
 import './style.scss'
 
-export default class ProgramsScreen extends React.Component {
+class ProgramsScreen extends React.Component {
   constructor(props) {
     super(props)
     this.programService = props.services.programService
@@ -30,10 +32,14 @@ export default class ProgramsScreen extends React.Component {
     pTraks.forEach((pTrack) => {
       tracks[pTrack.name] = pTrack.tracks
     })
+    const { name: programName } = this.props.match.params
+    const active = programName ? findIndex(programs, { name: programName }) : 0
+
     this.setState({
       programs,
       tracks,
-      loading: false
+      loading: false,
+      active
     })
   }
 
@@ -128,3 +134,4 @@ export default class ProgramsScreen extends React.Component {
     )
   }
 }
+export default withRouter(ProgramsScreen)
