@@ -1,4 +1,5 @@
 import axios from 'axios'
+import config from '../../modules/config'
 
 export class ProgramService {
   constructor(database) {
@@ -25,7 +26,7 @@ export class ProgramService {
         data: {
           payload: { programs }
         }
-      } = await axios.get('http://localhost:3100/api/v1/program')
+      } = await axios.get(`${config.get('api.v1.url')}/program`)
       const promises = []
       const result = []
       programs.map(async (program) => {

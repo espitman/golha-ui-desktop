@@ -1,4 +1,5 @@
 import axios from 'axios'
+import config from '../../modules/config'
 
 export class DastgahService {
   constructor(database) {
@@ -23,7 +24,7 @@ export class DastgahService {
         data: {
           payload: { programs: dastgah }
         }
-      } = await axios.get('http://localhost:3100/api/v1/dastgah')
+      } = await axios.get(`${config.get('api.v1.url')}/dastgah`)
       const promises = []
       const result = []
       dastgah.map(async (program) => {

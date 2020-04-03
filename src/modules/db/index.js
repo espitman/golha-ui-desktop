@@ -1,5 +1,6 @@
 import RxDB from 'rxdb'
 import adapter from 'pouchdb-adapter-idb'
+import config from '../../modules/config'
 RxDB.plugin(adapter)
 // RxDB.removeDatabase('golha', 'idb')
 
@@ -81,7 +82,7 @@ const personTracksSchema = {
 
 export class Database {
   isEnable() {
-    return true
+    return config.get('db.local.enable')
   }
 
   async connect() {

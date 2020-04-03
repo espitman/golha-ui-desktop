@@ -5,6 +5,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import moment from 'moment'
 import momentDurationFormatSetup from 'moment-duration-format'
 import Slider from 'rc-slider'
+import config from '../../modules/config'
 
 import 'rc-slider/assets/index.css'
 import './style.scss'
@@ -31,7 +32,7 @@ class Player extends React.Component {
   // eslint-disable-next-line react/no-deprecated
   componentWillReceiveProps(newProps) {
     const { track } = newProps
-    const src = `http://37.152.181.202:9000/golha/music/${track.file}`
+    const src = `${config.get('path.music.url')}/${track.file}`
     if (!this.props.track || track._id !== this.props.track._id) {
       this.audio.pause()
       this.audio.currentTime = 0
@@ -99,7 +100,7 @@ class Player extends React.Component {
                   {singer[0].image ? (
                     <LazyLoadImage
                       effect="blur"
-                      src={`http://37.152.181.202:9000${singer[0].image}`}
+                      src={`${config.get('path.image.url')}${singer[0].image}`}
                     />
                   ) : (
                     <i className="fal fa-microphone-stand no-img"></i>
