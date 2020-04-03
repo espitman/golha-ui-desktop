@@ -152,7 +152,7 @@ class Player extends React.Component {
             <div className={'player-box-options'}>
               <div className={'player-box-options-btns'}>
                 <i className="fal fa-list-music"></i>
-                <i className="fal fa-random"></i>
+                <i className="fal fa-user-music"></i>
               </div>
               <div className={'player-box-options-volume'}>
                 {volume === 0 ? (
