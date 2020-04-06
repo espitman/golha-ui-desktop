@@ -22,13 +22,13 @@ export class DastgahService {
     const getFromServer = async () => {
       const {
         data: {
-          payload: { programs: dastgah }
+          payload: { dastgah }
         }
       } = await axios.get(`${config.get('api.v1.url')}/dastgah`)
       const promises = []
       const result = []
-      dastgah.map(async (program) => {
-        const { count, title } = program
+      dastgah.map(async (dsg) => {
+        const { count, title } = dsg
         result.push({ count, title })
         promises.push(this.db.dastgah.insert({ count, title }))
       })
@@ -40,5 +40,62 @@ export class DastgahService {
       return result
     }
     return (await getFromLocalDb()) || (await getFromServer())
+  }
+
+  async geTracksByTitle(title) {
+    this.db = await this.connectToDb()
+    const getFromLocalDb = async () => {
+      if (!this.database.isEnable()) {
+        return null
+      }
+      const tracks = await this.db.dsgtracks
+        .find()
+        .where('title')
+        .eq(title)
+        .exec()
+      return tracks.length ? tracks[0].tracks : null
+    }
+    const getFromServer = async () => {
+      const {
+        data: {
+          payload: { tracks }
+        }
+      } = await axios.get(`${config.get('api.v1.url')}/dastgah/${title}`)
+      const result = []
+      tracks.map(async (track) => {
+        const {
+          _id,
+          title,
+          subtitle,
+          dastgah,
+          file,
+          program,
+          no,
+          duration,
+          singer
+        } = track
+        result.push({
+          _id,
+          title,
+          subtitle,
+          dastgah,
+          file,
+          program,
+          no,
+          duration,
+          singer
+        })
+      })
+      try {
+        this.db.dsgtracks.insert({ title, tracks: result })
+      } catch (error) {
+        // do nothing
+      }
+      return result
+    }
+    return {
+      title,
+      tracks: (await getFromLocalDb()) || (await getFromServer())
+    }
   }
 }

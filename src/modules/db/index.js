@@ -95,6 +95,21 @@ const programTracksSchema = {
   required: ['name']
 }
 
+const dastgahTracksSchema = {
+  version: 0,
+  type: 'object',
+  properties: {
+    title: {
+      type: 'string',
+      primary: true
+    },
+    tracks: {
+      type: 'array'
+    }
+  },
+  required: ['title']
+}
+
 export class Database {
   isEnable() {
     return config.get('db.local.enable')
@@ -136,6 +151,12 @@ export class Database {
     await db.collection({
       name: 'prgtracks',
       schema: programTracksSchema,
+      autoMigrate: true
+    })
+
+    await db.collection({
+      name: 'dsgtracks',
+      schema: dastgahTracksSchema,
       autoMigrate: true
     })
 

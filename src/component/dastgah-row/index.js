@@ -1,8 +1,14 @@
 import React from 'react'
+import { withRouter } from 'react-router'
 
 import './style.scss'
 
-export default class DastgahRow extends React.Component {
+class DastgahRow extends React.Component {
+  handleClick = (dastgah) => {
+    const { title } = dastgah
+    this.props.history.push(`/dastgah/${title}`)
+  }
+
   render() {
     const { id, style, dastgahs } = this.props
     const width = dastgahs.length * 330
@@ -14,7 +20,10 @@ export default class DastgahRow extends React.Component {
             {dastgahs.map((dastgah) => {
               const { title, count } = dastgah
               return (
-                <li key={`dastgah_${title}`}>
+                <li
+                  key={`dastgah_${title}`}
+                  onClick={() => this.handleClick(dastgah)}
+                >
                   <div className="dastgah-box">
                     <div className="dastgah-box-overlay"></div>
                     <h4>{title}</h4>
@@ -29,3 +38,5 @@ export default class DastgahRow extends React.Component {
     )
   }
 }
+
+export default withRouter(DastgahRow)
