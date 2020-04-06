@@ -1,8 +1,14 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 
 import './style.scss'
 
-export default class ProgramTitlesRow extends React.Component {
+class ProgramTitlesRow extends React.Component {
+  handleClick = (program) => {
+    const { name } = program
+    this.props.history.push(`/programs/${name}`)
+  }
+
   render() {
     const { id, style, programs } = this.props
     const width = programs.length * 330
@@ -18,7 +24,10 @@ export default class ProgramTitlesRow extends React.Component {
             {programs.map((program) => {
               const { name, title, count } = program
               return (
-                <li key={`program_${name}`}>
+                <li
+                  key={`program_${name}`}
+                  onClick={() => this.handleClick(program)}
+                >
                   <div className="program-box">
                     <div className="program-box-overlay"></div>
                     <h4>{title}</h4>
@@ -33,3 +42,4 @@ export default class ProgramTitlesRow extends React.Component {
     )
   }
 }
+export default withRouter(ProgramTitlesRow)

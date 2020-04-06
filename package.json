@@ -1,5 +1,5 @@
 {
-  "name": "Golha",
+  "name": "golha",
   "description": "Electron + Create React App + Electron Builder",
   "version": "1.0.0",
   "private": true,
@@ -13,6 +13,7 @@
     "productName": "Radio Golha",
     "copyright": "Copyright © 2020 boum.ir",
     "mac": {
+      "icon": "./public/icons/mac/icon.png",
       "category": "public.app-category.utilities"
     },
     "files": [

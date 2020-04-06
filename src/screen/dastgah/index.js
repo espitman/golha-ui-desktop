@@ -7,36 +7,37 @@ import TrackRow from '../../component/track-row'
 
 import './style.scss'
 
-class ProgramsScreen extends React.Component {
+class DastgahScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.programService = props.services.programService
-
+    this.dastgahService = props.services.dastgahService
     this.state = {
       loading: true,
-      programs: [],
       active: 0,
+      dastgahs: [],
       page: 1,
       limit: 20
     }
   }
 
   async componentDidMount() {
-    const [programs] = await Promise.all([this.programService.getAll()])
+    const { title: dastgahTitle } = this.props.match.params
+    const dastgahs = await this.dastgahService.getAll()
     const promises = []
     const tracks = {}
-    programs.map((program) => {
-      promises.push(this.programService.getTracks(program.name))
+    dastgahs.map((dastgah) => {
+      promises.push(this.dastgahService.geTracksByTitle(dastgah.title))
     })
-    const pTraks = await Promise.all(promises)
-    pTraks.forEach((pTrack) => {
-      tracks[pTrack.name] = pTrack.tracks
+    const dTraks = await Promise.all(promises)
+    dTraks.forEach((dTrack) => {
+      tracks[dTrack.title] = dTrack.tracks
     })
-    const { name: programName } = this.props.match.params
-    const active = programName ? findIndex(programs, { name: programName }) : 0
+    const active = dastgahTitle
+      ? findIndex(dastgahs, { title: dastgahTitle })
+      : 0
 
     this.setState({
-      programs,
+      dastgahs,
       tracks,
       loading: false,
       active
@@ -57,42 +58,42 @@ class ProgramsScreen extends React.Component {
   }
 
   resetScroll = () => {
-    document.querySelector('.program-tabs-body').scrollTo(0, 0)
+    document.querySelector('.dastgah-tabs-body').scrollTo(0, 0)
   }
 
   render() {
-    const { programs, loading, active, tracks, page, limit } = this.state
+    const { loading, dastgahs, active, tracks, page, limit } = this.state
     return (
-      <div id="screen-programs">
+      <div id="screen-dastgah">
         {loading ? (
           <Loading />
         ) : (
           <>
-            <div className="programs-tabs">
+            <div className="dastgah-tabs">
               <ul>
-                {programs.map((program, i) => {
+                {dastgahs.map((dastgah, i) => {
                   return (
                     <li
-                      key={`program_${i}`}
+                      key={`dastgah_${i}`}
                       className={active === i ? 'active' : ''}
-                      onClick={() => this.setActiveTab(i, program)}
+                      onClick={() => this.setActiveTab(i, dastgah)}
                     >
-                      {program.title}
+                      {dastgah.title}
                     </li>
                   )
                 })}
               </ul>
             </div>
-            <div className="program-tabs-body">
-              {programs.map((program, i) => {
+            <div className="dastgah-tabs-body">
+              {dastgahs.map((dastgah, i) => {
                 return (
                   <div
-                    key={`program_tab_${i}`}
-                    className={`program-tabs-body-inner ${
+                    key={`dastgah_tab_${i}`}
+                    className={`dastgah-tabs-body-inner ${
                       active === i && 'active'
                     }`}
                   >
-                    {tracks[program.name]
+                    {tracks[dastgah.title]
                       .slice((page - 1) * limit, page * limit)
                       .map((track, i) => {
                         return (
@@ -110,7 +111,7 @@ class ProgramsScreen extends React.Component {
                     <ul className="pagination">
                       {[
                         ...Array(
-                          Math.ceil(tracks[program.name].length / limit)
+                          Math.ceil(tracks[dastgah.title].length / limit)
                         ).keys()
                       ].map((i) => {
                         return (
@@ -134,4 +135,5 @@ class ProgramsScreen extends React.Component {
     )
   }
 }
-export default withRouter(ProgramsScreen)
+
+export default withRouter(DastgahScreen)

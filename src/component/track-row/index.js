@@ -3,6 +3,9 @@ import { withRouter } from 'react-router-dom'
 import moment from 'moment'
 import momentDurationFormatSetup from 'moment-duration-format'
 import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+
+import config from '../../modules/config/index'
 
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import './style.scss'
@@ -25,15 +28,37 @@ class TrackRow extends React.Component {
   render() {
     const {
       index,
-      track: { _id: id, title, dastgah = '', duration },
+      track: { _id: id, title, dastgah = '', duration, singer },
       currentTrack,
-      isPlaying
+      isPlaying,
+      type = 'small'
     } = this.props
     return (
       <>
-        <div className={`track-row ${currentTrack._id === id && 'active'}`}>
+        <div
+          className={`track-row ${type} ${
+            currentTrack._id === id ? 'active' : ''
+          }`}
+        >
           <div className="track-row-index">{index + 1}</div>
+          {type === 'large' && (
+            <div className="track-row-img">
+              {singer && singer[0] && singer[0].image ? (
+                <LazyLoadImage
+                  effect="blur"
+                  src={`${config.get('path.image.url')}${singer[0].image}`}
+                />
+              ) : (
+                <i className="fal fa-microphone-stand no-img"></i>
+              )}
+            </div>
+          )}
           <div className="track-row-title">{title}</div>
+          <div className="track-row-singers">
+            {singer.map((s) => (
+              <span key={`singer_${s._id}`}>{s.name}</span>
+            ))}
+          </div>
           <div className="track-row-dastgah">{dastgah}</div>
           <div className="track-row-duration">
             {moment.duration(duration, 'second').format('mm:ss')}

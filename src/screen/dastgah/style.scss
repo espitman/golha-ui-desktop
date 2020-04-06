@@ -1,7 +1,7 @@
-#screen-programs {
+#screen-dastgah {
   direction: rtl;
   height: 100%;
-  .programs-tabs {
+  .dastgah-tabs {
     width: 100%;
     height: 40px;
     border-bottom: solid 2px #eaeaea;
@@ -30,12 +30,12 @@
       }
     }
   }
-  .program-tabs-body {
+  .dastgah-tabs-body {
     width: 100%;
     height: calc(100% - 40px);
     overflow-y: auto;
     overflow-x: hidden;
-    .program-tabs-body-inner {
+    .dastgah-tabs-body-inner {
       width: calc(100% - 30px);
       padding: 15px;
       display: none;

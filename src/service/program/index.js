@@ -43,4 +43,59 @@ export class ProgramService {
     }
     return (await getFromLocalDb()) || (await getFromServer())
   }
+
+  async getTracks(name) {
+    this.db = await this.connectToDb()
+    const getFromLocalDb = async () => {
+      if (!this.database.isEnable()) {
+        return null
+      }
+      const tracks = await this.db.prgtracks
+        .find()
+        .where('name')
+        .eq(name)
+        .exec()
+      return tracks.length ? tracks[0].tracks : null
+    }
+    const getFromServer = async () => {
+      const {
+        data: { payload: programs }
+      } = await axios.get(`${config.get('api.v1.url')}/program/${name}`)
+      const result = []
+      programs.map(async (prg) => {
+        const {
+          _id,
+          title,
+          subtitle,
+          dastgah,
+          file,
+          program,
+          no,
+          duration,
+          singer
+        } = prg
+        result.push({
+          _id,
+          title,
+          subtitle,
+          dastgah,
+          file,
+          program,
+          no,
+          duration,
+          singer
+        })
+      })
+      try {
+        this.db.prgtracks.insert({ name, tracks: result })
+      } catch (error) {
+        // do nothing
+      }
+      return result
+    }
+    return {
+      name,
+      tracks: (await getFromLocalDb()) || (await getFromServer())
+    }
+  }
 }

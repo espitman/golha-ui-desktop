@@ -15,6 +15,7 @@ import '../common/css/context-menu.scss'
 
 import Side from '../component/side'
 import TitleBar from '../component/title-bar'
+import Player from '../component/player'
 
 import HomeScreen from '../screen/home'
 import ProgramsScreen from '../screen/programs'
@@ -23,7 +24,7 @@ import ArchiveScreens from '../screen/archive'
 import AboutScreen from '../screen/about'
 import SettingsScreen from '../screen/settings'
 import PersonScreen from '../screen/person'
-import Player from '../component/player'
+import DastgahScreen from '../screen/dastgah'
 
 const database = new Database()
 const services = {
@@ -48,7 +49,7 @@ class App extends React.Component {
   componentDidMount() {
     // Don`t remove it, its for fix production first navigation
     setTimeout(() => {
-      document.querySelector('a#homeLink').click()
+      // document.querySelector('a#homeLink').click()
     }, 100)
   }
 
@@ -95,8 +96,13 @@ class App extends React.Component {
             <Route exact path="/">
               <HomeScreen services={services} />
             </Route>
-            <Route path="/programs">
-              <ProgramsScreen services={services} />
+            <Route path="/programs/:name?">
+              <ProgramsScreen
+                services={services}
+                player={this.player}
+                currentTrack={currentTrack}
+                isPlaying={isPlaying}
+              />
             </Route>
             <Route path="/artists">
               <ArtistsScreen services={services} />
@@ -112,6 +118,14 @@ class App extends React.Component {
             </Route>
             <Route path="/person/:id/:name/:role">
               <PersonScreen
+                services={services}
+                player={this.player}
+                currentTrack={currentTrack}
+                isPlaying={isPlaying}
+              />
+            </Route>
+            <Route path="/dastgah/:title?">
+              <DastgahScreen
                 services={services}
                 player={this.player}
                 currentTrack={currentTrack}

@@ -1,7 +1,7 @@
 {
   "api": {
     "v1": {
-      "url": "http://localhost:3100/api/v1"
+      "url": "http://37.152.181.202:3100/api/v1"
     }
   },
   "db": {
