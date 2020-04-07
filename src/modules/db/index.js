@@ -110,6 +110,24 @@ const dastgahTracksSchema = {
   required: ['title']
 }
 
+const roleSchema = {
+  version: 0,
+  type: 'object',
+  properties: {
+    name: {
+      type: 'string',
+      primary: true
+    },
+    persons: {
+      type: 'array'
+    },
+    instruments: {
+      type: 'array'
+    }
+  },
+  required: ['name']
+}
+
 export class Database {
   isEnable() {
     return config.get('db.local.enable')
@@ -157,6 +175,12 @@ export class Database {
     await db.collection({
       name: 'dsgtracks',
       schema: dastgahTracksSchema,
+      autoMigrate: true
+    })
+
+    await db.collection({
+      name: 'roles',
+      schema: roleSchema,
       autoMigrate: true
     })
 
