@@ -118,6 +118,9 @@ const roleSchema = {
       type: 'string',
       primary: true
     },
+    title: {
+      type: 'string'
+    },
     persons: {
       type: 'array'
     },
@@ -125,7 +128,7 @@ const roleSchema = {
       type: 'array'
     }
   },
-  required: ['name']
+  required: ['name', 'title']
 }
 
 export class Database {

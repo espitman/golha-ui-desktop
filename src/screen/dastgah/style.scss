@@ -9,6 +9,10 @@
     align-items: center;
     justify-content: center;
     background-color: #ffffff;
+    position: absolute;
+    width: 100vw;
+    right: calc(-17.5% - 40px);
+    z-index: 2;
     ul {
       list-style: none;
       display: flex;
@@ -34,6 +38,7 @@
   .dastgah-tabs-body {
     width: 100%;
     height: calc(100% - 40px);
+    padding-top: 40px;
     overflow-y: auto;
     overflow-x: hidden;
     .dastgah-tabs-body-inner {

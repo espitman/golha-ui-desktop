@@ -94,15 +94,16 @@ export class PersonService {
       const result = []
       Object.keys(roles).forEach((role) => {
         const persons = roles[role]
+        const title = this.getRoleTitle(role)
         let row = {}
         if (role !== 'musicians') {
-          row = { name: role, persons }
+          row = { name: role, title, persons }
         } else {
           const instruments = []
           Object.keys(persons).forEach((instrument) => {
             instruments.push({ name: instrument, persons: persons[instrument] })
           })
-          row = { name: role, instruments }
+          row = { name: role, title, instruments }
         }
         result.push(row)
         promises.push(this.db.roles.insert(row))
@@ -115,5 +116,17 @@ export class PersonService {
       return result
     }
     return (await getFromLocalDb()) || (await getFromServer())
+  }
+
+  getRoleTitle(name) {
+    const titles = {
+      singer: 'خواننده',
+      poet: 'شاعر',
+      narrator: 'گوینده',
+      arrangement: 'تنظیم',
+      composer: 'آهنگساز',
+      musicians: 'نوازنده'
+    }
+    return titles[name]
   }
 }

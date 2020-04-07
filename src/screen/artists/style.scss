@@ -1,7 +1,76 @@
 #screen-artists {
   direction: rtl;
-  h1 {
-    font-family: IRANSansWeb;
-    font-weight: lighter;
+  height: 100%;
+  .role-tabs {
+    width: 100%;
+    height: 40px;
+    border-bottom: solid 2px #eaeaea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    position: absolute;
+    width: 100vw;
+    right: calc(-17.5% - 40px);
+    z-index: 2;
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      li {
+        font-family: IRANSansWeb;
+        font-weight: 400;
+        font-size: 0.75rem;
+        margin: 0 10px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        // background: rgba($color: #000000, $alpha: .05);
+        &.active {
+          background: black;
+          color: #ffffff;
+        }
+      }
+    }
+  }
+  .role-tabs-body {
+    width: 100%;
+    height: calc(100% - 40px);
+    padding-top: 40px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    .role-tabs-body-inner {
+      width: calc(100% - 30px);
+      padding: 15px;
+      display: none;
+      &.active {
+        display: block;
+      }
+    }
+    .pagination {
+      list-style: none;
+      display: flex;
+      flex-direction: row-reverse;
+      li {
+        width: 32px;
+        height: 32px;
+        border: solid 1px #eaeaea;
+        margin-right: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: IRANSansWeb;
+        font-size: 0.8rem;
+        font-weight: 100;
+        color: rgba($color: #000000, $alpha: 0.5);
+        border-radius: 7px;
+        &.active {
+          background-color: black;
+          color: #fff;
+        }
+      }
+    }
   }
 }
