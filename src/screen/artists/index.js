@@ -1,6 +1,9 @@
 import React from 'react'
 import Loading from '../../component/loading'
 
+import ArtistPersons from './persons'
+import ArtistInstruments from './instruments'
+
 import './style.scss'
 
 export default class ArtistsScreen extends React.Component {
@@ -16,7 +19,24 @@ export default class ArtistsScreen extends React.Component {
 
   async componentDidMount() {
     const roles = await this.personService.getAllRoles()
-    this.setState({ roles, loading: false })
+    this.setState({ roles: roles.reverse(), loading: false })
+  }
+
+  setActiveTab = (active) => {
+    this.resetScroll()
+    this.setState({
+      page: 1,
+      active
+    })
+  }
+
+  goToPage = (page) => {
+    this.resetScroll()
+    this.setState({ page })
+  }
+
+  resetScroll = () => {
+    document.querySelector('.role-tabs-body').scrollTo(0, 0)
   }
 
   render() {
@@ -42,7 +62,24 @@ export default class ArtistsScreen extends React.Component {
                 })}
               </ul>
             </div>
-            <div className="role-tabs-body"></div>
+            <div className="role-tabs-body">
+              {roles.map((role, i) => {
+                return (
+                  <div
+                    key={`role_tab_${i}`}
+                    className={`role-tabs-body-inner ${
+                      active === i && 'active'
+                    }`}
+                  >
+                    {role.persons ? (
+                      <ArtistPersons role={role} />
+                    ) : (
+                      <ArtistInstruments role={role} />
+                    )}
+                  </div>
+                )
+              })}
+            </div>
           </>
         )}
       </div>
