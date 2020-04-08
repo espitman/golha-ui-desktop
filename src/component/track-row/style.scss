@@ -107,6 +107,9 @@
     }
   }
   &.large {
+    .track-row-index {
+      flex: 0.35;
+    }
     .track-row-title {
       flex: 1.75;
     }
