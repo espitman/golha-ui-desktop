@@ -4,16 +4,25 @@ import { withRouter } from 'react-router-dom'
 import config from '../../modules/config'
 
 class ArtistPersons extends React.Component {
+  handleClick = (person, title) => {
+    const { _id, name } = person
+    this.props.history.push(`/person/${_id}/${name}/${title}`)
+  }
+
   render() {
     const {
-      role: { name, persons }
+      role: { title, persons }
     } = this.props
     return (
       <div className="persons-list">
         {persons.map((person) => {
           const { name, image } = person
           return (
-            <div className={'person'} key={`persons_${name}_${person._id}`}>
+            <div
+              className={'person'}
+              key={`persons_${name}_${person._id}`}
+              onClick={() => this.handleClick(person, title)}
+            >
               <div className={'img'}>
                 <div className={'img-inner'}>
                   {image ? (
