@@ -90,6 +90,14 @@ class Player extends React.Component {
     }
   }
 
+  fastBackward = () => {
+    this.audio.currentTime -= 10
+  }
+
+  fastForward = () => {
+    this.audio.currentTime += 10
+  }
+
   render() {
     const {
       show,
@@ -131,12 +139,18 @@ class Player extends React.Component {
             </div>
             <div className={'player-box-controller'}>
               <div className={'player-box-controller-btns'}>
-                <i className="arrow fal fa-fast-backward"></i>
+                <i
+                  className="arrow fal fa-fast-backward"
+                  onClick={this.fastBackward}
+                ></i>
                 <i
                   onClick={this.togglePlay}
                   className={`play fal ${isPlaying ? 'fa-pause' : 'fa-play'}`}
                 ></i>
-                <i className="arrow fal fa-fast-forward"></i>
+                <i
+                  className="arrow fal fa-fast-forward"
+                  onClick={this.fastForward}
+                ></i>
               </div>
               <div className={'player-box-controller-time'}>
                 <div className={'player-box-controller-time-current'}>
