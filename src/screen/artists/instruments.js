@@ -1,12 +1,47 @@
 import React from 'react'
+import { withRouter } from 'react-router'
+import { findIndex } from 'lodash'
+
 import ArtistPersons from './persons'
 
-export default class ArtistInstruments extends React.Component {
+class ArtistInstruments extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       active: 0
     }
+  }
+
+  componentDidMount() {
+    const { instrument } = this.props
+    console.log('D')
+    if (instrument) {
+      const active =
+        findIndex(this.props.role.instruments, { name: instrument }) || 0
+      this.setActive(active)
+    }
+  }
+
+  // eslint-disable-next-line react/no-deprecated
+  componentWillReceiveProps(newProps) {
+    console.log('E')
+    if (
+      newProps.match.params.instrument !== this.props.match.params.instrument
+    ) {
+      const instrument = newProps.match.params.instrument
+      const active = instrument
+        ? findIndex(this.props.role.instruments, { name: instrument })
+        : 0
+      this.setActive(active)
+    }
+  }
+
+  goToInstrument = (instrument) => {
+    const {
+      role: { title }
+    } = this.props
+    const { name } = instrument
+    this.props.history.push(`/artists/${title}/${name}`)
   }
 
   setActive = (active) => {
@@ -28,7 +63,7 @@ export default class ArtistInstruments extends React.Component {
                   <li
                     className={active === i ? 'active' : ''}
                     key={`instrument_${name}_${instrument.name}`}
-                    onClick={() => this.setActive(i)}
+                    onClick={() => this.goToInstrument(instrument)}
                   >
                     {instrument.name}
                   </li>
@@ -63,3 +98,4 @@ export default class ArtistInstruments extends React.Component {
     )
   }
 }
+export default withRouter(ArtistInstruments)

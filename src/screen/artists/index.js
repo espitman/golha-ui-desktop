@@ -1,4 +1,7 @@
 import React from 'react'
+import { withRouter } from 'react-router'
+import { findIndex } from 'lodash'
+
 import Loading from '../../component/loading'
 
 import ArtistPersons from './persons'
@@ -6,7 +9,7 @@ import ArtistInstruments from './instruments'
 
 import './style.scss'
 
-export default class ArtistsScreen extends React.Component {
+class ArtistsScreen extends React.Component {
   constructor(props) {
     super(props)
     this.personService = props.services.personService
@@ -18,21 +21,33 @@ export default class ArtistsScreen extends React.Component {
   }
 
   async componentDidMount() {
+    const title = this.props.match.params.title
     const roles = await this.personService.getAllRoles()
-    this.setState({ roles: roles.reverse(), loading: false })
+    roles.reverse()
+    const active = title ? findIndex(roles, { title }) : 0
+    const instrument = this.props.match.params.instrument
+    this.setState({ roles, active, instrument, loading: false })
+  }
+
+  // eslint-disable-next-line react/no-deprecated
+  componentWillReceiveProps(newProps) {
+    if (newProps.match.params.title !== this.props.match.params.title) {
+      const title = newProps.match.params.title
+      const active = title ? findIndex(this.state.roles, { title }) : 0
+      this.setActiveTab(active)
+    }
+  }
+
+  goToTab = (role) => {
+    const { title } = role
+    this.props.history.push(`/artists/${title}`)
   }
 
   setActiveTab = (active) => {
     this.resetScroll()
     this.setState({
-      page: 1,
       active
     })
-  }
-
-  goToPage = (page) => {
-    this.resetScroll()
-    this.setState({ page })
   }
 
   resetScroll = () => {
@@ -40,7 +55,7 @@ export default class ArtistsScreen extends React.Component {
   }
 
   render() {
-    const { loading, roles, active } = this.state
+    const { loading, roles, active, instrument } = this.state
     return (
       <div id="screen-artists">
         {loading ? (
@@ -54,7 +69,7 @@ export default class ArtistsScreen extends React.Component {
                     <li
                       key={`role_${i}`}
                       className={active === i ? 'active' : ''}
-                      onClick={() => this.setActiveTab(i, role)}
+                      onClick={() => this.goToTab(role)}
                     >
                       {role.title}
                     </li>
@@ -74,7 +89,7 @@ export default class ArtistsScreen extends React.Component {
                     {role.persons ? (
                       <ArtistPersons role={role} />
                     ) : (
-                      <ArtistInstruments role={role} />
+                      <ArtistInstruments role={role} instrument={instrument} />
                     )}
                   </div>
                 )
@@ -86,3 +101,4 @@ export default class ArtistsScreen extends React.Component {
     )
   }
 }
+export default withRouter(ArtistsScreen)

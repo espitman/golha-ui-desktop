@@ -90,7 +90,6 @@ class App extends React.Component {
     window.addEventListener(
       'keydown',
       function (e) {
-        // space and arrow keys
         if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
           e.preventDefault()
         }
@@ -118,8 +117,13 @@ class App extends React.Component {
                 isPlaying={isPlaying}
               />
             </Route>
-            <Route path="/artists">
-              <ArtistsScreen services={services} />
+            <Route path="/artists/:title?/:instrument?">
+              <ArtistsScreen
+                services={services}
+                player={this.player}
+                currentTrack={currentTrack}
+                isPlaying={isPlaying}
+              />
             </Route>
             <Route path="/archive">
               <ArchiveScreens services={services} />
