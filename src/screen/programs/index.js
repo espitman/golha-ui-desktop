@@ -16,7 +16,7 @@ class ProgramsScreen extends React.Component {
       loading: true,
       programs: [],
       active: 0,
-      page: 1,
+      page: +props.match.params.page,
       limit: 20
     }
   }
@@ -47,28 +47,36 @@ class ProgramsScreen extends React.Component {
   componentWillReceiveProps(newProps) {
     if (newProps.match.params.name !== this.props.match.params.name) {
       const programName = newProps.match.params.name
+      const page = +newProps.match.params.page || 1
       const active = programName
         ? findIndex(this.state.programs, { name: programName })
         : 0
-      this.setActiveTab(active)
+      this.setActiveTab(active, page)
+    } else if (newProps.match.params.page !== this.props.match.params.page) {
+      this.setPage(+newProps.match.params.page)
     }
   }
 
-  setActiveTab = (active) => {
+  setActiveTab = (active, page) => {
     this.resetScroll()
     this.setState({
-      page: 1,
+      page,
       active
     })
   }
 
   goToTab = (program) => {
     const { name } = program
-    this.props.history.push(`/programs/${name}`)
+    this.props.history.push(`/programs/${name}/1`)
   }
 
-  goToPage = (page) => {
+  goToPage = (program, page) => {
     this.resetScroll()
+    const { name } = program
+    this.props.history.push(`/programs/${name}/${page}`)
+  }
+
+  setPage = (page) => {
     this.setState({ page })
   }
 
@@ -133,7 +141,7 @@ class ProgramsScreen extends React.Component {
                           <li
                             className={i + 1 === page ? 'active' : ''}
                             key={`page_${i}`}
-                            onClick={() => this.goToPage(i + 1)}
+                            onClick={() => this.goToPage(program, i + 1)}
                           >
                             {i + 1}
                           </li>
