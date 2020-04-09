@@ -50,7 +50,7 @@ class App extends React.Component {
     // Don`t remove it, its for fix production first navigation
     setTimeout(() => {
       // document.querySelector('a#homeLink').click()
-    }, 20)
+    }, 5)
   }
 
   player = {

@@ -52,7 +52,9 @@
   }
   #artist-instruments {
     #artist-instruments-head {
-      width: 100%;
+      width: calc(100% + 20px);
+      margin-right: -10px;
+      margin-top: -10px;
       height: 40px;
       border-bottom: solid 2px #eaeaea;
       display: flex;
