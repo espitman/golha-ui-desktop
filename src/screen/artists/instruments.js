@@ -14,7 +14,6 @@ class ArtistInstruments extends React.Component {
 
   componentDidMount() {
     const { instrument } = this.props
-    console.log('D')
     if (instrument) {
       const active =
         findIndex(this.props.role.instruments, { name: instrument }) || 0
@@ -24,7 +23,6 @@ class ArtistInstruments extends React.Component {
 
   // eslint-disable-next-line react/no-deprecated
   componentWillReceiveProps(newProps) {
-    console.log('E')
     if (
       newProps.match.params.instrument !== this.props.match.params.instrument
     ) {
