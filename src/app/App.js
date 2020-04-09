@@ -51,6 +51,7 @@ class App extends React.Component {
     setTimeout(() => {
       // document.querySelector('a#homeLink').click()
     }, 5)
+    this.disableKeys()
   }
 
   player = {
@@ -83,6 +84,19 @@ class App extends React.Component {
         isPlaying: services.playerService.isPlaying
       })
     }
+  }
+
+  disableKeys = () => {
+    window.addEventListener(
+      'keydown',
+      function (e) {
+        // space and arrow keys
+        if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+          e.preventDefault()
+        }
+      },
+      false
+    )
   }
 
   render() {

@@ -5,6 +5,8 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import moment from 'moment'
 import momentDurationFormatSetup from 'moment-duration-format'
 import Slider from 'rc-slider'
+import Hotkeys from 'react-hot-keys'
+
 import config from '../../modules/config'
 
 import 'rc-slider/assets/index.css'
@@ -70,6 +72,16 @@ class Player extends React.Component {
     this.setCurrentVolume()
   }
 
+  setVolumeUp = () => {
+    this.audio.volume = Math.min(1, this.audio.volume + 0.1)
+    this.setCurrentVolume()
+  }
+
+  setVolumeDown = () => {
+    this.audio.volume = Math.max(0, this.audio.volume - 0.1)
+    this.setCurrentVolume()
+  }
+
   mute = () => {
     this.setState({ lastVolume: this.audio.volume })
     this.audio.volume = 0
@@ -98,6 +110,29 @@ class Player extends React.Component {
     this.audio.currentTime += 10
   }
 
+  onKeyDown = (keyName) => {
+    switch (keyName) {
+      case 'space':
+        this.togglePlay()
+        break
+      case 'up':
+        this.setVolumeUp()
+        break
+      case 'right':
+        this.fastForward()
+        break
+      case 'down':
+        this.setVolumeDown()
+        break
+      case 'left':
+        this.fastBackward()
+        break
+    }
+    // console.log('test:onKeyDown', keyName, e, handle)
+  }
+
+  onKeyUp = () => {}
+
   render() {
     const {
       show,
@@ -106,97 +141,105 @@ class Player extends React.Component {
     } = this.props
     const { currentTime, volume } = this.state
     return (
-      <div id="player" className={show ? 'show' : ''}>
-        <audio id="media">
-          <source type="audio/mpeg" />
-        </audio>
-        {this.audio && (
-          <>
-            <div className={'player-box-name'}>
-              <div className={'player-box-name-image'}>
-                <div id="avatar" className={'player-box-name-image-frame'}>
-                  {singer[0].image ? (
-                    <LazyLoadImage
-                      effect="blur"
-                      src={`${config.get('path.image.url')}${singer[0].image}`}
-                    />
-                  ) : (
-                    <i className="fal fa-microphone-stand no-img"></i>
-                  )}
-                </div>
-              </div>
-              <div className={'player-box-name-text'}>
-                <div className={'player-box-name-text-title'}>
-                  {title}{' '}
-                  {dastgah && <span className={'dastgah'}>{dastgah}</span>}
-                </div>
-                <div className={'player-box-name-text-singer'}>
-                  {singer.map((s) => (
-                    <span key={`singer_${s._id}`}>{s.name}</span>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <div className={'player-box-controller'}>
-              <div className={'player-box-controller-btns'}>
-                <i
-                  className="arrow fal fa-fast-backward"
-                  onClick={this.fastBackward}
-                ></i>
-                <i
-                  onClick={this.togglePlay}
-                  className={`play fal ${isPlaying ? 'fa-pause' : 'fa-play'}`}
-                ></i>
-                <i
-                  className="arrow fal fa-fast-forward"
-                  onClick={this.fastForward}
-                ></i>
-              </div>
-              <div className={'player-box-controller-time'}>
-                <div className={'player-box-controller-time-current'}>
-                  {moment
-                    .duration(currentTime, 'second')
-                    .format('mm:ss', { trim: false })}
-                </div>
-                <div className={'player-box-controller-time-bar'}>
-                  <div className={'bar'}>
-                    <Slider
-                      min={0}
-                      max={duration}
-                      defaultValue={0}
-                      value={currentTime}
-                      onChange={this.onSliderChange}
-                    />
+      <Hotkeys
+        keyName="space,up,right,down,left"
+        onKeyDown={this.onKeyDown}
+        onKeyUp={this.onKeyUp}
+      >
+        <div id="player" className={show ? 'show' : ''}>
+          <audio id="media">
+            <source type="audio/mpeg" />
+          </audio>
+          {this.audio && (
+            <>
+              <div className={'player-box-name'}>
+                <div className={'player-box-name-image'}>
+                  <div id="avatar" className={'player-box-name-image-frame'}>
+                    {singer[0].image ? (
+                      <LazyLoadImage
+                        effect="blur"
+                        src={`${config.get('path.image.url')}${
+                          singer[0].image
+                        }`}
+                      />
+                    ) : (
+                      <i className="fal fa-microphone-stand no-img"></i>
+                    )}
                   </div>
                 </div>
-                <div className={'player-box-controller-time-duration'}>
-                  {moment.duration(duration, 'second').format('mm:ss')}
+                <div className={'player-box-name-text'}>
+                  <div className={'player-box-name-text-title'}>
+                    {title}{' '}
+                    {dastgah && <span className={'dastgah'}>{dastgah}</span>}
+                  </div>
+                  <div className={'player-box-name-text-singer'}>
+                    {singer.map((s) => (
+                      <span key={`singer_${s._id}`}>{s.name}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={'player-box-options'}>
-              <div className={'player-box-options-btns'}>
-                <i className="fal fa-list-music"></i>
-                <i className="fal fa-user-music"></i>
+              <div className={'player-box-controller'}>
+                <div className={'player-box-controller-btns'}>
+                  <i
+                    className="arrow fal fa-fast-backward"
+                    onClick={this.fastBackward}
+                  ></i>
+                  <i
+                    onClick={this.togglePlay}
+                    className={`play fal ${isPlaying ? 'fa-pause' : 'fa-play'}`}
+                  ></i>
+                  <i
+                    className="arrow fal fa-fast-forward"
+                    onClick={this.fastForward}
+                  ></i>
+                </div>
+                <div className={'player-box-controller-time'}>
+                  <div className={'player-box-controller-time-current'}>
+                    {moment
+                      .duration(currentTime, 'second')
+                      .format('mm:ss', { trim: false })}
+                  </div>
+                  <div className={'player-box-controller-time-bar'}>
+                    <div className={'bar'}>
+                      <Slider
+                        min={0}
+                        max={duration}
+                        defaultValue={0}
+                        value={currentTime}
+                        onChange={this.onSliderChange}
+                      />
+                    </div>
+                  </div>
+                  <div className={'player-box-controller-time-duration'}>
+                    {moment.duration(duration, 'second').format('mm:ss')}
+                  </div>
+                </div>
               </div>
-              <div className={'player-box-options-volume'}>
-                {volume === 0 ? (
-                  <i className="fal fa-volume-off" onClick={this.unmute}></i>
-                ) : (
-                  <i className="fal fa-volume" onClick={this.mute}></i>
-                )}
-                <Slider
-                  min={0}
-                  max={100}
-                  defaultValue={volume}
-                  value={volume}
-                  onChange={this.onVolumeChange}
-                />
+              <div className={'player-box-options'}>
+                <div className={'player-box-options-btns'}>
+                  <i className="fal fa-list-music"></i>
+                  <i className="fal fa-user-music"></i>
+                </div>
+                <div className={'player-box-options-volume'}>
+                  {volume === 0 ? (
+                    <i className="fal fa-volume-off" onClick={this.unmute}></i>
+                  ) : (
+                    <i className="fal fa-volume" onClick={this.mute}></i>
+                  )}
+                  <Slider
+                    min={0}
+                    max={100}
+                    defaultValue={volume}
+                    value={volume}
+                    onChange={this.onVolumeChange}
+                  />
+                </div>
               </div>
-            </div>
-          </>
-        )}
-      </div>
+            </>
+          )}
+        </div>
+      </Hotkeys>
     )
   }
 }
