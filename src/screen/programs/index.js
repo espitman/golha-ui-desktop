@@ -43,12 +43,28 @@ class ProgramsScreen extends React.Component {
     })
   }
 
+  // eslint-disable-next-line react/no-deprecated
+  componentWillReceiveProps(newProps) {
+    if (newProps.match.params.name !== this.props.match.params.name) {
+      const programName = newProps.match.params.name
+      const active = programName
+        ? findIndex(this.state.programs, { name: programName })
+        : 0
+      this.setActiveTab(active)
+    }
+  }
+
   setActiveTab = (active) => {
     this.resetScroll()
     this.setState({
       page: 1,
       active
     })
+  }
+
+  goToTab = (program) => {
+    const { name } = program
+    this.props.history.push(`/programs/${name}`)
   }
 
   goToPage = (page) => {
@@ -75,7 +91,7 @@ class ProgramsScreen extends React.Component {
                     <li
                       key={`program_${i}`}
                       className={active === i ? 'active' : ''}
-                      onClick={() => this.setActiveTab(i, program)}
+                      onClick={() => this.goToTab(program)}
                     >
                       {program.title}
                     </li>
