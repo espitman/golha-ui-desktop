@@ -27,6 +27,7 @@ class Player extends React.Component {
     this.audio = $('#media')[0]
     this.setCurrentTime()
     this.setCurrentVolume()
+    this.setEnded()
   }
 
   // eslint-disable-next-line react/no-deprecated
@@ -78,6 +79,15 @@ class Player extends React.Component {
   unmute = () => {
     this.audio.volume = this.state.lastVolume
     this.setState({ volume: this.state.lastVolume * 100 })
+  }
+
+  setEnded = () => {
+    const player = this.player
+    const audio = this.audio
+    this.audio.onended = function () {
+      player.pause()
+      audio.currentTime = 0
+    }
   }
 
   render() {
