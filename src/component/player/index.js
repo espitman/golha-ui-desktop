@@ -66,6 +66,7 @@ class Player extends React.Component {
   }
 
   onAfterChange = () => {
+    $('a#homeLink').focus() // prevent slide handle keyboard
     this.setState({ step: 10 })
   }
 
