@@ -20,7 +20,8 @@ class Player extends React.Component {
     this.player = props.player
     this.state = {
       currentTime: 0,
-      volume: 0
+      volume: 0,
+      step: 10
     }
   }
 
@@ -54,13 +55,18 @@ class Player extends React.Component {
   }
 
   setCurrentTime = () => {
-    setInterval(() => {
+    this.audio.ontimeupdate = () => {
       this.setState({ currentTime: this.audio.currentTime })
-    }, 1000)
+    }
   }
 
   onSliderChange = (value) => {
+    this.setState({ step: 1 })
     this.audio.currentTime = value
+  }
+
+  onAfterChange = () => {
+    this.setState({ step: 10 })
   }
 
   setCurrentVolume = () => {
@@ -96,7 +102,7 @@ class Player extends React.Component {
   setEnded = () => {
     const player = this.player
     const audio = this.audio
-    this.audio.onended = function () {
+    this.audio.onended = () => {
       player.pause()
       audio.currentTime = 0
     }
@@ -128,7 +134,6 @@ class Player extends React.Component {
         this.fastBackward()
         break
     }
-    // console.log('test:onKeyDown', keyName, e, handle)
   }
 
   goToPerson = (person) => {
@@ -142,7 +147,7 @@ class Player extends React.Component {
       isPlaying,
       track: { title, dastgah = '', singer = [{}], duration }
     } = this.props
-    const { currentTime, volume } = this.state
+    const { currentTime, volume, step } = this.state
     return (
       <Hotkeys keyName="space,up,right,down,left" onKeyDown={this.onKeyDown}>
         <div id="player" className={show ? 'show' : ''}>
@@ -210,9 +215,10 @@ class Player extends React.Component {
                         min={0}
                         max={duration}
                         defaultValue={0}
-                        step={10}
+                        step={step}
                         value={currentTime}
                         onChange={this.onSliderChange}
+                        onAfterChange={this.onAfterChange}
                       />
                     </div>
                   </div>
