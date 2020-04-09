@@ -16,7 +16,7 @@ class ProgramsScreen extends React.Component {
       loading: true,
       programs: [],
       active: 0,
-      page: +props.match.params.page,
+      page: +props.match.params.page || 1,
       limit: 20
     }
   }
