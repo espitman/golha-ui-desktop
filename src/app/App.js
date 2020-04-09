@@ -142,7 +142,7 @@ class App extends React.Component {
                 isPlaying={isPlaying}
               />
             </Route>
-            <Route path="/dastgah/:title?">
+            <Route path="/dastgah/:title?/:page?">
               <DastgahScreen
                 services={services}
                 player={this.player}

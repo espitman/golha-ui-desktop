@@ -57,17 +57,17 @@ class ProgramsScreen extends React.Component {
     }
   }
 
+  goToTab = (program) => {
+    const { name } = program
+    this.props.history.push(`/programs/${name}/1`)
+  }
+
   setActiveTab = (active, page) => {
     this.resetScroll()
     this.setState({
       page,
       active
     })
-  }
-
-  goToTab = (program) => {
-    const { name } = program
-    this.props.history.push(`/programs/${name}/1`)
   }
 
   goToPage = (program, page) => {
