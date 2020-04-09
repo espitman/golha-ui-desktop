@@ -131,7 +131,10 @@ class Player extends React.Component {
     // console.log('test:onKeyDown', keyName, e, handle)
   }
 
-  onKeyUp = () => {}
+  goToPerson = (person) => {
+    const { _id, name } = person
+    this.props.history.push(`/person/${_id}/${name}/خواننده?id=${_id}`)
+  }
 
   render() {
     const {
@@ -141,11 +144,7 @@ class Player extends React.Component {
     } = this.props
     const { currentTime, volume } = this.state
     return (
-      <Hotkeys
-        keyName="space,up,right,down,left"
-        onKeyDown={this.onKeyDown}
-        onKeyUp={this.onKeyUp}
-      >
+      <Hotkeys keyName="space,up,right,down,left" onKeyDown={this.onKeyDown}>
         <div id="player" className={show ? 'show' : ''}>
           <audio id="media">
             <source type="audio/mpeg" />
@@ -174,7 +173,12 @@ class Player extends React.Component {
                   </div>
                   <div className={'player-box-name-text-singer'}>
                     {singer.map((s) => (
-                      <span key={`singer_${s._id}`}>{s.name}</span>
+                      <span
+                        key={`singer_${s._id}`}
+                        onClick={() => this.goToPerson(s)}
+                      >
+                        {s.name}
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -206,6 +210,7 @@ class Player extends React.Component {
                         min={0}
                         max={duration}
                         defaultValue={0}
+                        step={10}
                         value={currentTime}
                         onChange={this.onSliderChange}
                       />
