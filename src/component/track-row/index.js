@@ -17,6 +17,9 @@ class TrackRow extends React.Component {
     super(props)
     this.player = this.props.player
     this.playerService = this.props.services.playerService
+    this.state = {
+      isInPlayList: this.playerService.isInPlayList(this.props.track._id)
+    }
   }
 
   play = () => {
@@ -37,7 +40,13 @@ class TrackRow extends React.Component {
   }
 
   addToPlayList = () => {
-    this.playerService.addToPlayList(this.props.track)
+    const isInPlayList = this.playerService.addToPlayList(this.props.track)
+    this.setState({ isInPlayList })
+  }
+
+  removeFromPlayList = () => {
+    const isInPlayList = this.playerService.removeFromPlayList(this.props.track)
+    this.setState({ isInPlayList })
   }
 
   render() {
@@ -48,6 +57,7 @@ class TrackRow extends React.Component {
       isPlaying,
       type = 'small'
     } = this.props
+    const { isInPlayList } = this.state
     return (
       <>
         <div
@@ -111,9 +121,16 @@ class TrackRow extends React.Component {
           ) : (
             <MenuItem onClick={this.play}>پخش</MenuItem>
           )}
-          <MenuItem onClick={this.addToPlayList}>
-            افزودن به صف در حال پخش
-          </MenuItem>
+          {!isInPlayList ? (
+            <MenuItem onClick={this.addToPlayList}>
+              افزودن به صف در حال پخش
+            </MenuItem>
+          ) : (
+            <MenuItem onClick={this.removeFromPlayList}>
+              حذف از صف در حال پخش
+            </MenuItem>
+          )}
+
           <MenuItem onClick={this.handleClick}>افزودن به لیست</MenuItem>
           <MenuItem divider />
           <MenuItem onClick={this.handleClick}>مشاهده مشخصات</MenuItem>
