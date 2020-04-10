@@ -15,6 +15,7 @@ export class PlayerService {
     this.visible = false
   }
   play(track) {
+    this.clearPlayList()
     this.isPlaying = true
     this.track = track
     this.show()
@@ -34,8 +35,11 @@ export class PlayerService {
       this.playList.push(track)
     }
   }
+  clearPlayList() {
+    this.playListIndex = -1
+    this.playList = []
+  }
   getNextTrack() {
-    console.log(this.playList.length, this.playListIndex)
     if (this.playList.length > this.playListIndex + 1) {
       this.playListIndex += 1
       return this.playList[this.playListIndex]
