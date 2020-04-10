@@ -11,7 +11,7 @@ Create React App is a tool (built by developers at Facebook) that gives you a ma
 ### Getting started
 
 ```sh
-git clone https://github.com/espitman/cra-electron-kit.git
+git clone https://github.com/espitman/golha-ui-desktop.git
 ```
 
 Then install all the `node_modules` needed by executing the following command:
