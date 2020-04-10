@@ -161,6 +161,12 @@
       i {
         color: #ffffff;
         margin: 0 10px;
+        opacity: 0.3;
+        pointer-events: none;
+        &.active {
+          opacity: 1;
+          pointer-events: auto;
+        }
       }
     }
     .player-box-options-volume {

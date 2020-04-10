@@ -245,10 +245,14 @@ class Player extends React.Component {
               <div className={'player-box-options'}>
                 <div className={'player-box-options-btns'}>
                   <i
-                    className="fal fa-list-music"
+                    className={`fal fa-list-music playlist ${
+                      this.props.playlist && this.props.playlist.length > 0
+                        ? 'active'
+                        : ''
+                    }`}
                     onClick={this.togglePlayList}
                   ></i>
-                  <i className="fal fa-user-music"></i>
+                  <i className="fal fa-user-music active"></i>
                 </div>
                 <div className={'player-box-options-volume'}>
                   {volume === 0 ? (
@@ -269,7 +273,13 @@ class Player extends React.Component {
           )}
         </div>
         {show && (
-          <PlayList show={showPlayList} services={this.props.services} />
+          <PlayList
+            show={showPlayList}
+            playlist={this.props.playlist}
+            currentTrack={this.props.track}
+            player={this.player}
+            isPlaying={isPlaying}
+          />
         )}
       </Hotkeys>
     )

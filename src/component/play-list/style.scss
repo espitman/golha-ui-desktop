@@ -8,4 +8,52 @@
   z-index: 4;
   border-radius: 10px 10px 0 0;
   transform: translateY(-2000px);
+  ul {
+    list-style: none;
+    margin: o;
+    padding: 0;
+    li.pl-track {
+      color: #ffffff;
+      display: flex;
+      flex-direction: row-reverse;
+      width: calc(100% - 30px);
+      padding: 7.5px 15px;
+      font-family: IRANSansWeb;
+      font-weight: lighter;
+      font-size: 0.75rem;
+      &:nth-child(2n) {
+        background-color: #191919;
+      }
+      &.active {
+        font-weight: 500;
+      }
+      .pl-track-index {
+        flex: 0.25;
+        text-align: right;
+      }
+      .pl-track-title {
+        flex: 2.5;
+        text-align: right;
+      }
+      .pl-track-btns {
+        flex: 0.5;
+        text-align: center;
+        i {
+          font-size: 0.75rem;
+        }
+      }
+      .pl-track-singers {
+        flex: 3;
+        text-align: right;
+      }
+      .pl-track-dastgah {
+        flex: 1;
+        text-align: center;
+      }
+      .pl-track-duration {
+        flex: 1;
+        text-align: center;
+      }
+    }
+  }
 }
