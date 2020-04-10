@@ -40,15 +40,12 @@ class TrackRow extends React.Component {
   }
 
   addToPlayList = () => {
-    const isInPlayList = this.playerService.addToPlayList(this.props.track)
+    const isInPlayList = this.player.addToPlayList(this.props.track)
     this.setState({ isInPlayList })
-    if (this.playerService.playList.length === 1) {
-      this.play()
-    }
   }
 
   removeFromPlayList = () => {
-    const isInPlayList = this.playerService.removeFromPlayList(this.props.track)
+    const isInPlayList = this.player.removeFromPlayList(this.props.track)
     this.setState({ isInPlayList })
   }
 

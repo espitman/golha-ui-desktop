@@ -9,6 +9,8 @@ import Hotkeys from 'react-hot-keys'
 
 import config from '../../modules/config'
 
+import PlayList from '../play-list'
+
 import 'rc-slider/assets/index.css'
 import './style.scss'
 
@@ -21,7 +23,8 @@ class Player extends React.Component {
     this.state = {
       currentTime: 0,
       volume: 0,
-      step: 10
+      step: 10,
+      showPlayList: false
     }
   }
 
@@ -147,13 +150,19 @@ class Player extends React.Component {
     this.player.playNextTrack()
   }
 
+  togglePlayList = () => {
+    this.setState((prevState) => {
+      return { showPlayList: !prevState.showPlayList }
+    })
+  }
+
   render() {
     const {
       show,
       isPlaying,
       track: { title, dastgah = '', singer = [{}], duration }
     } = this.props
-    const { currentTime, volume, step } = this.state
+    const { currentTime, volume, step, showPlayList } = this.state
     return (
       <Hotkeys keyName="space,up,right,down,left" onKeyDown={this.onKeyDown}>
         <div id="player" className={show ? 'show' : ''}>
@@ -235,7 +244,10 @@ class Player extends React.Component {
               </div>
               <div className={'player-box-options'}>
                 <div className={'player-box-options-btns'}>
-                  <i className="fal fa-list-music"></i>
+                  <i
+                    className="fal fa-list-music"
+                    onClick={this.togglePlayList}
+                  ></i>
                   <i className="fal fa-user-music"></i>
                 </div>
                 <div className={'player-box-options-volume'}>
@@ -256,6 +268,9 @@ class Player extends React.Component {
             </>
           )}
         </div>
+        {show && (
+          <PlayList show={showPlayList} services={this.props.services} />
+        )}
       </Hotkeys>
     )
   }

@@ -94,6 +94,16 @@ class App extends React.Component {
     },
     clearPlayList: () => {
       services.playerService.clearPlayList()
+    },
+    addToPlayList: (track) => {
+      const isInPlayList = services.playerService.addToPlayList(track)
+      if (services.playerService.playList.length === 1) {
+        this.player.play(track)
+      }
+      return isInPlayList
+    },
+    removeFromPlayList: (track) => {
+      return services.playerService.removeFromPlayList(track)
     }
   }
 
