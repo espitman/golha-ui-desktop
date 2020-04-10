@@ -27,7 +27,7 @@ yarn
 
 ##### Development
 
-`Yarn start:dev`
+`yarn start:dev`
 
 ##### Build
 
