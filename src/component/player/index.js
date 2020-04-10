@@ -106,6 +106,7 @@ class Player extends React.Component {
     this.audio.onended = () => {
       player.pause()
       audio.currentTime = 0
+      this.playNextTrack()
     }
   }
 
@@ -140,6 +141,10 @@ class Player extends React.Component {
   goToPerson = (person) => {
     const { _id, name } = person
     this.props.history.push(`/person/${_id}/${name}/خواننده?id=${_id}`)
+  }
+
+  playNextTrack = () => {
+    this.player.playNextTrack()
   }
 
   render() {

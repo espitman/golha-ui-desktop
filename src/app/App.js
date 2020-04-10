@@ -83,6 +83,14 @@ class App extends React.Component {
         showPlayer: services.playerService.visible,
         isPlaying: services.playerService.isPlaying
       })
+    },
+    playNextTrack: () => {
+      const nextTrack = services.playerService.getNextTrack()
+      if (nextTrack) {
+        this.player.play(nextTrack)
+      } else {
+        this.player.pause()
+      }
     }
   }
 

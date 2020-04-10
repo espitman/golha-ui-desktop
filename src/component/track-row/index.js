@@ -15,14 +15,16 @@ momentDurationFormatSetup(moment)
 class TrackRow extends React.Component {
   constructor(props) {
     super(props)
+    this.player = this.props.player
+    this.playerService = this.props.services.playerService
   }
 
   play = () => {
-    this.props.player.play(this.props.track)
+    this.player.play(this.props.track)
   }
 
   pause = () => {
-    this.props.player.pause()
+    this.player.pause()
   }
 
   goToSingerScreen = (person) => {
@@ -32,6 +34,10 @@ class TrackRow extends React.Component {
 
   goToDastgahScreen = (title) => {
     this.props.history.push(`/dastgah/${title}`)
+  }
+
+  addToPlayList = () => {
+    this.playerService.addToPlayList(this.props.track)
   }
 
   render() {
@@ -105,16 +111,12 @@ class TrackRow extends React.Component {
           ) : (
             <MenuItem onClick={this.play}>پخش</MenuItem>
           )}
-          <MenuItem data={{ foo: 'bar' }} onClick={this.handleClick}>
+          <MenuItem onClick={this.addToPlayList}>
             افزودن به صف در حال پخش
           </MenuItem>
-          <MenuItem data={{ foo: 'bar' }} onClick={this.handleClick}>
-            افزودن به لیست
-          </MenuItem>
+          <MenuItem onClick={this.handleClick}>افزودن به لیست</MenuItem>
           <MenuItem divider />
-          <MenuItem data={{ foo: 'bar' }} onClick={this.handleClick}>
-            مشاهده مشخصات
-          </MenuItem>
+          <MenuItem onClick={this.handleClick}>مشاهده مشخصات</MenuItem>
         </ContextMenu>
       </>
     )
