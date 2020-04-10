@@ -14,7 +14,6 @@ export class PlayerService {
     this.visible = false
   }
   play(track) {
-    // this.clearPlayList()
     this.isPlaying = true
     this.track = track
     this.show()

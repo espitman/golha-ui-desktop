@@ -91,6 +91,9 @@ class App extends React.Component {
       } else {
         this.player.pause()
       }
+    },
+    clearPlayList: () => {
+      services.playerService.clearPlayList()
     }
   }
 
