@@ -6,7 +6,7 @@ import './style.scss'
 class ProgramTitlesRow extends React.Component {
   handleClick = (program) => {
     const { name } = program
-    this.props.history.push(`/programs/${name}`)
+    this.props.history.push(`/programs/${name}/1`)
   }
 
   render() {

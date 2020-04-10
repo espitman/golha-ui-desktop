@@ -76,4 +76,57 @@ export class PersonService {
     }
     return (await getFromLocalDb()) || (await getFromServer())
   }
+
+  async getAllRoles() {
+    this.db = await this.connectToDb()
+    const getFromLocalDb = async () => {
+      if (!this.database.isEnable()) {
+        return null
+      }
+      const roles = await this.db.roles.find().exec()
+      return roles.length ? roles.map((role) => role.toJSON()) : null
+    }
+    const getFromServer = async () => {
+      const {
+        data: { payload: roles }
+      } = await axios.get(`${config.get('api.v1.url')}/person`)
+      const promises = []
+      const result = []
+      Object.keys(roles).forEach((role) => {
+        const persons = roles[role]
+        const title = this.getRoleTitle(role)
+        let row = {}
+        if (role !== 'musicians') {
+          row = { name: role, title, persons }
+        } else {
+          const instruments = []
+          Object.keys(persons).forEach((instrument) => {
+            instruments.push({ name: instrument, persons: persons[instrument] })
+          })
+          row = { name: role, title, instruments }
+        }
+        result.push(row)
+        promises.push(this.db.roles.insert(row))
+      })
+      try {
+        await Promise.all(promises)
+      } catch (error) {
+        // do nothing
+      }
+      return result
+    }
+    return (await getFromLocalDb()) || (await getFromServer())
+  }
+
+  getRoleTitle(name) {
+    const titles = {
+      singer: 'خواننده',
+      poet: 'شاعر',
+      narrator: 'گوینده',
+      arrangement: 'تنظیم',
+      composer: 'آهنگساز',
+      musicians: 'نوازنده'
+    }
+    return titles[name]
+  }
 }

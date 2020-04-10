@@ -25,6 +25,15 @@ class TrackRow extends React.Component {
     this.props.player.pause()
   }
 
+  goToSingerScreen = (person) => {
+    const { _id, name } = person
+    this.props.history.push(`/person/${_id}/${name}/خواننده`)
+  }
+
+  goToDastgahScreen = (title) => {
+    this.props.history.push(`/dastgah/${title}`)
+  }
+
   render() {
     const {
       index,
@@ -56,10 +65,20 @@ class TrackRow extends React.Component {
           <div className="track-row-title">{title}</div>
           <div className="track-row-singers">
             {singer.map((s) => (
-              <span key={`singer_${s._id}`}>{s.name}</span>
+              <span
+                key={`singer_${s._id}`}
+                onClick={() => this.goToSingerScreen(s)}
+              >
+                {s.name}
+              </span>
             ))}
           </div>
-          <div className="track-row-dastgah">{dastgah}</div>
+          <div
+            className="track-row-dastgah"
+            onClick={() => this.goToDastgahScreen(dastgah)}
+          >
+            {dastgah}
+          </div>
           <div className="track-row-duration">
             {moment.duration(duration, 'second').format('mm:ss')}
           </div>
@@ -81,9 +100,11 @@ class TrackRow extends React.Component {
           </div>
         </div>
         <ContextMenu id={`some_unique_identifier-${id}`} rtl={true}>
-          <MenuItem data={{ foo: 'bar' }} onClick={this.handleClick}>
-            پخش
-          </MenuItem>
+          {currentTrack._id === id && isPlaying ? (
+            <MenuItem onClick={this.pause}>توقف پخش</MenuItem>
+          ) : (
+            <MenuItem onClick={this.play}>پخش</MenuItem>
+          )}
           <MenuItem data={{ foo: 'bar' }} onClick={this.handleClick}>
             افزودن به صف در حال پخش
           </MenuItem>

@@ -9,14 +9,15 @@ import './style.scss'
 
 class PersonColumn extends React.Component {
   handleClick = (person) => {
-    this.props.changePerson(person)
+    const { id, name } = person
+    this.props.history.push(`/person/${id}/${name}/خواننده?id=${id}`)
   }
 
   render() {
     const { id, style, persons } = this.props
     return (
       <div id={id} className="person-column" style={style}>
-        <h3>سایر خواننده‌ها</h3>
+        <h3>خواننده‌ها</h3>
         <ul>
           {persons.map((person, i) => {
             return (

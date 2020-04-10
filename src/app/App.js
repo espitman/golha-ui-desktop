@@ -50,7 +50,8 @@ class App extends React.Component {
     // Don`t remove it, its for fix production first navigation
     setTimeout(() => {
       // document.querySelector('a#homeLink').click()
-    }, 20)
+    }, 5)
+    this.disableKeys()
   }
 
   player = {
@@ -85,6 +86,18 @@ class App extends React.Component {
     }
   }
 
+  disableKeys = () => {
+    window.addEventListener(
+      'keydown',
+      function (e) {
+        if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+          e.preventDefault()
+        }
+      },
+      false
+    )
+  }
+
   render() {
     const { showPlayer, isPlaying, currentTrack } = this.state
     return (
@@ -96,7 +109,7 @@ class App extends React.Component {
             <Route exact path="/">
               <HomeScreen services={services} />
             </Route>
-            <Route path="/programs/:name?">
+            <Route path="/programs/:name?/:page?">
               <ProgramsScreen
                 services={services}
                 player={this.player}
@@ -104,8 +117,13 @@ class App extends React.Component {
                 isPlaying={isPlaying}
               />
             </Route>
-            <Route path="/artists">
-              <ArtistsScreen services={services} />
+            <Route path="/artists/:title?/:instrument?">
+              <ArtistsScreen
+                services={services}
+                player={this.player}
+                currentTrack={currentTrack}
+                isPlaying={isPlaying}
+              />
             </Route>
             <Route path="/archive">
               <ArchiveScreens services={services} />
@@ -124,7 +142,7 @@ class App extends React.Component {
                 isPlaying={isPlaying}
               />
             </Route>
-            <Route path="/dastgah/:title?">
+            <Route path="/dastgah/:title?/:page?">
               <DastgahScreen
                 services={services}
                 player={this.player}

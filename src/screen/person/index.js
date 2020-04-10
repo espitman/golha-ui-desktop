@@ -17,7 +17,9 @@ class PersonScreen extends React.Component {
 
     this.state = {
       person: {},
-      loading: true
+      role: this.props.match.params.role,
+      loading: true,
+      show: false
     }
   }
 
@@ -27,17 +29,26 @@ class PersonScreen extends React.Component {
     window.addEventListener('scroll', this.handleScroll, true)
   }
 
+  // eslint-disable-next-line react/no-deprecated
+  componentWillReceiveProps(newProps) {
+    if (newProps.match.params.id !== this.props.match.params.id) {
+      this.changePerson({ id: newProps.match.params.id })
+    }
+  }
+
   getPersonData = async (personId) => {
     const [person, singers] = await Promise.all([
       this.personService.getPersonTracks(personId),
       this.personService.getAllByRole('singer')
     ])
-    this.setState({ person, singers, loading: false })
+    this.setState({ person, singers, show: true, loading: false })
   }
 
   changePerson = async (person) => {
     const { id } = person
-    this.getPersonData(id)
+    this.setState({ show: false })
+    await this.getPersonData(id)
+    this.setState({ role: 'خواننده' })
     setTimeout(() => {
       document.querySelector('.box-main-right').scrollTo(0, 0)
     }, 100)
@@ -54,11 +65,12 @@ class PersonScreen extends React.Component {
   }
 
   render() {
-    const { role } = this.props.match.params
     const {
       singers,
       person: { name, image, tracks },
-      loading
+      role,
+      loading,
+      show
     } = this.state
     return (
       <div id="screen-person">
@@ -67,45 +79,48 @@ class PersonScreen extends React.Component {
         ) : (
           <div className={'box-main'}>
             <div className={'box-main-left'}>
-              <PersonColumn
-                persons={singers}
-                changePerson={this.changePerson}
-              />
+              <PersonColumn persons={singers} />
             </div>
             <div className={'box-main-right'}>
-              <div className={'box-name'}>
-                <div className={'box-name-image'}>
-                  <div id="avatar" className={'box-name-image-frame'}>
-                    {!loading && image ? (
-                      <LazyLoadImage
-                        alt={name}
-                        effect="blur"
-                        src={`${config.get('path.image.url')}${image}`}
-                      />
-                    ) : (
-                      <i className="fal fa-microphone-stand no-img"></i>
-                    )}
+              {show ? (
+                <>
+                  <div className={'box-name'}>
+                    <div className={'box-name-image'}>
+                      <div id="avatar" className={'box-name-image-frame'}>
+                        {!loading && image ? (
+                          <LazyLoadImage
+                            alt={name}
+                            effect="blur"
+                            src={`${config.get('path.image.url')}${image}`}
+                          />
+                        ) : (
+                          <i className="fal fa-microphone-stand no-img"></i>
+                        )}
+                      </div>
+                    </div>
+                    <div className={'box-name-text'}>
+                      <h1>{name}</h1>
+                      <h2>{role}</h2>
+                    </div>
                   </div>
-                </div>
-                <div className={'box-name-text'}>
-                  <h1>{name}</h1>
-                  <h2>{role}</h2>
-                </div>
-              </div>
-              <div className={'box-tracks'}>
-                {tracks.map((track, i) => {
-                  return (
-                    <TrackRow
-                      key={`track_${i}`}
-                      index={i}
-                      track={track}
-                      player={this.props.player}
-                      currentTrack={this.props.currentTrack}
-                      isPlaying={this.props.isPlaying}
-                    />
-                  )
-                })}
-              </div>
+                  <div className={'box-tracks'}>
+                    {tracks.map((track, i) => {
+                      return (
+                        <TrackRow
+                          key={`track_${i}`}
+                          index={i}
+                          track={track}
+                          player={this.props.player}
+                          currentTrack={this.props.currentTrack}
+                          isPlaying={this.props.isPlaying}
+                        />
+                      )
+                    })}
+                  </div>
+                </>
+              ) : (
+                <Loading />
+              )}
             </div>
           </div>
         )}

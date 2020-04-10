@@ -15,7 +15,7 @@ class DastgahScreen extends React.Component {
       loading: true,
       active: 0,
       dastgahs: [],
-      page: 1,
+      page: +props.match.params.page || 1,
       limit: 20
     }
   }
@@ -44,16 +44,40 @@ class DastgahScreen extends React.Component {
     })
   }
 
-  setActiveTab = (active) => {
+  // eslint-disable-next-line react/no-deprecated
+  componentWillReceiveProps(newProps) {
+    if (newProps.match.params.title !== this.props.match.params.title) {
+      const dastgahTitle = newProps.match.params.title
+      const page = +newProps.match.params.page || 1
+      const active = dastgahTitle
+        ? findIndex(this.state.dastgahs, { title: dastgahTitle })
+        : 0
+      this.setActiveTab(active, page)
+    } else if (newProps.match.params.page !== this.props.match.params.page) {
+      this.setPage(+newProps.match.params.page)
+    }
+  }
+
+  goToTab = (dastgah) => {
+    const { title } = dastgah
+    this.props.history.push(`/dastgah/${title}/1`)
+  }
+
+  setActiveTab = (active, page) => {
     this.resetScroll()
     this.setState({
-      page: 1,
+      page,
       active
     })
   }
 
-  goToPage = (page) => {
+  goToPage = (dastgah, page) => {
     this.resetScroll()
+    const { title } = dastgah
+    this.props.history.push(`/dastgah/${title}/${page}`)
+  }
+
+  setPage = (page) => {
     this.setState({ page })
   }
 
@@ -76,7 +100,7 @@ class DastgahScreen extends React.Component {
                     <li
                       key={`dastgah_${i}`}
                       className={active === i ? 'active' : ''}
-                      onClick={() => this.setActiveTab(i, dastgah)}
+                      onClick={() => this.goToTab(dastgah)}
                     >
                       {dastgah.title}
                     </li>
@@ -118,7 +142,7 @@ class DastgahScreen extends React.Component {
                           <li
                             className={i + 1 === page ? 'active' : ''}
                             key={`page_${i}`}
-                            onClick={() => this.goToPage(i + 1)}
+                            onClick={() => this.goToPage(dastgah, i + 1)}
                           >
                             {i + 1}
                           </li>

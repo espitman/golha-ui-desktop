@@ -16,7 +16,7 @@ class ProgramsScreen extends React.Component {
       loading: true,
       programs: [],
       active: 0,
-      page: 1,
+      page: +props.match.params.page || 1,
       limit: 20
     }
   }
@@ -43,16 +43,40 @@ class ProgramsScreen extends React.Component {
     })
   }
 
-  setActiveTab = (active) => {
+  // eslint-disable-next-line react/no-deprecated
+  componentWillReceiveProps(newProps) {
+    if (newProps.match.params.name !== this.props.match.params.name) {
+      const programName = newProps.match.params.name
+      const page = +newProps.match.params.page || 1
+      const active = programName
+        ? findIndex(this.state.programs, { name: programName })
+        : 0
+      this.setActiveTab(active, page)
+    } else if (newProps.match.params.page !== this.props.match.params.page) {
+      this.setPage(+newProps.match.params.page)
+    }
+  }
+
+  goToTab = (program) => {
+    const { name } = program
+    this.props.history.push(`/programs/${name}/1`)
+  }
+
+  setActiveTab = (active, page) => {
     this.resetScroll()
     this.setState({
-      page: 1,
+      page,
       active
     })
   }
 
-  goToPage = (page) => {
+  goToPage = (program, page) => {
     this.resetScroll()
+    const { name } = program
+    this.props.history.push(`/programs/${name}/${page}`)
+  }
+
+  setPage = (page) => {
     this.setState({ page })
   }
 
@@ -75,7 +99,7 @@ class ProgramsScreen extends React.Component {
                     <li
                       key={`program_${i}`}
                       className={active === i ? 'active' : ''}
-                      onClick={() => this.setActiveTab(i, program)}
+                      onClick={() => this.goToTab(program)}
                     >
                       {program.title}
                     </li>
@@ -117,7 +141,7 @@ class ProgramsScreen extends React.Component {
                           <li
                             className={i + 1 === page ? 'active' : ''}
                             key={`page_${i}`}
-                            onClick={() => this.goToPage(i + 1)}
+                            onClick={() => this.goToPage(program, i + 1)}
                           >
                             {i + 1}
                           </li>
