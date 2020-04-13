@@ -15,14 +15,19 @@ momentDurationFormatSetup(moment)
 class TrackRow extends React.Component {
   constructor(props) {
     super(props)
+    this.player = this.props.player
+    this.playerService = this.props.services.playerService
+    this.state = {
+      isInPlayList: this.playerService.isInPlayList(this.props.track._id)
+    }
   }
 
   play = () => {
-    this.props.player.play(this.props.track)
+    this.player.play(this.props.track)
   }
 
   pause = () => {
-    this.props.player.pause()
+    this.player.pause()
   }
 
   goToSingerScreen = (person) => {
@@ -34,6 +39,16 @@ class TrackRow extends React.Component {
     this.props.history.push(`/dastgah/${title}`)
   }
 
+  addToPlayList = () => {
+    const isInPlayList = this.player.addToPlayList(this.props.track)
+    this.setState({ isInPlayList })
+  }
+
+  removeFromPlayList = () => {
+    const isInPlayList = this.player.removeFromPlayList(this.props.track)
+    this.setState({ isInPlayList })
+  }
+
   render() {
     const {
       index,
@@ -42,6 +57,7 @@ class TrackRow extends React.Component {
       isPlaying,
       type = 'small'
     } = this.props
+    const { isInPlayList } = this.state
     return (
       <>
         <div
@@ -105,16 +121,19 @@ class TrackRow extends React.Component {
           ) : (
             <MenuItem onClick={this.play}>پخش</MenuItem>
           )}
-          <MenuItem data={{ foo: 'bar' }} onClick={this.handleClick}>
-            افزودن به صف در حال پخش
-          </MenuItem>
-          <MenuItem data={{ foo: 'bar' }} onClick={this.handleClick}>
-            افزودن به لیست
-          </MenuItem>
+          {!isInPlayList ? (
+            <MenuItem onClick={this.addToPlayList}>
+              افزودن به صف در حال پخش
+            </MenuItem>
+          ) : (
+            <MenuItem onClick={this.removeFromPlayList}>
+              حذف از صف در حال پخش
+            </MenuItem>
+          )}
+
+          <MenuItem onClick={this.handleClick}>افزودن به لیست</MenuItem>
           <MenuItem divider />
-          <MenuItem data={{ foo: 'bar' }} onClick={this.handleClick}>
-            مشاهده مشخصات
-          </MenuItem>
+          <MenuItem onClick={this.handleClick}>مشاهده مشخصات</MenuItem>
         </ContextMenu>
       </>
     )

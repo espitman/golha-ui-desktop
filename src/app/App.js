@@ -83,6 +83,32 @@ class App extends React.Component {
         showPlayer: services.playerService.visible,
         isPlaying: services.playerService.isPlaying
       })
+    },
+    playNextTrack: () => {
+      const nextTrack = services.playerService.getNextTrack()
+      if (nextTrack) {
+        this.player.play(nextTrack)
+      } else {
+        this.player.pause()
+      }
+    },
+    clearPlayList: () => {
+      services.playerService.clearPlayList()
+    },
+    addToPlayList: (track) => {
+      const isInPlayList = services.playerService.addToPlayList(track)
+      if (
+        !this.state.isPlaying &&
+        services.playerService.playList.length === 1
+      ) {
+        this.player.play(track)
+      }
+      this.setState({ playlist: services.playerService.playList })
+      return isInPlayList
+    },
+    removeFromPlayList: (track) => {
+      this.setState({ playlist: services.playerService.playList })
+      return services.playerService.removeFromPlayList(track)
     }
   }
 
@@ -99,7 +125,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { showPlayer, isPlaying, currentTrack } = this.state
+    const { showPlayer, isPlaying, currentTrack, playlist } = this.state
     return (
       <Router>
         <TitleBar />
@@ -157,6 +183,7 @@ class App extends React.Component {
           track={currentTrack}
           isPlaying={isPlaying}
           player={this.player}
+          playlist={playlist}
         />
       </Router>
     )

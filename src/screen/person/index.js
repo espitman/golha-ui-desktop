@@ -109,6 +109,7 @@ class PersonScreen extends React.Component {
                         <TrackRow
                           key={`track_${i}`}
                           index={i}
+                          services={this.props.services}
                           track={track}
                           player={this.props.player}
                           currentTrack={this.props.currentTrack}

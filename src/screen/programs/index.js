@@ -123,6 +123,7 @@ class ProgramsScreen extends React.Component {
                           <TrackRow
                             key={`track_${i}`}
                             index={(page - 1) * limit + i}
+                            services={this.props.services}
                             type="large"
                             track={track}
                             player={this.props.player}
