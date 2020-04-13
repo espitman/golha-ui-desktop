@@ -1,7 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import $ from 'jquery'
 import config from '../../modules/config'
 
 import './style.scss'
@@ -57,9 +56,9 @@ class PersonScreen extends React.Component {
     const target = e.target.className
     const scrollTop = e.target.scrollTop
     if (target === 'box-main-right' && scrollTop > 40) {
-      $('.box-name').addClass('small')
+      this.nameBox.setAttribute('class', 'box-name small')
     } else {
-      $('.box-name').removeClass('small')
+      this.nameBox.setAttribute('class', 'box-name')
     }
   }
 
@@ -83,7 +82,10 @@ class PersonScreen extends React.Component {
             <div className={'box-main-right'}>
               {show ? (
                 <>
-                  <div className={'box-name'}>
+                  <div
+                    className={'box-name'}
+                    ref={(ref) => (this.nameBox = ref)}
+                  >
                     <div className={'box-name-image'}>
                       <div id="avatar" className={'box-name-image-frame'}>
                         {!loading && image ? (
