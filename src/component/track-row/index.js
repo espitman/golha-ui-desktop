@@ -16,9 +16,8 @@ class TrackRow extends React.Component {
   constructor(props) {
     super(props)
     this.player = this.props.player
-    this.playerService = this.props.services.playerService
     this.state = {
-      isInPlayList: this.playerService.isInPlayList(this.props.track._id)
+      isInPlayList: this.player.isInPlayList(this.props.track._id)
     }
   }
 

@@ -26,12 +26,13 @@ import SettingsScreen from '../screen/settings'
 import PersonScreen from '../screen/person'
 import DastgahScreen from '../screen/dastgah'
 
+import PlayerProvider from '../provider/player'
+
 const database = new Database()
 const services = {
   programService: new ProgramService(database),
   personService: new PersonService(database),
-  dastgahService: new DastgahService(database),
-  playerService: new PlayerService()
+  dastgahService: new DastgahService(database)
 }
 
 storage.clear()
@@ -44,6 +45,10 @@ class App extends React.Component {
       isPlaying: false,
       currentTrack: {}
     }
+    this.player = new PlayerProvider({
+      PlayerService,
+      stateSetter: this.stateSetter
+    })
   }
 
   componentDidMount() {
@@ -54,62 +59,8 @@ class App extends React.Component {
     this.disableKeys()
   }
 
-  player = {
-    play: (track) => {
-      services.playerService.play(track)
-      this.setState({
-        currentTrack: services.playerService.track,
-        showPlayer: services.playerService.visible,
-        isPlaying: services.playerService.isPlaying
-      })
-    },
-    pause: () => {
-      services.playerService.pause()
-      this.setState({
-        isPlaying: services.playerService.isPlaying
-      })
-    },
-    togglePlay: () => {
-      services.playerService.togglePlay()
-      const isPlaying = services.playerService.isPlaying
-      this.setState({
-        isPlaying
-      })
-      return isPlaying
-    },
-    hide: () => {
-      services.playerService.hide()
-      this.setState({
-        showPlayer: services.playerService.visible,
-        isPlaying: services.playerService.isPlaying
-      })
-    },
-    playNextTrack: () => {
-      const nextTrack = services.playerService.getNextTrack()
-      if (nextTrack) {
-        this.player.play(nextTrack)
-      } else {
-        this.player.pause()
-      }
-    },
-    clearPlayList: () => {
-      services.playerService.clearPlayList()
-    },
-    addToPlayList: (track) => {
-      const isInPlayList = services.playerService.addToPlayList(track)
-      if (
-        !this.state.isPlaying &&
-        services.playerService.playList.length === 1
-      ) {
-        this.player.play(track)
-      }
-      this.setState({ playlist: services.playerService.playList })
-      return isInPlayList
-    },
-    removeFromPlayList: (track) => {
-      this.setState({ playlist: services.playerService.playList })
-      return services.playerService.removeFromPlayList(track)
-    }
+  stateSetter = (states) => {
+    this.setState(states)
   }
 
   disableKeys = () => {
