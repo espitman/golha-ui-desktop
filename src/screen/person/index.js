@@ -53,6 +53,9 @@ class PersonScreen extends React.Component {
   }
 
   handleScroll = (e) => {
+    if (!this.nameBox) {
+      return false
+    }
     const target = e.target.className
     const scrollTop = e.target.scrollTop
     if (target === 'box-main-right' && scrollTop > 40) {
