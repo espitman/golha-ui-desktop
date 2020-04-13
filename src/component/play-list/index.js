@@ -39,6 +39,10 @@ class PlayList extends React.Component {
     this.props.history.push(`/dastgah/${title}`)
   }
 
+  remove = (track) => {
+    this.player.removeFromPlayList(track)
+  }
+
   render() {
     const { show = false, playlist = [], currentTrack, isPlaying } = this.props
     const { animated } = this.state
@@ -88,6 +92,12 @@ class PlayList extends React.Component {
                 </div>
                 <div className={'pl-track-duration'}>
                   {moment.duration(duration, 'second').format('mm:ss')}
+                </div>
+                <div className={'pl-track-remove'}>
+                  <i
+                    className="fal fa-times-circle"
+                    onClick={() => this.remove(track)}
+                  ></i>
                 </div>
               </li>
             )

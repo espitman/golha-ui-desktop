@@ -1,6 +1,5 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
-import $ from 'jquery'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import moment from 'moment'
 import momentDurationFormatSetup from 'moment-duration-format'
@@ -20,6 +19,7 @@ class Player extends React.Component {
   constructor(props) {
     super(props)
     this.player = props.player
+
     this.state = {
       currentTime: 0,
       volume: 0,
@@ -29,8 +29,7 @@ class Player extends React.Component {
   }
 
   componentDidMount() {
-    this.media = $('#media')
-    this.audio = $('#media')[0]
+    this.audio = this.media
     this.setCurrentTime()
     this.setCurrentVolume()
     this.setEnded()
@@ -44,7 +43,7 @@ class Player extends React.Component {
       this.audio.pause()
       this.audio.currentTime = 0
       setTimeout(() => {
-        this.media.attr('src', src)
+        this.audio.setAttribute('src', src)
         this.audio.play()
       })
     } else if (isPlaying !== prevProps.isPlaying) {
@@ -69,7 +68,7 @@ class Player extends React.Component {
   }
 
   onAfterChange = () => {
-    $('a#homeLink').focus() // prevent slide handle keyboard
+    document.querySelector('a#homeLink').focus()
     this.setState({ step: 10 })
   }
 
@@ -166,7 +165,7 @@ class Player extends React.Component {
     return (
       <Hotkeys keyName="space,up,right,down,left" onKeyDown={this.onKeyDown}>
         <div id="player" className={show ? 'show' : ''}>
-          <audio id="media">
+          <audio id="media" ref={(ref) => (this.media = ref)}>
             <source type="audio/mpeg" />
           </audio>
           {this.audio && (
