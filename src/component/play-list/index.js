@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import moment from 'moment'
 import momentDurationFormatSetup from 'moment-duration-format'
 
@@ -6,7 +7,7 @@ import './style.scss'
 
 momentDurationFormatSetup(moment)
 
-export default class PlayList extends React.Component {
+class PlayList extends React.Component {
   constructor(props) {
     super(props)
     this.player = this.props.player
@@ -96,3 +97,5 @@ export default class PlayList extends React.Component {
     )
   }
 }
+
+export default withRouter(PlayList)

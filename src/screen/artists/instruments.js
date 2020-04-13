@@ -21,12 +21,11 @@ class ArtistInstruments extends React.Component {
     }
   }
 
-  // eslint-disable-next-line react/no-deprecated
-  componentWillReceiveProps(newProps) {
+  componentDidUpdate(prevProps) {
     if (
-      newProps.match.params.instrument !== this.props.match.params.instrument
+      prevProps.match.params.instrument !== this.props.match.params.instrument
     ) {
-      const instrument = newProps.match.params.instrument
+      const instrument = this.props.match.params.instrument
       const active = instrument
         ? findIndex(this.props.role.instruments, { name: instrument })
         : 0

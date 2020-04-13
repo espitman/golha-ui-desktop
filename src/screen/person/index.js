@@ -29,10 +29,9 @@ class PersonScreen extends React.Component {
     window.addEventListener('scroll', this.handleScroll, true)
   }
 
-  // eslint-disable-next-line react/no-deprecated
-  componentWillReceiveProps(newProps) {
-    if (newProps.match.params.id !== this.props.match.params.id) {
-      this.changePerson({ id: newProps.match.params.id })
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      this.changePerson({ id: this.props.match.params.id })
     }
   }
 

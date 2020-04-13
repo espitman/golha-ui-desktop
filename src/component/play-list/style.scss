@@ -45,6 +45,16 @@
       .pl-track-singers {
         flex: 3;
         text-align: right;
+        span {
+          &::after {
+            content: '، ';
+          }
+          &:last-child {
+            &::after {
+              content: '';
+            }
+          }
+        }
       }
       .pl-track-dastgah {
         flex: 1;

@@ -36,19 +36,19 @@ class Player extends React.Component {
     this.setEnded()
   }
 
-  // eslint-disable-next-line react/no-deprecated
-  componentWillReceiveProps(newProps) {
-    const { track } = newProps
+  componentDidUpdate(prevProps) {
+    const newProps = this.props
+    const { track, isPlaying } = newProps
     const src = `${config.get('path.music.url')}/${track.file}`
-    if (!this.props.track || track._id !== this.props.track._id) {
+    if (!prevProps.track || track._id !== prevProps.track._id) {
       this.audio.pause()
       this.audio.currentTime = 0
       setTimeout(() => {
         this.media.attr('src', src)
         this.audio.play()
       })
-    } else if (newProps.isPlaying !== this.props.isPlaying) {
-      !newProps.isPlaying ? this.audio.pause() : this.audio.play()
+    } else if (isPlaying !== prevProps.isPlaying) {
+      !isPlaying ? this.audio.pause() : this.audio.play()
     }
   }
 

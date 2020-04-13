@@ -43,17 +43,16 @@ class ProgramsScreen extends React.Component {
     })
   }
 
-  // eslint-disable-next-line react/no-deprecated
-  componentWillReceiveProps(newProps) {
-    if (newProps.match.params.name !== this.props.match.params.name) {
-      const programName = newProps.match.params.name
-      const page = +newProps.match.params.page || 1
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.name !== this.props.match.params.name) {
+      const programName = this.props.match.params.name
+      const page = +this.props.match.params.page || 1
       const active = programName
         ? findIndex(this.state.programs, { name: programName })
         : 0
       this.setActiveTab(active, page)
-    } else if (newProps.match.params.page !== this.props.match.params.page) {
-      this.setPage(+newProps.match.params.page)
+    } else if (prevProps.match.params.page !== this.props.match.params.page) {
+      this.setPage(+this.props.match.params.page)
     }
   }
 
