@@ -8,7 +8,6 @@ import { Database } from '../modules/db'
 import { ProgramService } from '../service/program'
 import { PersonService } from '../service/person'
 import { DastgahService } from '../service/dastgah'
-import { PlayerService } from '../service/player'
 
 import './App.scss'
 import '../common/css/context-menu.scss'
@@ -46,7 +45,6 @@ class App extends React.Component {
       currentTrack: {}
     }
     this.player = new PlayerProvider({
-      PlayerService,
       stateSetter: this.stateSetter
     })
   }
