@@ -59,6 +59,7 @@ export default class PlayerProvider {
 
   clearPlayList = () => {
     this.playerService.clearPlayList()
+    this.setState({ playlist: this.playerService.playList })
   }
 
   addToPlayList = (track) => {

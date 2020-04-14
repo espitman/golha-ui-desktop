@@ -277,6 +277,7 @@ class Player extends React.Component {
             currentTrack={this.props.track}
             player={this.player}
             isPlaying={isPlaying}
+            togglePlayList={this.togglePlayList}
           />
         )}
       </Hotkeys>

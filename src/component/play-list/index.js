@@ -43,6 +43,12 @@ class PlayList extends React.Component {
     this.player.removeFromPlayList(track)
   }
 
+  clear = () => {
+    this.pause()
+    this.player.clearPlayList()
+    setTimeout(this.props.togglePlayList, 300)
+  }
+
   render() {
     const { show = false, playlist = [], currentTrack, isPlaying } = this.props
     const { animated } = this.state
@@ -52,6 +58,16 @@ class PlayList extends React.Component {
         ${animated ? 'animated ' : ''} 
         ${show ? 'slideInUp' : 'slideOutDown'}`}
       >
+        <div className="player-btns">
+          <div className="player-btns-btn" onClick={this.props.togglePlayList}>
+            <i className="fal fa-chevron-down"></i>
+            <span>بستن</span>
+          </div>
+          <div className="player-btns-btn" onClick={this.clear}>
+            <i className="fal fa-trash"></i>
+            <span>پاک کردن لیست</span>
+          </div>
+        </div>
         <ul>
           {playlist.map((track, i) => {
             const { _id, title, singer, dastgah, duration } = track
