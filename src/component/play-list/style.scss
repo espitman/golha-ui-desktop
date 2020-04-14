@@ -1,6 +1,5 @@
 .play-list {
   width: 100%;
-  height: 200px;
   background: #090909;
   position: absolute;
   left: 0;
@@ -44,6 +43,8 @@
     list-style: none;
     margin: o;
     padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
     li.pl-track {
       color: #ffffff;
       display: flex;
