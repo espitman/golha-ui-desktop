@@ -29,7 +29,6 @@ class Player extends React.Component {
   }
 
   componentDidMount() {
-    this.audio = this.media
     this.setCurrentTime()
     this.setCurrentVolume()
     this.setEnded()
@@ -165,7 +164,7 @@ class Player extends React.Component {
     return (
       <Hotkeys keyName="space,up,right,down,left" onKeyDown={this.onKeyDown}>
         <div id="player" className={show ? 'show' : ''}>
-          <audio id="media" ref={(ref) => (this.media = ref)}>
+          <audio id="media" ref={(ref) => (this.audio = ref)}>
             <source type="audio/mpeg" />
           </audio>
           {this.audio && (
