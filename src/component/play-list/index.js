@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import moment from 'moment'
 import momentDurationFormatSetup from 'moment-duration-format'
 
@@ -6,7 +7,7 @@ import './style.scss'
 
 momentDurationFormatSetup(moment)
 
-export default class PlayList extends React.Component {
+class PlayList extends React.Component {
   constructor(props) {
     super(props)
     this.player = this.props.player
@@ -38,6 +39,16 @@ export default class PlayList extends React.Component {
     this.props.history.push(`/dastgah/${title}`)
   }
 
+  remove = (track) => {
+    this.player.removeFromPlayList(track)
+  }
+
+  clear = () => {
+    this.pause()
+    this.player.clearPlayList()
+    setTimeout(this.props.togglePlayList, 300)
+  }
+
   render() {
     const { show = false, playlist = [], currentTrack, isPlaying } = this.props
     const { animated } = this.state
@@ -47,6 +58,16 @@ export default class PlayList extends React.Component {
         ${animated ? 'animated ' : ''} 
         ${show ? 'slideInUp' : 'slideOutDown'}`}
       >
+        <div className="player-btns">
+          <div className="player-btns-btn" onClick={this.props.togglePlayList}>
+            <i className="fal fa-chevron-down"></i>
+            <span>بستن</span>
+          </div>
+          <div className="player-btns-btn" onClick={this.clear}>
+            <i className="fal fa-trash"></i>
+            <span>پاک کردن لیست</span>
+          </div>
+        </div>
         <ul>
           {playlist.map((track, i) => {
             const { _id, title, singer, dastgah, duration } = track
@@ -88,6 +109,12 @@ export default class PlayList extends React.Component {
                 <div className={'pl-track-duration'}>
                   {moment.duration(duration, 'second').format('mm:ss')}
                 </div>
+                <div className={'pl-track-remove'}>
+                  <i
+                    className="fal fa-times-circle"
+                    onClick={() => this.remove(track)}
+                  ></i>
+                </div>
               </li>
             )
           })}
@@ -96,3 +123,5 @@ export default class PlayList extends React.Component {
     )
   }
 }
+
+export default withRouter(PlayList)

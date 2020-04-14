@@ -29,10 +29,9 @@ class ArtistsScreen extends React.Component {
     this.setState({ roles, active, instrument, loading: false })
   }
 
-  // eslint-disable-next-line react/no-deprecated
-  componentWillReceiveProps(newProps) {
-    if (newProps.match.params.title !== this.props.match.params.title) {
-      const title = newProps.match.params.title
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.title !== this.props.match.params.title) {
+      const title = this.props.match.params.title
       const active = title ? findIndex(this.state.roles, { title }) : 0
       this.setActiveTab(active)
     }

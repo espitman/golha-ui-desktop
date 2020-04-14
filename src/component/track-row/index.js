@@ -56,7 +56,7 @@ class TrackRow extends React.Component {
       isPlaying,
       type = 'small'
     } = this.props
-    const { isInPlayList } = this.state
+    const isInPlayList = this.player.isInPlayList(id)
     return (
       <>
         <div

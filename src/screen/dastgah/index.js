@@ -44,17 +44,16 @@ class DastgahScreen extends React.Component {
     })
   }
 
-  // eslint-disable-next-line react/no-deprecated
-  componentWillReceiveProps(newProps) {
-    if (newProps.match.params.title !== this.props.match.params.title) {
-      const dastgahTitle = newProps.match.params.title
-      const page = +newProps.match.params.page || 1
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.title !== this.props.match.params.title) {
+      const dastgahTitle = this.props.match.params.title
+      const page = +this.props.match.params.page || 1
       const active = dastgahTitle
         ? findIndex(this.state.dastgahs, { title: dastgahTitle })
         : 0
       this.setActiveTab(active, page)
-    } else if (newProps.match.params.page !== this.props.match.params.page) {
-      this.setPage(+newProps.match.params.page)
+    } else if (prevProps.match.params.page !== this.props.match.params.page) {
+      this.setPage(+this.props.match.params.page)
     }
   }
 

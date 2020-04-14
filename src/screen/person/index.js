@@ -1,7 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import $ from 'jquery'
 import config from '../../modules/config'
 
 import './style.scss'
@@ -29,10 +28,9 @@ class PersonScreen extends React.Component {
     window.addEventListener('scroll', this.handleScroll, true)
   }
 
-  // eslint-disable-next-line react/no-deprecated
-  componentWillReceiveProps(newProps) {
-    if (newProps.match.params.id !== this.props.match.params.id) {
-      this.changePerson({ id: newProps.match.params.id })
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      this.changePerson({ id: this.props.match.params.id })
     }
   }
 
@@ -55,12 +53,15 @@ class PersonScreen extends React.Component {
   }
 
   handleScroll = (e) => {
+    if (!this.nameBox) {
+      return false
+    }
     const target = e.target.className
     const scrollTop = e.target.scrollTop
     if (target === 'box-main-right' && scrollTop > 40) {
-      $('.box-name').addClass('small')
+      this.nameBox.setAttribute('class', 'box-name small')
     } else {
-      $('.box-name').removeClass('small')
+      this.nameBox.setAttribute('class', 'box-name')
     }
   }
 
@@ -84,7 +85,10 @@ class PersonScreen extends React.Component {
             <div className={'box-main-right'}>
               {show ? (
                 <>
-                  <div className={'box-name'}>
+                  <div
+                    className={'box-name'}
+                    ref={(ref) => (this.nameBox = ref)}
+                  >
                     <div className={'box-name-image'}>
                       <div id="avatar" className={'box-name-image-frame'}>
                         {!loading && image ? (
@@ -114,6 +118,7 @@ class PersonScreen extends React.Component {
                           player={this.props.player}
                           currentTrack={this.props.currentTrack}
                           isPlaying={this.props.isPlaying}
+                          playlist={this.props.playlist}
                         />
                       )
                     })}

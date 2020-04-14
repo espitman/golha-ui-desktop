@@ -11,6 +11,11 @@ export default class PlayerProvider {
   }
 
   play = (track) => {
+    const isInPlayList = this.playerService.isInPlayList(track._id)
+    if (!isInPlayList) {
+      this.clearPlayList()
+      this.addToPlayList(track)
+    }
     this.playerService.play(track)
     this.setState({
       currentTrack: this.playerService.track,
@@ -54,6 +59,7 @@ export default class PlayerProvider {
 
   clearPlayList = () => {
     this.playerService.clearPlayList()
+    this.setState({ playlist: this.playerService.playList })
   }
 
   addToPlayList = (track) => {
