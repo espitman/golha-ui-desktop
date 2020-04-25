@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import storage from '../modules/storage'
 
 import { Database } from '../modules/db'
+import { Socket } from '../modules/socket'
+
 import { ProgramService } from '../service/program'
 import { PersonService } from '../service/person'
 import { DastgahService } from '../service/dastgah'
@@ -28,6 +30,7 @@ import DastgahScreen from '../screen/dastgah'
 import PlayerProvider from '../provider/player'
 
 const database = new Database()
+const socket = new Socket()
 const services = {
   programService: new ProgramService(database),
   personService: new PersonService(database),
@@ -45,7 +48,8 @@ class App extends React.Component {
       currentTrack: {}
     }
     this.player = new PlayerProvider({
-      stateSetter: this.stateSetter
+      stateSetter: this.stateSetter,
+      socket
     })
   }
 

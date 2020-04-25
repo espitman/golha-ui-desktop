@@ -3,6 +3,7 @@ import { findIndex } from 'lodash'
 export default class PlayerProvider {
   constructor(props) {
     this.stateSetter = props.stateSetter
+    this.socket = props.socket
     this.visible = false
     this.isPlaying = false
     this.track = {}
@@ -37,6 +38,8 @@ export default class PlayerProvider {
       showPlayer: this.visible,
       isPlaying: this.isPlaying
     })
+
+    this.socket.emit('track:play', { _id: track._id })
   }
 
   pause = () => {
