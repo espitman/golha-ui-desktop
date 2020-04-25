@@ -39,7 +39,7 @@ export default class PlayerProvider {
       isPlaying: this.isPlaying
     })
 
-    this.socket.emit('track:play', { _id: track._id })
+    this.socket.emit('track/play', { _id: track._id })
   }
 
   pause = () => {
