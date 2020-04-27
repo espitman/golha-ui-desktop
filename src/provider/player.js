@@ -7,6 +7,7 @@ export default class PlayerProvider {
     this.visible = false
     this.isPlaying = false
     this.track = {}
+    this.currentTime = 0
     this.playList = []
     this.state = {}
   }
@@ -140,5 +141,9 @@ export default class PlayerProvider {
     this.playList = []
     this.socket.emit('playlist/clear', {})
     this.setState({ playlist: this.playList })
+  }
+
+  setCurrentTime = (time) => {
+    this.currentTime = time
   }
 }

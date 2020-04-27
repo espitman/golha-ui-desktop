@@ -47,7 +47,8 @@ class App extends React.Component {
     this.state = {
       showPlayer: false,
       isPlaying: false,
-      currentTrack: {}
+      currentTrack: {},
+      currentTime: 0
     }
     this.player = new PlayerProvider({
       stateSetter: this.stateSetter,
@@ -61,7 +62,8 @@ class App extends React.Component {
       // document.querySelector('a#homeLink').click()
     }, 5)
     this.disableKeys()
-    this.getLastState()
+    this.restoreLastState()
+    this.saveStateOnClose()
   }
 
   stateSetter = (states) => {
@@ -80,19 +82,40 @@ class App extends React.Component {
     )
   }
 
-  getLastState = async () => {
-    const { currentTrack, playlist } = await services.userService.getLastState()
+  restoreLastState = async () => {
+    const {
+      currentTrack,
+      currentTime,
+      playlist
+    } = await services.userService.getLastState()
     if (playlist) {
       this.player.addToPlayListGroup(playlist)
     }
     if (currentTrack) {
       this.player.play(currentTrack)
-      setTimeout(() => this.player.pause(), 1000)
+      setTimeout(() => this.player.pause())
+    }
+    if (currentTime) {
+      this.setState({ currentTime })
     }
   }
 
+  saveStateOnClose = () => {
+    window.addEventListener('beforeunload', (ev) => {
+      socket.emit('app/close', {
+        currentTime: this.player.currentTime
+      })
+    })
+  }
+
   render() {
-    const { showPlayer, isPlaying, currentTrack, playlist } = this.state
+    const {
+      showPlayer,
+      isPlaying,
+      currentTrack,
+      currentTime,
+      playlist
+    } = this.state
     return (
       <Router>
         <TitleBar />
@@ -148,6 +171,7 @@ class App extends React.Component {
         <Player
           show={showPlayer}
           track={currentTrack}
+          time={currentTime}
           isPlaying={isPlaying}
           player={this.player}
           playlist={playlist}

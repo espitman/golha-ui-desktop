@@ -7,13 +7,13 @@ export class UserService {
   async getLastState() {
     const {
       data: {
-        payload: { currentTrack, playlist }
+        payload: { currentTrack, currentTime, playlist }
       }
     } = await axios.get(`${config.get('api.v1.url')}/user/me`, {
       headers: {
         Authorization: 'Bearer ' + token
       }
     })
-    return { currentTrack, playlist }
+    return { currentTrack, currentTime, playlist }
   }
 }
