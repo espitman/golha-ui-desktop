@@ -10,6 +10,7 @@ import { Socket } from '../modules/socket'
 import { ProgramService } from '../service/program'
 import { PersonService } from '../service/person'
 import { DastgahService } from '../service/dastgah'
+import { UserService } from '../service/user'
 
 import './App.scss'
 import '../common/css/context-menu.scss'
@@ -34,7 +35,8 @@ const socket = new Socket()
 const services = {
   programService: new ProgramService(database),
   personService: new PersonService(database),
-  dastgahService: new DastgahService(database)
+  dastgahService: new DastgahService(database),
+  userService: new UserService()
 }
 
 storage.clear()
@@ -59,6 +61,7 @@ class App extends React.Component {
       // document.querySelector('a#homeLink').click()
     }, 5)
     this.disableKeys()
+    this.getLastState()
   }
 
   stateSetter = (states) => {
@@ -75,6 +78,17 @@ class App extends React.Component {
       },
       false
     )
+  }
+
+  getLastState = async () => {
+    const { currentTrack, playlist } = await services.userService.getLastState()
+    if (playlist) {
+      this.player.addToPlayListGroup(playlist)
+    }
+    if (currentTrack) {
+      this.player.play(currentTrack)
+      setTimeout(() => this.player.pause(), 1000)
+    }
   }
 
   render() {

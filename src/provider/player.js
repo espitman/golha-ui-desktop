@@ -38,7 +38,6 @@ export default class PlayerProvider {
       showPlayer: this.visible,
       isPlaying: this.isPlaying
     })
-
     this.socket.emit('track/play', { _id: track._id })
   }
 
@@ -68,6 +67,10 @@ export default class PlayerProvider {
   addingToPlayList(track) {
     if (track._id !== this.track._id && !this.isInPlayList(track._id)) {
       this.playList.push(track)
+      this.socket.emit('playlist/add', {
+        _id: track._id,
+        playList: this.playList.map(({ _id }) => _id)
+      })
       return true
     }
     return false
@@ -82,6 +85,14 @@ export default class PlayerProvider {
     return isInPlayList
   }
 
+  addToPlayListGroup = (tracks) => {
+    this.clearPlayList()
+    tracks.forEach((trk) => {
+      this.addingToPlayList(trk)
+    })
+    this.setState({ playlist: this.playList })
+  }
+
   removeFromPlayList = (track) => {
     const index = this.getPlayListIndex(track._id)
     if (index === -1) {
@@ -89,6 +100,10 @@ export default class PlayerProvider {
     }
     this.playList.splice(index, 1)
     this.setState({ playlist: this.playList })
+    this.socket.emit('playlist/remove', {
+      _id: track._id,
+      playList: this.playList.map(({ _id }) => _id)
+    })
     return true
   }
 
@@ -123,6 +138,7 @@ export default class PlayerProvider {
   clearPlayList = () => {
     this.playListIndex = -1
     this.playList = []
+    this.socket.emit('playlist/clear', {})
     this.setState({ playlist: this.playList })
   }
 }
