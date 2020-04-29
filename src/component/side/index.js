@@ -42,6 +42,12 @@ export default class Side extends React.Component {
             <h5>اپلیکیشن</h5>
             <ul>
               <li>
+                <Link to="/signin">
+                  <i className="fal fa-user"></i>
+                  <span>ورود اعضا</span>
+                </Link>
+              </li>
+              <li>
                 <Link to="/settings">
                   <i className="fal fa-cog"></i>
                   <span>تنظیمات</span>

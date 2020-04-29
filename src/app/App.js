@@ -14,6 +14,7 @@ import { UserService } from '../service/user'
 
 import './App.scss'
 import '../common/css/context-menu.scss'
+import '../common/css/gForm.scss'
 
 import Side from '../component/side'
 import TitleBar from '../component/title-bar'
@@ -29,6 +30,7 @@ import PersonScreen from '../screen/person'
 import DastgahScreen from '../screen/dastgah'
 
 import PlayerProvider from '../provider/player'
+import SigninScreen from '../screen/signin'
 
 const database = new Database()
 const socket = new Socket()
@@ -140,6 +142,9 @@ class App extends React.Component {
                 currentTrack={currentTrack}
                 isPlaying={isPlaying}
               />
+            </Route>
+            <Route path="/signin">
+              <SigninScreen services={services} />
             </Route>
             <Route path="/archive">
               <ArchiveScreens services={services} />

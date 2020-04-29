@@ -4,6 +4,9 @@
       "url": "http://37.152.181.202:3100/api/v1"
     }
   },
+  "userciry": {
+    "url": "http://37.152.181.202:3101/api/v1"
+  },
   "db": {
     "local": {
       "enable": true

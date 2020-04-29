@@ -11,7 +11,6 @@ class ProgramsScreen extends React.Component {
   constructor(props) {
     super(props)
     this.programService = props.services.programService
-
     this.state = {
       loading: true,
       programs: [],
