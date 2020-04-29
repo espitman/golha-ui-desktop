@@ -52,5 +52,20 @@
         display: flex;
       }
     }
+
+    .sign-with-email {
+      border: solid 1px rgba($color: #000000, $alpha: 0.5);
+      background-color: #ffffff;
+      color: black;
+      text-align: center;
+      span {
+        font-size: 0.85rem;
+      }
+      i {
+        position: relative;
+        margin-left: 10px;
+        top: 5px;
+      }
+    }
   }
 }

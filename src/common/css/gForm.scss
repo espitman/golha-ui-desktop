@@ -9,6 +9,11 @@
       font-family: IRANSansWeb;
       text-align: right;
       font-weight: 100;
+      &.error {
+        color: red;
+        font-size: 0.6rem;
+        margin-top: 2px;
+      }
     }
     input {
       padding: 8px 20px;
@@ -24,6 +29,9 @@
       &.rtl {
         text-align: right;
         direction: rtl;
+      }
+      &.error {
+        border-color: red;
       }
     }
     button {

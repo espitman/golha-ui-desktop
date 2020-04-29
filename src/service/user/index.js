@@ -44,7 +44,6 @@ export class UserService {
           mobile
         }
       )
-      console.log({ result })
     } catch (error) {
       throw new Error(error.response.data.message)
     }
