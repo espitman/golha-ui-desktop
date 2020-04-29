@@ -12,6 +12,7 @@ export default class SigninScreen extends React.Component {
     this.userProvider = props.userProvider
     this.state = {
       loadingSignIn: false,
+      loadingSignUp: false,
       active: 0,
       usernameField: 'mobile',
       fields: {
@@ -43,6 +44,19 @@ export default class SigninScreen extends React.Component {
       const username = email
       this.signin({ username, password })
     }
+
+    this.formSignup = new ReactFormInputValidation(this)
+    this.formSignup.useRules({
+      mobile: ['required', 'regex:/09\\d{9}$'],
+      email: 'required|email',
+      password: 'required|min:8',
+      fname: 'required',
+      lname: 'required'
+    })
+    this.formSignup.onformsubmit = (fields) => {
+      const { password, fname, lname, email, mobile } = fields
+      this.signup({ password, fname, lname, email, mobile })
+    }
   }
 
   goToTab = (active) => {
@@ -68,16 +82,18 @@ export default class SigninScreen extends React.Component {
     }
   }
 
-  signup = async (e) => {
-    e.preventDefault()
-    this.setState({ loadingSignIn: true })
-    const { password, fname, lname, email, mobile } = this.state
+  signup = async (fields) => {
+    this.setState({ loadingSignUp: true })
+    const { password, fname, lname, email, mobile } = fields
     try {
       await this.userService.signup(password, fname, lname, email, mobile)
-      this.setState({ loadingSignIn: false })
+      toast.success('ثبت نام موفقیت‌آمیز بود.')
+      this.setState({ loadingSignUp: false })
+      this.goToTab(0)
     } catch (error) {
-      alert(error.message)
-      this.setState({ loadingSignIn: false })
+      toast.error('کاربر دیگری با این ایمیل یا تلفن همراه ثبت نام کرده است.')
+
+      this.setState({ loadingSignUp: false })
     }
   }
 
@@ -87,8 +103,15 @@ export default class SigninScreen extends React.Component {
 
   render() {
     ReactFormInputValidation.useLang('fa')
-    const { active, loadingSignIn, fields, errors, usernameField } = this.state
-    const { formSigninWithMobile, formSigninWithEmail } = this
+    const {
+      active,
+      loadingSignIn,
+      loadingSignUp,
+      fields,
+      errors,
+      usernameField
+    } = this.state
+    const { formSigninWithMobile, formSigninWithEmail, formSignup } = this
     return (
       <div id="screen-signin">
         <div className="signin-tabs">
@@ -230,50 +253,91 @@ export default class SigninScreen extends React.Component {
             )}
           </div>
           <div className={`signin-tabs-body-inner ${active === 1 && 'active'}`}>
-            <form className="gForm" onSubmit={this.signup}>
+            <form className="gForm" onSubmit={formSignup.handleSubmit}>
               <div className="gForm-row">
-                <label>شماره تلفن همراه</label>
-                <input type="text" name="mobile" onChange={this.handleChange} />
+                <label>تلفن همراه</label>
+                <input
+                  type="text"
+                  name="mobile"
+                  onChange={formSignup.handleChangeEvent}
+                  onBlur={formSignup.handleBlurEvent}
+                  value={fields.mobile}
+                  data-attribute-name="تلفن همراه"
+                  className={errors.mobile ? 'error' : ''}
+                />
+                {errors.mobile && (
+                  <label className="error">{errors.mobile}</label>
+                )}
               </div>
               <div className="gForm-row">
                 <label>ایمیل</label>
-                <input type="email" name="email" onChange={this.handleChange} />
+                <input
+                  type="text"
+                  name="email"
+                  onChange={formSignup.handleChangeEvent}
+                  onBlur={formSignup.handleBlurEvent}
+                  value={fields.email}
+                  data-attribute-name="ایمیل"
+                  className={errors.email ? 'error' : ''}
+                />
+                {errors.email && (
+                  <label className="error">{errors.email}</label>
+                )}
               </div>
               <div className="gForm-row">
                 <label>رمز عبور</label>
                 <input
                   type="password"
                   name="password"
-                  onChange={this.handleChange}
+                  onBlur={formSignup.handleBlurEvent}
+                  onChange={this.formSignup.handleChangeEvent}
+                  value={fields.password}
+                  data-attribute-name="رمز عبور"
+                  className={errors.password ? 'error' : ''}
                 />
+                {errors.password && (
+                  <label className="error">{errors.password}</label>
+                )}
               </div>
               <div className="gForm-row">
                 <label>نام</label>
                 <input
                   type="text"
                   name="fname"
-                  onChange={this.handleChange}
-                  className="rtl"
+                  onChange={formSignup.handleChangeEvent}
+                  onBlur={formSignup.handleBlurEvent}
+                  value={fields.fname}
+                  data-attribute-name="نام"
+                  className={`rtl ${errors.fname ? 'error' : ''}`}
                 />
+                {errors.fname && (
+                  <label className="error">{errors.fname}</label>
+                )}
               </div>
               <div className="gForm-row">
                 <label>نام خانوادگی</label>
                 <input
                   type="text"
                   name="lname"
-                  onChange={this.handleChange}
-                  className="rtl"
+                  onChange={formSignup.handleChangeEvent}
+                  onBlur={formSignup.handleBlurEvent}
+                  value={fields.lname}
+                  data-attribute-name="نام خانوادگی"
+                  className={`rtl ${errors.lname ? 'error' : ''}`}
                 />
+                {errors.lname && (
+                  <label className="error">{errors.lname}</label>
+                )}
               </div>
               <div className="gForm-row">
                 <button
                   type="submit"
-                  className={loadingSignIn ? 'loading' : ''}
+                  className={loadingSignUp ? 'loading' : ''}
                 >
-                  {!loadingSignIn ? (
-                    <>ثبت‌نام</>
+                  {!loadingSignUp ? (
+                    <>ثبت نام</>
                   ) : (
-                    <i className="fal fa-spinner-third fa-spin"></i>
+                    <i className="fal fa-spinner-third fa-spin" />
                   )}
                 </button>
               </div>
