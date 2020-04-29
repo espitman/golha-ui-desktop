@@ -4,7 +4,7 @@ const storage = {
     localStorage.setItem(key, value)
   },
   get(key) {
-    return JSON.parse(localStorage.getItem(key))
+    return JSON.parse(localStorage.getItem(key)) || ''
   },
   remove(key) {
     localStorage.removeItem(key)

@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactFormInputValidation from 'react-form-input-validation'
 import { toast } from 'react-toastify'
+import storage from '../../modules/storage'
 
 import './style.scss'
 
@@ -8,6 +9,7 @@ export default class SigninScreen extends React.Component {
   constructor(props) {
     super(props)
     this.userService = props.services.userService
+    this.userProvider = props.userProvider
     this.state = {
       loadingSignIn: false,
       active: 0,
@@ -55,8 +57,11 @@ export default class SigninScreen extends React.Component {
     this.setState({ loadingSignIn: true })
     const { username, password } = fields
     try {
-      await this.userService.signin(username, password)
+      const user = await this.userService.signin(username, password)
+      this.userProvider.setUser(user)
+      storage.set('user', user)
       this.setState({ loadingSignIn: false })
+      window.history.back()
     } catch (error) {
       toast.error('مشخصات وارد شده صحیح نمی‌باشد.')
       this.setState({ loadingSignIn: false })
@@ -103,7 +108,9 @@ export default class SigninScreen extends React.Component {
           </ul>
         </div>
         <div className="signin-tabs-body">
-          <div className={`signin-tabs-body-inner ${active === 0 && 'active'}`}>
+          <div
+            className={`signin-tabs-body-inner ${active === 0 ? 'active' : ''}`}
+          >
             {usernameField === 'mobile' ? (
               <form
                 className="gForm"
@@ -118,7 +125,7 @@ export default class SigninScreen extends React.Component {
                     onBlur={formSigninWithMobile.handleBlurEvent}
                     value={fields.mobile}
                     data-attribute-name="تلفن همراه"
-                    className={errors.mobile && 'error'}
+                    className={errors.mobile ? 'error' : ''}
                   />
                   {errors.mobile && (
                     <label className="error">{errors.mobile}</label>
@@ -133,14 +140,17 @@ export default class SigninScreen extends React.Component {
                     onChange={this.formSigninWithMobile.handleChangeEvent}
                     value={fields.password}
                     data-attribute-name="رمز عبور"
-                    className={errors.password && 'error'}
+                    className={errors.password ? 'error' : ''}
                   />
                   {errors.password && (
                     <label className="error">{errors.password}</label>
                   )}
                 </div>
                 <div className="gForm-row">
-                  <button type="submit" className={loadingSignIn && 'loading'}>
+                  <button
+                    type="submit"
+                    className={loadingSignIn ? 'loading' : ''}
+                  >
                     {!loadingSignIn ? (
                       <>ورود</>
                     ) : (
@@ -173,7 +183,7 @@ export default class SigninScreen extends React.Component {
                     onBlur={formSigninWithEmail.handleBlurEvent}
                     value={fields.email}
                     data-attribute-name="ایمیل"
-                    className={errors.email && 'error'}
+                    className={errors.email ? 'error' : ''}
                   />
                   {errors.email && (
                     <label className="error">{errors.email}</label>
@@ -188,14 +198,17 @@ export default class SigninScreen extends React.Component {
                     onChange={this.formSigninWithEmail.handleChangeEvent}
                     value={fields.password}
                     data-attribute-name="رمز عبور"
-                    className={errors.password && 'error'}
+                    className={errors.password ? 'error' : ''}
                   />
                   {errors.password && (
                     <label className="error">{errors.password}</label>
                   )}
                 </div>
                 <div className="gForm-row">
-                  <button type="submit" className={loadingSignIn && 'loading'}>
+                  <button
+                    type="submit"
+                    className={loadingSignIn ? 'loading' : ''}
+                  >
                     {!loadingSignIn ? (
                       <>ورود</>
                     ) : (
@@ -253,7 +266,10 @@ export default class SigninScreen extends React.Component {
                 />
               </div>
               <div className="gForm-row">
-                <button type="submit" className={loadingSignIn && 'loading'}>
+                <button
+                  type="submit"
+                  className={loadingSignIn ? 'loading' : ''}
+                >
                   {!loadingSignIn ? (
                     <>ثبت‌نام</>
                   ) : (

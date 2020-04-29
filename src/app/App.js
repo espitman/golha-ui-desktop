@@ -33,6 +33,7 @@ import DastgahScreen from '../screen/dastgah'
 
 import PlayerProvider from '../provider/player'
 import SigninScreen from '../screen/signin'
+import UserProvider from '../provider/user'
 
 const database = new Database()
 const socket = new Socket()
@@ -43,7 +44,9 @@ const services = {
   userService: new UserService()
 }
 
+const me = storage.get('user') || {}
 storage.clear()
+storage.set('user', me)
 
 class App extends React.Component {
   constructor(props) {
@@ -52,12 +55,14 @@ class App extends React.Component {
       showPlayer: false,
       isPlaying: false,
       currentTrack: {},
-      currentTime: 0
+      currentTime: 0,
+      user: me
     }
     this.player = new PlayerProvider({
       stateSetter: this.stateSetter,
       socket
     })
+    this.userProvider = new UserProvider({ stateSetter: this.stateSetter })
   }
 
   componentDidMount() {
@@ -87,6 +92,10 @@ class App extends React.Component {
   }
 
   restoreLastState = async () => {
+    const { user } = this.state
+    if (!Object.keys(user).length) {
+      return false
+    }
     const {
       currentTrack,
       currentTime,
@@ -118,17 +127,18 @@ class App extends React.Component {
       isPlaying,
       currentTrack,
       currentTime,
-      playlist
+      playlist,
+      user
     } = this.state
     return (
       <Router>
         <ToastContainer
           position="bottom-right"
-          rtl="true"
+          rtl={true}
           bodyClassName="gToastify"
         />
         <TitleBar />
-        <Side />
+        <Side user={user} />
         <div id="main" className={showPlayer ? 'withPlayer' : ''}>
           <Switch>
             <Route exact path="/">
@@ -151,7 +161,10 @@ class App extends React.Component {
               />
             </Route>
             <Route path="/signin">
-              <SigninScreen services={services} />
+              <SigninScreen
+                services={services}
+                userProvider={this.userProvider}
+              />
             </Route>
             <Route path="/archive">
               <ArchiveScreens services={services} />

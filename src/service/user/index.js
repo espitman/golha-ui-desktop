@@ -1,7 +1,8 @@
 import axios from 'axios'
 import config from '../../modules/config'
+import storage from '../../modules/storage'
 
-const token = config.get('token')
+const { token } = storage.get('user')
 
 export class UserService {
   async getLastState() {
@@ -14,6 +15,7 @@ export class UserService {
         Authorization: 'Bearer ' + token
       }
     })
+
     return { currentTrack, currentTime, playlist }
   }
 
@@ -26,7 +28,7 @@ export class UserService {
           password
         }
       )
-      console.log({ result })
+      return result.data.payload
     } catch (error) {
       throw new Error(error.response.data.message)
     }
@@ -44,6 +46,7 @@ export class UserService {
           mobile
         }
       )
+      return result.data.payload
     } catch (error) {
       throw new Error(error.response.data.message)
     }

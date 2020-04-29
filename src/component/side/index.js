@@ -5,6 +5,8 @@ import './style.scss'
 
 export default class Side extends React.Component {
   render() {
+    const { user } = this.props
+    console.log(user)
     return (
       <>
         <div id="side">
@@ -41,12 +43,14 @@ export default class Side extends React.Component {
           <div id="side-menu-app">
             <h5>اپلیکیشن</h5>
             <ul>
-              <li>
-                <Link to="/signin">
-                  <i className="fal fa-user"></i>
-                  <span>ورود اعضا</span>
-                </Link>
-              </li>
+              {!Object.keys(user).length && (
+                <li>
+                  <Link to="/signin">
+                    <i className="fal fa-user"></i>
+                    <span>ورود اعضا</span>
+                  </Link>
+                </li>
+              )}
               <li>
                 <Link to="/settings">
                   <i className="fal fa-cog"></i>
