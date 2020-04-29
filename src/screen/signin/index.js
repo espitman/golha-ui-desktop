@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactFormInputValidation from 'react-form-input-validation'
+import { toast } from 'react-toastify'
 
 import './style.scss'
 
@@ -57,7 +58,7 @@ export default class SigninScreen extends React.Component {
       await this.userService.signin(username, password)
       this.setState({ loadingSignIn: false })
     } catch (error) {
-      alert(error.message)
+      toast.error('مشخصات وارد شده صحیح نمی‌باشد.')
       this.setState({ loadingSignIn: false })
     }
   }

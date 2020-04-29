@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 
 import storage from '../modules/storage'
 
@@ -15,6 +16,7 @@ import { UserService } from '../service/user'
 import './App.scss'
 import '../common/css/context-menu.scss'
 import '../common/css/gForm.scss'
+import 'react-toastify/dist/ReactToastify.css'
 
 import Side from '../component/side'
 import TitleBar from '../component/title-bar'
@@ -120,6 +122,11 @@ class App extends React.Component {
     } = this.state
     return (
       <Router>
+        <ToastContainer
+          position="bottom-right"
+          rtl="true"
+          bodyClassName="gToastify"
+        />
         <TitleBar />
         <Side />
         <div id="main" className={showPlayer ? 'withPlayer' : ''}>
