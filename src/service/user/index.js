@@ -2,10 +2,10 @@ import axios from 'axios'
 import config from '../../modules/config'
 import storage from '../../modules/storage'
 
-const { token } = storage.get('user')
-
 export class UserService {
   async getLastState() {
+    const { token } = storage.get('user')
+    console.log(token)
     const {
       data: {
         payload: { currentTrack, currentTime, playlist }

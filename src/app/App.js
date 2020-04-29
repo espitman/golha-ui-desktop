@@ -75,6 +75,12 @@ class App extends React.Component {
     this.saveStateOnClose()
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.user !== this.state.user) {
+      setTimeout(this.restoreLastState)
+    }
+  }
+
   stateSetter = (states) => {
     this.setState(states)
   }
@@ -138,7 +144,7 @@ class App extends React.Component {
           bodyClassName="gToastify"
         />
         <TitleBar />
-        <Side user={user} />
+        <Side user={user} userProvider={this.userProvider} />
         <div id="main" className={showPlayer ? 'withPlayer' : ''}>
           <Switch>
             <Route exact path="/">
