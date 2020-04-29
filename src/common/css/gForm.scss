@@ -1,0 +1,60 @@
+.gForm {
+  width: 100%;
+  .gForm-row {
+    width: 100%;
+    margin-bottom: 15px;
+    label {
+      width: 100%;
+      display: block;
+      font-family: IRANSansWeb;
+      text-align: right;
+      font-weight: 100;
+      &.error {
+        color: red;
+        font-size: 0.6rem;
+        margin-top: 2px;
+      }
+    }
+    input {
+      padding: 8px 20px;
+      width: 40%;
+      direction: ltr;
+      font-family: IRANSansWeb;
+      font-weight: 300;
+      font-size: 0.95rem;
+      margin-top: 10px;
+      color: rgba($color: #000000, $alpha: 0.75);
+      border: solid 1px rgba($color: #000000, $alpha: 0.2);
+      border-radius: 5px;
+      &.rtl {
+        text-align: right;
+        direction: rtl;
+      }
+      &.error {
+        border-color: red;
+      }
+    }
+    button {
+      padding: 10px 0;
+      width: calc(40% + 42px);
+      background-color: black;
+      color: #ffffff;
+      border: solid 1px rgba($color: #000000, $alpha: 0.2);
+      font-family: IRANSansWeb;
+      font-weight: 400;
+      margin-top: 15px;
+      border-radius: 5px;
+      min-height: 40px;
+      position: relative;
+      &.loading {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      i {
+        position: absolute;
+        font-size: 2em;
+        top: 10px;
+      }
+    }
+  }
+}

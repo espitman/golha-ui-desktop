@@ -1,7 +1,6 @@
 import io from 'socket.io-client'
 import config from './../config'
-
-const token = config.get('token')
+import storage from '../storage'
 
 export class Socket {
   constructor() {
@@ -9,6 +8,7 @@ export class Socket {
   }
 
   emit(event, data) {
+    const { token } = storage.get('user')
     const content = {
       authorization: token,
       data: JSON.stringify(data)

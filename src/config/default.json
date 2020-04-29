@@ -4,6 +4,9 @@
       "url": "http://37.152.181.202:3100/api/v1"
     }
   },
+  "userciry": {
+    "url": "http://37.152.181.202:3101/api/v1"
+  },
   "db": {
     "local": {
       "enable": true
@@ -19,6 +22,5 @@
   },
   "socket": {
     "url": "http://37.152.181.202:3100"
-  },
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjVlYTM0OWQwMGRkYWQ3MzI0OTA1MjgyZCIsImZuYW1lIjoic2FlZWQiLCJsbmFtZSI6ImhlaWRhcmkiLCJ1c2VybmFtZSI6IjA5MTIyODk0MzMxIiwibW9iaWxlIjoiMDkxMjI4OTQzMzEifSwiaWF0IjoxNTg4MDA0NzE5LCJleHAiOjE1ODgwOTExMTl9.i35VynfT2uVjiFVg-a7VcJLUYsK4H7TNpPpHjDiHi2g"
+  }
 }
