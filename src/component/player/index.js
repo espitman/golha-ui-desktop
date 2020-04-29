@@ -48,6 +48,9 @@ class Player extends React.Component {
     } else if (isPlaying !== prevProps.isPlaying) {
       !isPlaying ? this.audio.pause() : this.audio.play()
     }
+    if (newProps.time > 0 && newProps.time !== prevProps.time) {
+      this.goToTime(newProps.time)
+    }
   }
 
   togglePlay = () => {
@@ -57,7 +60,9 @@ class Player extends React.Component {
 
   setCurrentTime = () => {
     this.audio.ontimeupdate = () => {
-      this.setState({ currentTime: this.audio.currentTime })
+      const currentTime = this.audio.currentTime
+      this.setState({ currentTime })
+      this.player.setCurrentTime(currentTime)
     }
   }
 
@@ -117,6 +122,10 @@ class Player extends React.Component {
 
   fastForward = () => {
     this.audio.currentTime += 10
+  }
+
+  goToTime = (time) => {
+    this.audio.currentTime = time
   }
 
   onKeyDown = (keyName) => {

@@ -5,9 +5,12 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import storage from '../modules/storage'
 
 import { Database } from '../modules/db'
+import { Socket } from '../modules/socket'
+
 import { ProgramService } from '../service/program'
 import { PersonService } from '../service/person'
 import { DastgahService } from '../service/dastgah'
+import { UserService } from '../service/user'
 
 import './App.scss'
 import '../common/css/context-menu.scss'
@@ -28,10 +31,12 @@ import DastgahScreen from '../screen/dastgah'
 import PlayerProvider from '../provider/player'
 
 const database = new Database()
+const socket = new Socket()
 const services = {
   programService: new ProgramService(database),
   personService: new PersonService(database),
-  dastgahService: new DastgahService(database)
+  dastgahService: new DastgahService(database),
+  userService: new UserService()
 }
 
 storage.clear()
@@ -42,10 +47,12 @@ class App extends React.Component {
     this.state = {
       showPlayer: false,
       isPlaying: false,
-      currentTrack: {}
+      currentTrack: {},
+      currentTime: 0
     }
     this.player = new PlayerProvider({
-      stateSetter: this.stateSetter
+      stateSetter: this.stateSetter,
+      socket
     })
   }
 
@@ -55,6 +62,8 @@ class App extends React.Component {
       // document.querySelector('a#homeLink').click()
     }, 5)
     this.disableKeys()
+    this.restoreLastState()
+    this.saveStateOnClose()
   }
 
   stateSetter = (states) => {
@@ -73,8 +82,40 @@ class App extends React.Component {
     )
   }
 
+  restoreLastState = async () => {
+    const {
+      currentTrack,
+      currentTime,
+      playlist
+    } = await services.userService.getLastState()
+    if (playlist) {
+      this.player.addToPlayListGroup(playlist)
+    }
+    if (currentTrack) {
+      this.player.play(currentTrack)
+      setTimeout(() => this.player.pause())
+    }
+    if (currentTime) {
+      this.setState({ currentTime })
+    }
+  }
+
+  saveStateOnClose = () => {
+    window.addEventListener('beforeunload', (ev) => {
+      socket.emit('app/close', {
+        currentTime: this.player.currentTime
+      })
+    })
+  }
+
   render() {
-    const { showPlayer, isPlaying, currentTrack, playlist } = this.state
+    const {
+      showPlayer,
+      isPlaying,
+      currentTrack,
+      currentTime,
+      playlist
+    } = this.state
     return (
       <Router>
         <TitleBar />
@@ -130,6 +171,7 @@ class App extends React.Component {
         <Player
           show={showPlayer}
           track={currentTrack}
+          time={currentTime}
           isPlaying={isPlaying}
           player={this.player}
           playlist={playlist}
